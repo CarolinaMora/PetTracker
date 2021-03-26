@@ -1,14 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     tools:context=".ui.PetRegistrationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Registro de mascota" />
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        >
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/pet_registration_main_photo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pet_registration_vaccines"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintDimensionRatio="1:1"
+            />
+
+        <!--
+            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pet_registration_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/prompt_name"
+            app:layout_constraintBottom_toTopOf="@+id/pet_registration_type"
+            app:layout_constraintTop_toBottomOf="@+id/pet_registration_main_photo"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pet_registration_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/pet_registration_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_name"
+            app:layout_constraintBottom_toTopOf="@+id/pet_registration_gender"
+            />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/pet_registration_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/pet_registration_type"
+            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_race"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pet_registration_race"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/prompt_race"
+            app:layout_constraintTop_toBottomOf="@+id/pet_registration_gender"
+            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_description"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pet_registration_race"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pet_registration_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/prompt_description"
+            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_race"
+            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_birth_date"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pet_registration_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pet_registration_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/prompt_birth_date"
+            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_description"
+            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_rescue_date"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pet_registration_birth_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pet_registration_rescue_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/prompt_rescue_date"
+            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_birth_date"
+            app:layout_constraintBottom_toTopOf="@+id/cl_sterilized_container"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pet_registration_rescue_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/cl_sterilized_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_rescue_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+        -->
+
+        <fragment
+            android:id="@+id/pet_registration_vaccines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.teammovil.pettracker.ui.vaccines.VaccinesListFragment"
+            app:layout_constraintTop_toBottomOf="@+id/pet_registration_main_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
