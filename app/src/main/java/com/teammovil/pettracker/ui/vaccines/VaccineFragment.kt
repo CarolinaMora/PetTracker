@@ -60,12 +60,12 @@ class VaccineFragment : DialogFragment(), DatePickerFragment.DatePickerFragmentL
     }
 
     private fun onClickDate(){
-        val newFragment = DatePickerFragment()
+        val newFragment = DatePickerFragment(binding.root.id)
         newFragment.listener = this
         newFragment.show(childFragmentManager, "datePicker")
     }
 
-    override fun saveDate(date: String) {
+    override fun saveDate(date: String, idCaller: Int) {
         binding.vaccineApplicationDate.setText(date)
     }
 

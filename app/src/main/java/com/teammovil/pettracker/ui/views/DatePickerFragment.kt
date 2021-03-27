@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.teammovil.pettracker.R
 import java.util.*
 
-class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerFragment(val idCaller: Int) : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     var listener: DatePickerFragmentListener? = null
 
@@ -25,11 +25,11 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val date = getString(R.string.string_format_date, year, month, day)
-        listener?.saveDate(date)
+        listener?.saveDate(date, idCaller)
         this.dismiss()
     }
 
     interface DatePickerFragmentListener {
-        fun saveDate (date: String)
+        fun saveDate (date: String, idCaller: Int)
     }
 }

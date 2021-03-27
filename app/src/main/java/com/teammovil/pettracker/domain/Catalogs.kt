@@ -1,18 +1,18 @@
 package com.teammovil.pettracker.domain
 
-enum class PetType (val type: String) {
-    DOG("Perro"),
-    CAT("Gato"),
-    FISH("Pez"),
-    BIRD("Ave"),
-    RABBIT("Conejo"),
-    REPTILE("Reptil"),
-    OTHER("Otro")
+enum class PetType {
+    DOG,
+    CAT,
+    FISH,
+    BIRD,
+    RABBIT,
+    REPTILE,
+    OTHER
 }
 
-enum class GenderType (val gender: String) {
-    MALE("Masculino"),
-    FEMALE("Femenino")
+enum class GenderType {
+    MALE,
+    FEMALE
 }
 
 enum class PetStatus {
