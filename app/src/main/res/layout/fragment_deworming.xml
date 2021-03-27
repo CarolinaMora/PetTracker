@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:minWidth="800dp"
     android:orientation="vertical"
-    android:layout_margin="16dp"
-    android:padding="16dp"
+    android:layout_margin="@dimen/default_margin"
+    android:padding="@dimen/default_margin"
     >
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,7 +27,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/default_margin"
         android:hint="@string/prompt_date"
         >
 
@@ -41,7 +41,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/deworming_save_action"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_save"

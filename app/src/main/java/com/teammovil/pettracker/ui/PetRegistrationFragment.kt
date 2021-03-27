@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import com.teammovil.pettracker.R
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
-import com.teammovil.pettracker.getStringFromDate
-import com.teammovil.pettracker.ui.dewormings.DewormingView
-import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
-import com.teammovil.pettracker.ui.vaccines.VaccineView
-import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
-import java.util.*
+import com.teammovil.pettracker.domain.GenderType
+import com.teammovil.pettracker.domain.PetType
+
 
 class PetRegistrationFragment : Fragment() {
 
@@ -36,21 +33,23 @@ class PetRegistrationFragment : Fragment() {
     }
 
     private fun setViews (){
-        //Vaccines
-        val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
-        if(vaccinesFragment is VaccinesListFragment){
-            vaccinesFragment.setVaccinesList(listOf(
-                VaccineView(name = "puppy 1", applicationDate = getStringFromDate(Date())!!)
-            ))
-        }
+        //Type selection
+        val arrayType = listOf("Seleccione la especie") + PetType.values().map{it.type}
+        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, arrayType
+        )
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.petRegistrationType.adapter = adapterType
 
-        //Dewormings
-        val dewormingsFragment = childFragmentManager.findFragmentById(R.id.pet_registration_dewormings)
-        if(dewormingsFragment is DewormingsListFragment){
-            dewormingsFragment.setDewormingsList(listOf(
-                DewormingView(name = "Tableta 1", applicationDate = getStringFromDate(Date())!!)
-            ))
-        }
+        //Gender selection
+        val arrayGender = listOf("Seleccione el género") + GenderType.values().map{it.gender}
+        val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, arrayGender
+        )
+        adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.petRegistrationGender.adapter = adapterGender
     }
 
     fun onClickRegister (){

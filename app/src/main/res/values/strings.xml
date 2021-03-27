@@ -16,14 +16,15 @@
     <string name="prompt_vaccines">Vacunas</string>
     <string name="prompt_dewormings">Desparacitaciones</string>
     <string name="prompt_evidences">Evidencias</string>
-
-    <!-- Vaccines List -->
-    <string name="action_add">Agregar</string>
     <string name="prompt_date">Fecha</string>
     <string name="string_format_date">%4d-%02d-%02d</string>
-
+    <string name="title_vaccines">VACUNAS</string>
+    <string name="title_dewormings">DESPARASITACIONES</string>
 
     <!-- Actions -->
     <string name="action_save">Guardar</string>
+    <string name="action_add">Agregar</string>
+    <string name="action_yes">Sí</string>
+    <string name="action_no">No</string>
 
 </resources>

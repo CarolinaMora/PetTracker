@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true"
     tools:context=".ui.PetRegistrationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/default_margin"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         >
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -22,21 +27,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/pet_registration_vaccines"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_percent="0.4"
             app:layout_constraintDimensionRatio="1:1"
             />
 
-        <!--
-            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_name"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_pet_registration_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:hint="@string/prompt_name"
-            app:layout_constraintBottom_toTopOf="@+id/pet_registration_type"
-            app:layout_constraintTop_toBottomOf="@+id/pet_registration_main_photo"
             >
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -49,28 +52,24 @@
             android:id="@+id/pet_registration_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_name"
-            app:layout_constraintBottom_toTopOf="@+id/pet_registration_gender"
+            android:layout_marginTop="@dimen/default_margin"
+            android:padding="@dimen/default_margin"
             />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/pet_registration_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/pet_registration_type"
-            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_race"
+            android:layout_marginTop="@dimen/default_margin"
+            android:padding="@dimen/default_margin"
             />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_pet_registration_race"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:hint="@string/prompt_race"
-            app:layout_constraintTop_toBottomOf="@+id/pet_registration_gender"
-            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_description"
             >
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -83,10 +82,8 @@
             android:id="@+id/til_pet_registration_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:hint="@string/prompt_description"
-            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_race"
-            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_birth_date"
             >
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -99,10 +96,8 @@
             android:id="@+id/til_pet_registration_birth_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:hint="@string/prompt_birth_date"
-            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_description"
-            app:layout_constraintBottom_toTopOf="@+id/til_pet_registration_rescue_date"
             >
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -115,10 +110,8 @@
             android:id="@+id/til_pet_registration_rescue_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:hint="@string/prompt_rescue_date"
-            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_birth_date"
-            app:layout_constraintBottom_toTopOf="@+id/cl_sterilized_container"
             >
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -128,43 +121,50 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/cl_sterilized_container"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/pet_registration_sterilized"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/til_pet_registration_rescue_date"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/prompt_sterilized"
+            android:textOff="@string/action_no"
+            android:textOn="@string/action_yes"
+            android:checked="false"
+            />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-        </LinearLayout>
-        -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/title_vaccines"
+            />
 
         <fragment
             android:id="@+id/pet_registration_vaccines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:name="com.teammovil.pettracker.ui.vaccines.VaccinesListFragment"
-            app:layout_constraintTop_toBottomOf="@+id/pet_registration_main_photo"
-            app:layout_constraintBottom_toTopOf="@+id/pet_registration_dewormings"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/title_dewormings"
             />
 
         <fragment
             android:id="@+id/pet_registration_dewormings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/default_margin"
             android:name="com.teammovil.pettracker.ui.dewormings.DewormingsListFragment"
-            app:layout_constraintTop_toBottomOf="@+id/pet_registration_vaccines"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
 
 </ScrollView>
