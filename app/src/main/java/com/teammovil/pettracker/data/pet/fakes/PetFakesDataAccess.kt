@@ -82,6 +82,7 @@ class PetFakeExternalDataAccess: PetExternalDataAccess{
     }
 
     override suspend fun registerPet(pet: Pet): Boolean {
+        fakePetList.add(pet)
         return true
     }
 }
