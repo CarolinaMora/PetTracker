@@ -1,13 +1,13 @@
 package com.teammovil.pettracker.domain
 
-data class PetsList (val name: String, val description: String, val image: String)
+import java.util.*
 
-fun getPets(): List<PetsList> = listOf(
-    PetsList("Max","Perro muy cariñoso y juguetón con personas.","https://loremflickr.com/320/240/dog"),
-    PetsList("Milo","Perro muy cariñoso, juguetón y amigable.","https://loremflickr.com/320/240/dog"),
-    PetsList("Toby","Ideal compañero para una familia joven que realice ejercicio.","https://loremflickr.com/320/240/dog"),
-    PetsList("Jack","Perro muy cariñoso y juguetón con personas.","https://loremflickr.com/320/240/dog"),
-    PetsList("Molly","Perro muy cariñoso, juguetón y amigable.","https://loremflickr.com/320/240/dog"),
-    PetsList("Ruby","Ideal compañero para una familia joven que realice ejercicio.","https://loremflickr.com/320/240/dog")
+fun getPets(): List<Pet> = listOf(
+        Pet("", "Max", GenderType.MALE, "", "Perro muy cariñoso y juguetón con personas.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf()),
+        Pet("", "Toby", GenderType.MALE, "", "Ideal compañero para una familia joven que realice ejercicio.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf()),
+        Pet("", "Ruby", GenderType.FEMALE, "", "Perro muy cariñoso, juguetón y amigable.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf()),
+        Pet("", "Molly", GenderType.FEMALE, "", "Ideal compañero para una familia joven que realice ejercicio.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf()),
+        Pet("", "Milo", GenderType.MALE, "", "Perro muy cariñoso y juguetón con personas.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf()),
+        Pet("", "Jack", GenderType.MALE, "", "Perro muy cariñoso, juguetón y amigable.", Date(), Date(), PetType.DOG, false, listOf(), listOf(), "https://loremflickr.com/320/240/dog", 0, listOf())
 
 )
