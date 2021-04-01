@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.pet.PetExternalDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
 import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.getDateFromString
@@ -19,7 +19,6 @@ import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
@@ -135,22 +134,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
 
     private fun savePet (pet: Pet){
-        val dataAccess = object : PetExternalDataAccess{
-            var petList : MutableList<Pet> = ArrayList()
-            override suspend fun getAllPatsFromRescuer(rescuerId: String): List<Pet> {
-                return petList
-            }
-
-            override suspend fun getPetById(petId: String): Pet {
-                return petList[0]
-            }
-
-            override suspend fun registerPet(pet: Pet): Boolean {
-                petList.add(pet)
-                return true
-            }
-        }
-        val repository= PetRepository(dataAccess)
+        val repository = PetRepository(PetFakeExternalDataAccess())
         viewLifecycleOwner.lifecycleScope.launch {
             val result = repository.registerPet(pet)
             if(result) Toast.makeText(requireContext(), "Registro exitoso", Toast.LENGTH_LONG).show()
