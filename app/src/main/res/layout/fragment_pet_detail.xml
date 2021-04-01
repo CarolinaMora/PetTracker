@@ -1,14 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.PetDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Detalle de Mascota" />
 
-</FrameLayout>
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalle de Mascota"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtLabelName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre Mascota"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX"
+        />
+
+    <TextView
+        android:id="@+id/txtLabelGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sexo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        />
+
+    <TextView
+        android:id="@+id/txtGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX"
+        />
+
+    <TextView
+        android:id="@+id/txtLabelRace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raza"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        />
+
+    <TextView
+        android:id="@+id/txtRace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX"
+        />
+
+    <TextView
+        android:id="@+id/txtLabelDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        />
+
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+    <TextView
+        android:id="@+id/txtLabelBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha Nacimiento"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        />
+
+    <TextView
+        android:id="@+id/txtBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+    <TextView
+        android:id="@+id/txtLabelRescue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha Rescate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtRescue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+    <TextView
+        android:id="@+id/txtLabelType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="XX"  />
+
+    <TextView
+        android:id="@+id/txtLabelSterilized"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Está esterilizado?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtSterilized"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX"  />
+
+    <TextView
+        android:id="@+id/txtLabelVaccine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vacunas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtVaccine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+    <TextView
+        android:id="@+id/txtLabelDeworming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Desparacitaciones"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtDeworming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+    <TextView
+        android:id="@+id/txtLabelStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX" />
+
+</LinearLayout>
