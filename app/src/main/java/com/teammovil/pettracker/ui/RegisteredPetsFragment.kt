@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.pet.PetExternalDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.domain.getPets
 import kotlinx.coroutines.launch
 
 
@@ -24,6 +25,9 @@ class RegisterPetsFragment : Fragment() {
 
     lateinit var binding: FragmentRegisteredPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
+    var petFake = PetFakeExternalDataAccess()
+    var rescuerFake = RescuerFakeExternalDataAccess()
+    var rescuerStorage = RescuerFakeStorageDataAccess()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRegisteredPetsBinding.inflate(inflater)
@@ -37,8 +41,8 @@ class RegisterPetsFragment : Fragment() {
         getDummyList()
     }
 
-    private fun getDummyList(){
-        var data = object : PetExternalDataAccess{
+    private fun getDummyList() {
+        /*var data = object : PetExternalDataAccess{
             override suspend fun getAllPatsFromRescuer(rescuerId: String): List<Pet> {
                 return getPets()
             }
@@ -51,20 +55,21 @@ class RegisterPetsFragment : Fragment() {
                 TODO("Not yet implemented")
             }
 
-        }
+        }*/
 
-        val repo = PetRepository(data)
-        viewLifecycleOwner.lifecycleScope.launch{
-            var result =  repo.getAllPatsFromRescuer("1")
+        val repo = PetRepository(petFake)
+        val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)
+        viewLifecycleOwner.lifecycleScope.launch {
+            var rescuer = rescuerRepo.getRescuer()
+            var result = repo.getAllPatsFromRescuer(rescuer.id)
             setView(result)
         }
 
     }
 
-    private fun setView(petsList : List<Pet>){
+    private fun setView(petsList: List<Pet>) {
         petsAdapter.items = petsList
     }
-
 
 
 }
