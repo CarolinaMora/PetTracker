@@ -1,5 +1,6 @@
 package com.teammovil.pettracker.ui.petregistration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
 import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.getDateFromString
@@ -24,6 +28,7 @@ import java.util.*
 class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentPetRegistrationBinding
+    private var photoTaker : PhotoTaker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +37,26 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         // Inflate the layout for this fragment
         binding = FragmentPetRegistrationBinding.inflate(inflater)
 
+        photoTaker = PhotoTaker(requireContext())
+        photoTaker?.fragment = this
         setViews()
         setListeners()
 
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        photoTaker?.onActivityResult(requestCode, resultCode, data, binding.petRegistrationMainPhoto)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        photoTaker?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun saveDate(date: String, idCaller: Int) {
@@ -49,6 +70,11 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         //Register button
         binding.petRegistrationRegisterAction.setOnClickListener{
             onClickRegister()
+        }
+
+        //Image button
+        binding.petRegistrationMainPhoto.setOnClickListener {
+            onTakePhoto()
         }
 
         //Dates
@@ -80,6 +106,13 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.petRegistrationGender.adapter = adapterGender
 
     }
+
+    private fun onTakePhoto (){
+        activity?.let {
+            photoTaker?.dispatchTakePictureIntent()
+        }
+    }
+
 
     private fun onClickDate (idCaller: Int){
         val newFragment = DatePickerFragment(idCaller)
@@ -117,7 +150,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                     petRegistrationSterilized.isChecked,
                     vaccinesList,
                     dewormingsList,
-                    "",//TODO: Main photo,
+                    photoTaker?.currentPhotoPath?.let { it } ?: "",
                     PetStatus.RESCUED.ordinal,
                         listOf()//TODO: Evidencias
                 )
@@ -130,7 +163,8 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun validateInput (): Boolean = binding.petRegistrationGender.selectedItemPosition != 0 &&
-                binding.petRegistrationType.selectedItemPosition != 0
+                binding.petRegistrationType.selectedItemPosition != 0 &&
+            photoTaker?.currentPhotoPath != null
 
 
     private fun savePet (pet: Pet){
