@@ -100,12 +100,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:hint="@string/prompt_birth_date">
-
+                android:paddingTop="@dimen/default_margin"
+                android:hint="@string/prompt_birth_date"
+                >
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/pet_registration_birth_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -113,12 +120,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:hint="@string/prompt_rescue_date">
+                android:paddingTop="@dimen/default_margin"
+                android:hint="@string/prompt_rescue_date"
+                >
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/pet_registration_rescue_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.SwitchCompat
