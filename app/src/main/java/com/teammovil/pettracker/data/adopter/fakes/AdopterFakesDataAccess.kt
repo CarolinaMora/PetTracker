@@ -15,7 +15,7 @@ val fakeAdopter = Adopter(
     "García",
     GenderType.FEMALE,
     getDateFromString("1981-05-27")?.let{it}?: Date(),
-    "karen@gmial.com",
+    "karen@gmai.com",
     "hola1234",
     "5566778899",
     "Ciudad de México"
@@ -24,6 +24,10 @@ val fakeAdopter = Adopter(
 class FakeAdopterExternalDataAccess: AdopterExternalDataAccess{
     override suspend fun login(user: String, password: String): Adopter {
         return fakeAdopter
+    }
+
+    override suspend fun saveAdopter(adopter: Adopter) {
+
     }
 }
 
