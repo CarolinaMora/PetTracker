@@ -151,7 +151,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                     vaccinesList,
                     dewormingsList,
                     photoTaker?.currentPhotoPath?.let { it } ?: "",
-                    PetStatus.RESCUED.ordinal,
+                    PetStatus.RESCUED,
                         listOf()//TODO: Evidencias
                 )
                 savePet(pet)
