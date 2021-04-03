@@ -15,7 +15,7 @@ val fakeAdopter = Adopter(
     "García",
     GenderType.FEMALE,
     getDateFromString("1981-05-27")?.let{it}?: Date(),
-    "karen@gmial.com",
+    "karen@gmai.com",
     "hola1234",
     "5566778899",
     "Ciudad de México"

@@ -1,6 +1,8 @@
 package com.teammovil.pettracker.data.adopter
 
-class AdopterRepository (private val externalDataAccess: AdopterExternalDataAccess, private val storageDataAccess: AdopterStorageDataAccess) {
+import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
+
+class AdopterRepository(private val externalDataAccess: FakeAdopterExternalDataAccess, private val storageDataAccess: AdopterStorageDataAccess) {
 
     suspend fun login(user: String, password: String): Boolean{
         val adopter = externalDataAccess.login(user, password)
