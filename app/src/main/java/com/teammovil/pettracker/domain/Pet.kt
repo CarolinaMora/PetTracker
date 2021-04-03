@@ -15,7 +15,7 @@ data class Pet (
     var vaccines: List<Vaccine>,
     var dewormings: List<Date>,
     var mainPhoto: String,
-    var status: Int,
+    var status: PetStatus,
     var evidences: List<Evidence>
     )
 

@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.pet.PetExternalDataAccess
-import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.pettracker.data.pet.*
+import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
 import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.domain.Pet
@@ -54,6 +55,7 @@ class PetDetailFragment : Fragment() {
 
     private fun setView(pet: Pet) {
         with(binding){
+
             txtName.text = pet.name
             txtGender.text= pet.gender.name
             txtRace.text = pet.race
@@ -62,49 +64,21 @@ class PetDetailFragment : Fragment() {
             txtRescue.text = pet.rescueDate.toString()
             txtType.text = pet.petType.name
             txtSterilized.text = pet.sterilized.toString()
-            txtVaccine.text = pet.vaccines.toString()
-            txtDeworming.text = pet.dewormings.toString()  //TODO crear recyclerView
-            //TODO foto principal
-            txtStatus.text = pet.status.toString()
-            //TODO evidencias
-
-
+            rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
+            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings)
+            txtStatus.text = pet.status.name
+            rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
+            Glide
+                    .with(binding.root.context)
+                    .load(pet.mainPhoto)
+                    .into(binding.imgPetPhoto)
 
         }
 
     }
 
     private fun getPet() {
-        var dataAccess = object: PetExternalDataAccess{
-            override suspend fun getAllPatsFromRescuer(rescuerId: String): List<Pet> {
-                TODO("Not yet implemented")
-            }
-
-            override suspend fun getPetById(petId: String): Pet {
-                return Pet (
-                        "1",
-                        "Milo",
-                        GenderType.MALE,
-                        "Criollo",
-                        "Gato a rayas tonos grises y negro",
-                        Date (),
-                        Date (),
-                        PetType.CAT,
-                        true,
-                        listOf(Vaccine("rabia", Date() )),
-                        listOf(),
-                        "https://loremflickr.com/cache/resized/3716_9361101519_4c6a114d73_320_240_nofilter.jpg",
-                        0,
-                        listOf()
-                )
-            }
-
-            override suspend fun registerPet(pet: Pet): Boolean {
-                TODO("Not yet implemented")
-            }
-        }
-
-        val petRepository = PetRepository(dataAccess)
+        val petRepository = PetRepository(PetFakeExternalDataAccess())
         viewLifecycleOwner.lifecycleScope.launch{
 
             var resultPet = petRepository.getPetById("1")
