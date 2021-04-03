@@ -25,6 +25,10 @@ class FakeAdopterExternalDataAccess: AdopterExternalDataAccess{
     override suspend fun login(user: String, password: String): Adopter {
         return fakeAdopter
     }
+
+    override suspend fun saveAdopter(adopter: Adopter) {
+
+    }
 }
 
 class FakeAdopterStorageDataAccess: AdopterStorageDataAccess{
