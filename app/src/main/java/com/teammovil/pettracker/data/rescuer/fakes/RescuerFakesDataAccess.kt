@@ -12,7 +12,7 @@ val fakeRescuer = Rescuer(
     "Rescatista independiente",
     "Ecuador",
     "jefferson@gmail.com",
-"hola1234",
+    "hola1234",
     "5566778899",
     getDateFromString("2015-07-19")?.let{it}?:Date()
 )
