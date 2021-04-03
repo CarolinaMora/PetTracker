@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_adopter_registration" />
     <fragment
         android:id="@+id/petRegistrationFragment"
-        android:name="com.teammovil.pettracker.ui.PetRegistrationFragment"
+        android:name="com.teammovil.pettracker.ui.petregistration.PetRegistrationFragment"
         android:label="fragment_pet_registration"
         tools:layout="@layout/fragment_pet_registration" />
     <fragment
