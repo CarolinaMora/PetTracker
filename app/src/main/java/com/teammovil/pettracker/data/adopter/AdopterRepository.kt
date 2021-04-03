@@ -1,5 +1,7 @@
 package com.teammovil.pettracker.data.adopter
 
+import com.teammovil.pettracker.domain.Adopter
+
 class AdopterRepository (private val externalDataAccess: AdopterExternalDataAccess, private val storageDataAccess: AdopterStorageDataAccess) {
 
     suspend fun login(user: String, password: String): Boolean{
@@ -9,4 +11,6 @@ class AdopterRepository (private val externalDataAccess: AdopterExternalDataAcce
     }
 
     suspend fun getAdopter () = storageDataAccess.getAdopter()
+
+    suspend fun saveAdopter (adopter:Adopter) = externalDataAccess.saveAdopter(adopter)
 }
