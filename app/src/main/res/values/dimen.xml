@@ -3,4 +3,5 @@
     <dimen name="popup_width">600dp</dimen>
     <dimen name="popup_height">800dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_half_margin">8dp</dimen>
 </resources>
