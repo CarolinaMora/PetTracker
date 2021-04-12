@@ -20,6 +20,9 @@
     <string name="string_format_date">%4d-%02d-%02d</string>
     <string name="title_vaccines">VACUNAS</string>
     <string name="title_dewormings">DESPARASITACIONES</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="error_photo_required">Fotografía requerida</string>
+    <string name="prompt_select_option">Seleccione una opción...</string>
 
     <!-- Actions -->
     <string name="action_save">Guardar</string>

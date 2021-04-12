@@ -112,7 +112,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     private fun setViews (){
         //Type selection
-        val arrayType = listOf("Seleccione la especie") + PetType.values().map{it.name}
+        val arrayType = listOf(getString(R.string.prompt_select_option)) + PetType.values().map{it.name}
         val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayType
@@ -121,7 +121,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.petRegistrationType.adapter = adapterType
 
         //Gender selection
-        val arrayGender = listOf("Seleccione el género") + GenderType.values().map{it.name}
+        val arrayGender = listOf(getString(R.string.prompt_select_option)) + GenderType.values().map{it.name}
         val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayGender
@@ -132,14 +132,14 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun showPetError (petView: PetView){
-        binding.petRegistrationName.error = if(petView.name.valid) null else petView.name.message
-        binding.petRegistrationDescription.error = if(petView.description.valid) null else petView.description.message
-        binding.petRegistrationRace.error = if(petView.race.valid) null else petView.race.message
-        binding.petRegistrationBirthDate.error = if(petView.approximateDateOfBirth.valid) null else petView.approximateDateOfBirth.message
-        binding.petRegistrationRescueDate.error = if(petView.rescueDate.valid) null else petView.rescueDate.message
-        binding.petRegistrationGenderError.text = if(petView.gender.valid) "" else petView.gender.message
-        binding.petRegistrationTypeError.text = if(petView.petType.valid) "" else petView.petType.message
-        binding.petRegistrationPhotoError.text = if(petView.mainPhoto.valid) "" else petView.mainPhoto.message
+        binding.petRegistrationName.error = if(petView.name.valid) null else getString(petView.name.messageResourceId)
+        binding.petRegistrationDescription.error = if(petView.description.valid) null else getString(petView.description.messageResourceId)
+        binding.petRegistrationRace.error = if(petView.race.valid) null else getString(petView.race.messageResourceId)
+        binding.petRegistrationBirthDate.error = if(petView.approximateDateOfBirth.valid) null else getString(petView.approximateDateOfBirth.messageResourceId)
+        binding.petRegistrationRescueDate.error = if(petView.rescueDate.valid) null else getString(petView.rescueDate.messageResourceId)
+        binding.petRegistrationGenderError.text = if(petView.gender.valid) "" else getString(petView.gender.messageResourceId)
+        binding.petRegistrationTypeError.text = if(petView.petType.valid) "" else getString(petView.petType.messageResourceId)
+        binding.petRegistrationPhotoError.text = if(petView.mainPhoto.valid) "" else getString(petView.mainPhoto.messageResourceId)
     }
 
     private fun navigateUp (){
@@ -197,12 +197,12 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
             val pet = PetView(
                     null,
                     FieldView(petRegistrationName.text.toString()),
-                    FieldView(petRegistrationGender.selectedItem.toString()),
+                    SelectFieldView(petRegistrationGender.selectedItem.toString(), petRegistrationGender.selectedItemPosition),
                     FieldView(petRegistrationRace.text.toString()),
                     FieldView(petRegistrationDescription.text.toString()),
                     FieldView(petRegistrationBirthDate.text.toString()),
                     FieldView(petRegistrationRescueDate.text.toString()),
-                    FieldView(petRegistrationType.selectedItem.toString()),
+                    SelectFieldView(petRegistrationType.selectedItem.toString(), petRegistrationType.selectedItemPosition),
                     FieldView(petRegistrationSterilized.isChecked),
                     FieldView(vaccinesList),
                     FieldView(dewormingsList),
