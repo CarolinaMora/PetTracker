@@ -30,23 +30,13 @@
 
     <!-- TODO: fragment_adopter_registration string values-->
     <string name="tittle_adopter_registration">Registro adoptante</string>
-    <string name="name_adopter_registration">Nombres:</string>
-    <string name="name_adopter_registration_hint">Nombres</string>
-    <string name="first_name_adopter_registration">Primer apellido:</string>
-    <string name="first_name_adopter_registration_hint">Primer apellido</string>
-    <string name="mother_s_last_name_adopter_registration">Segundo apellido:</string>
-    <string name="mother_s_last_name_adopter_registration_hint">Segundo apellido</string>
-    <string name="email_adopter_registration">Correo electrónio:</string>
-    <string name="email_adopter_registration_hint">example@gmail.com</string>
-    <string name="password_adopter_registration">Password:</string>
-    <string name="password_adopter_registration_hint">************</string>
-    <string name="phone_adopter_registration">Teléfono:</string>
-    <string name="phone_adopter_registration_hint">5565589076</string>
-    <string name="address_adopter_registration">Dirección:</string>
-    <string name="address_adopter_registration_hint">Ejemplo: Eje 8 Norte #43, Número interior, Colonia, Delegación, C.P, Ciudad</string>
+    <string name="prompt_adopter_name">Nombres</string>
+    <string name="prompt_adopter_last_name">Apellido paterno</string>
+    <string name="prompt_adopter_second_surname">Apellido materno</string>
+    <string name="prompt_adopter_birth_date">Fecha de cumpleaños</string>
+    <string name="prompt_adopter_email">Correo electronico</string>
+    <string name="prompt_adopter_password">Contraseña</string>
+    <string name="prompt_adopter_phone">Número telefónico</string>
+    <string name="prompt_adopter_address">Dirección</string>
     <string name="register_adopter_registration">Registrar</string>
-    <string name="gender_adopter_registration">Genero:</string>
-    <string name="birth_date_adopter_registration">Fecha de cumpleaños:</string>
-    <string name="genred_male_adopter_registration">Hombre</string>
-    <string name="gender_female_adopter_registration">Mujer</string>
 </resources>
