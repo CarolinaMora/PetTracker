@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +14,7 @@ import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.domain.GenderType
+import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 
 
@@ -45,7 +45,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
 
     private fun setObservers(){
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
-        //viewModel.navigation.observe(viewLifecycleOwner,EventObserver{ navigateUp() })
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
     }
 
     private fun updateUI(model: AdopterRegistrationViewModel.UiModel){

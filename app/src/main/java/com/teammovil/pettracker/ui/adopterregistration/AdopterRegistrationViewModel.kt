@@ -8,14 +8,13 @@ import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.domain.Adopter
 import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.getDateFromString
-//import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : ViewModel() {
-
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -27,11 +26,8 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel> get() = _model
 
-/*
     private val _navigation = MutableLiveData<Event<Unit>>()
     val navigation: LiveData<Event<Unit>> get() = _navigation
-*/
-
 
     fun onSaveAdopter (adopter: AdopterView){
         if(validateView(adopter)){
@@ -43,7 +39,7 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
     }
 
     fun onClickOkAdvice (){
- //       _navigation.value = Event(Unit)
+        _navigation.value = Event(Unit)
     }
 
     private fun saveAdopter (adopter: Adopter){
@@ -54,7 +50,6 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
             else showRegistrationError()
         }
     }
-
 
     private fun validateView(adopter: AdopterView): Boolean {
         var valid = true
