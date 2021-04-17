@@ -39,4 +39,5 @@
     <string name="prompt_adopter_phone">Número telefónico</string>
     <string name="prompt_adopter_address">Dirección</string>
     <string name="register_adopter_registration">Registrar</string>
+    <string name="action_accept">Aceptar</string>
 </resources>
