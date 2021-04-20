@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
+import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,8 +50,11 @@ class ScreenSelectionFragment : Fragment() {
 
         val detailButton = view.findViewById<AppCompatButton>(R.id.bt_detail_option)
         detailButton.setOnClickListener{
+            //val bundle = TODO CREAR EL BUNDLE, mandar el misma contastne ARG_ID_PET = "1"
+            val bundle = bundleOf(Pair(ARG_PET_ID, "1" ))
             view?.findNavController()
-                ?.navigate(R.id.action_screenSelectionFragment_to_petDetailFragment)
+                ?.navigate(R.id.action_screenSelectionFragment_to_petDetailFragment, bundle)
+            //, bundle dentro del navigate
         }
 
         val adopterRegistrationButton = view.findViewById<AppCompatButton>(R.id.bt_adopter_registration)
