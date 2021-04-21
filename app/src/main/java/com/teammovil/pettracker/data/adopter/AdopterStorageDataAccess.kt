@@ -6,5 +6,5 @@ interface AdopterStorageDataAccess {
 
     suspend fun saveAdopter (adopter: Adopter)
 
-    suspend fun getAdopter (adopter: Adopter): Adopter
+    suspend fun getAdopter (): Adopter
 }

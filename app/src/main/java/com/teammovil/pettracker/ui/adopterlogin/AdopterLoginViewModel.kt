@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui.login
+package com.teammovil.pettracker.ui.adopterlogin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.pettracker.util.MessageValidation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,8 +16,7 @@ class AdopterLoginViewModel(private val adopterRepository: AdopterRepository): V
 
     sealed class UiModel {
         object Loading : UiModel()
-        class LoginError(val adopterView: AdopterView) : UiModel()
-        class SuccessNotification(val message: String) : UiModel()
+        class LoginError(val userView: UserView) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
     }
 
@@ -26,63 +26,50 @@ class AdopterLoginViewModel(private val adopterRepository: AdopterRepository): V
     private val _navigation = MutableLiveData<Event<Unit>>()
     val navigation: LiveData<Event<Unit>> get() = _navigation
 
-    fun onLoginAdopter(adopter: AdopterView){
-        if(validateView((adopter))){
-            loginAdopter(adopter)
+    fun onLoginAdopter(user: UserView){
+        if(validateView((user))){
+            loginAdopter(user)
         }else
-            _model.value = UiModel.LoginError(adopter)
+            _model.value = UiModel.LoginError(user)
     }
 
-    fun onClickOkAdvice (){
-        _navigation.value = Event(Unit)
-    }
-
-    private fun loginAdopter (adopter: AdopterView){
+    private fun loginAdopter (user: UserView){
         viewModelScope.launch{
             _model.value = UiModel.Loading
 
             val result = withContext(Dispatchers.IO){
-                val password = ""
-                val name = ""
-                adopterRepository.login(name, password)
+                adopterRepository.login(user.email.value!!, user.password.value!!)
             }
             if(result){
-                showSuccessAdvice()
+                navigateTo()
             } else showLoginError()
         }
     }
 
-    private fun validateView(adopter: AdopterView): Boolean {
+    private fun validateView(user: UserView): Boolean {
 
         var valid = true
 
-        if (adopter.email.value.isNullOrEmpty()) {
+        if (user.email.value.isNullOrEmpty()) {
             valid = false
-            adopter.email.valid = false
-            adopter.email.message = MessageValidation.FIELD_REQUIERED
+            user.email.valid = false
+            user.email.message = MessageValidation.FIELD_REQUIERED
         }
 
-        if (adopter.password.value.isNullOrEmpty()) {
+        if (user.password.value.isNullOrEmpty()) {
             valid = false
-            adopter.password.valid = false
-            adopter.password.message = MessageValidation.FIELD_REQUIERED
+            user.password.valid = false
+            user.password.message = MessageValidation.FIELD_REQUIERED
         }
 
 
         return valid
     }
 
-//    private fun mapAdopter (origin: AdopterView): Adopter{
-//        return Adopter(
-//            origin.email.value!!,
-//            origin.password.value!!
-//
-//        )
-//    }
-
-    private fun showSuccessAdvice () {
-        _model.value = UiModel.SuccessNotification(MessageValidation.ADOPTER_LOGIN_SUCCESS)
+    private fun navigateTo (){
+        _navigation.value = Event(Unit)
     }
+
     private fun showLoginError () {
         _model.value = UiModel.ErrorNotification(MessageValidation.ADOPTER_RESGISTER_FAILURE)
     }

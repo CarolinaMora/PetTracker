@@ -19,12 +19,25 @@
     </fragment>
     <fragment
         android:id="@+id/adopterLoginFragment"
-        android:name="com.teammovil.pettracker.ui.login.AdopterLoginFragment"
+        android:name="com.teammovil.pettracker.ui.adopterlogin.AdopterLoginFragment"
         android:label="fragment_adopter_login"
-        tools:layout="@layout/fragment_adopter_login" />
+        tools:layout="@layout/fragment_adopter_login" >
+        <action
+            android:id="@+id/action_adopterLoginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/rescuerLoginFragment"
-        android:name="com.teammovil.pettracker.ui.RescuerLoginFragment"
+        android:name="com.teammovil.pettracker.ui.rescuerlogin.RescuerLoginFragment"
         android:label="fragment_rescuer_login"
-        tools:layout="@layout/fragment_rescuer_login" />
+        tools:layout="@layout/fragment_rescuer_login" >
+        <action
+            android:id="@+id/action_rescuerLoginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.teammovil.pettracker.ui.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>
