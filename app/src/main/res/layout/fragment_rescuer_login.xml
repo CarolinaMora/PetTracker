@@ -20,12 +20,14 @@
             android:padding="30dp"
             android:text="Login Rescuer"/>
         <EditText
+            android:id="@+id/rescuer_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email Address"
             android:textColor="#FFA040"
             android:textColorHint="#FFA040"/>
         <EditText
+            android:id="@+id/rescuer_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
