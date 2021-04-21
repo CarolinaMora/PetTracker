@@ -6,5 +6,5 @@ interface AdopterExternalDataAccess {
 
     suspend fun login(user: String, password: String): Adopter
 
-    suspend fun saveAdopter (adopter: Adopter)
+    suspend fun saveAdopter (adopter: Adopter) : Boolean
 }
