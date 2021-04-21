@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/adopterLoginFragment"
-        android:name="com.teammovil.pettracker.ui.AdopterLoginFragment"
+        android:name="com.teammovil.pettracker.ui.login.AdopterLoginFragment"
         android:label="fragment_adopter_login"
         tools:layout="@layout/fragment_adopter_login" />
     <fragment

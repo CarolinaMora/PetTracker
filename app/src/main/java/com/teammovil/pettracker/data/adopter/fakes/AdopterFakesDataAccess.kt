@@ -36,7 +36,7 @@ class FakeAdopterStorageDataAccess: AdopterStorageDataAccess{
 
     }
 
-    override suspend fun getAdopter(): Adopter {
+    override suspend fun getAdopter(adopter: Adopter): Adopter {
         return fakeAdopter
     }
 }
