@@ -1,45 +1,42 @@
-package com.teammovil.pettracker.ui
+package com.teammovil.pettracker.ui.petdetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
-import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.domain.PetType
-import com.teammovil.pettracker.domain.Vaccine
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+const val ARG_PET_ID= "petId"
 
 /**
  * A simple [Fragment] subclass.
  * Use the [PetDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PetDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class PetDetailFragment: Fragment() {
+
+    private var petId: String? = null
+
     private lateinit var binding: FragmentPetDetailBinding
+    private lateinit var viewModel: PetDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            petId = it.getString(ARG_PET_ID)
+
         }
     }
 
@@ -48,9 +45,29 @@ class PetDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPetDetailBinding.inflate (inflater)
-        getPet()
+
+        viewModel = ViewModelProvider(this,
+                PetDetailViewModelFactory (PetRepository(PetFakeExternalDataAccess()))
+        ) [PetDetailViewModel::class.java]
+        viewModel.model.observe(viewLifecycleOwner, Observer {
+            updateUi(it)
+        })
+
+        petId?.let{
+            viewModel.onGetPetDetail(it)
+        }
 
         return binding.root
+    }
+
+    private fun updateUi (uiModel: PetDetailViewModel.UiModel) {
+        //Activa / desactiva progress bar
+        binding.prgProgress.visibility = if (uiModel is PetDetailViewModel.UiModel.Loading)  View.VISIBLE else View.GONE
+
+        when (uiModel) {
+            is PetDetailViewModel.UiModel.PetDetailContent -> setView(uiModel.pet)
+        }
+
     }
 
     private fun setView(pet: Pet) {
@@ -69,40 +86,12 @@ class PetDetailFragment : Fragment() {
             txtStatus.text = pet.status.name
             rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
             Glide
-                    .with(binding.root.context)
-                    .load(pet.mainPhoto)
-                    .into(binding.imgPetPhoto)
+                .with(binding.root.context)
+                .load(pet.mainPhoto)
+                .into(binding.imgPetPhoto)
 
         }
 
     }
 
-    private fun getPet() {
-        val petRepository = PetRepository(PetFakeExternalDataAccess())
-        viewLifecycleOwner.lifecycleScope.launch{
-
-            var resultPet = petRepository.getPetById("1")
-            setView(resultPet)
-        }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PetDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PetDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

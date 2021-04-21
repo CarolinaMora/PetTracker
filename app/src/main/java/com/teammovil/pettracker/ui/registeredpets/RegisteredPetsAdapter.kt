@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui
+package com.teammovil.pettracker.ui.registeredpets
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import com.teammovil.pettracker.domain.Pet
 
 class RegisteredPetsAdapter() : RecyclerView.Adapter<RegisteredPetsAdapter.ViewHolder>(){
 
-    var items: List<Pet> = ArrayList()
+    var items : List<Pet> = listOf()
     set(value){
         field = value
         notifyDataSetChanged()

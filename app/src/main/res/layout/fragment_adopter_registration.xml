@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.AdopterRegistrationFragment"
+    tools:context=".ui.adopterregistration.AdopterRegistrationFragment"
     android:layout_marginBottom="16dp">
 
     <TextView
@@ -27,144 +27,147 @@
         android:orientation="vertical"
         android:layout_margin="16dp">
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_name">
 
-        <EditText
-            android:id="@+id/et_name"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name_adopter_registration_hint"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_last_name">
 
-        <TextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_second_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/first_name_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_second_surname">
 
-        <EditText
-            android:id="@+id/et_first_name"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_second_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/adopter_registration_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name_adopter_registration_hint"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:padding="@dimen/default_margin" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/adopter_registration_gender_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mother_s_last_name_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="@dimen/default_half_margin"
+            android:layout_marginBottom="@dimen/default_half_margin"
+            />
 
-        <EditText
-            android:id="@+id/et_mother_s_last_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_birth_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/mother_s_last_name_adopter_registration_hint"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/gender_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/rb_female"
-                android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:paddingTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_birth_date"
+            >
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_birth_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/gender_female_adopter_registration"/>
+                android:drawableEnd="@drawable/ic_calendar"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioButton
-                android:id="@+id/rb_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/genred_male_adopter_registration"/>
-
-        </RadioGroup>
-
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/birth_date_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_email">
 
-        <TextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_email"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/email_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_password">
 
-        <EditText
-            android:id="@+id/et_email"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email_adopter_registration_hint"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_phone">
 
-        <TextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_phone"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_adopter_registration_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/password_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_adopter_address">
 
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/password_adopter_registration_hint"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="@string/phone_adopter_registration_hint"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/address_adopter_registration"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:id="@+id/et_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/address_adopter_registration_hint"
-            android:background="@color/yellow_light_area"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:lines="6"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:scrollHorizontally="false"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/adopter_registration_address"
+                android:background="@color/yellow_light_area"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:lines="6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn__adopter_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/register_adopter_registration"

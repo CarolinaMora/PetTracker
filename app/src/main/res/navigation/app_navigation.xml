@@ -12,12 +12,12 @@
         tools:layout="@layout/fragment_registered_pets" />
     <fragment
         android:id="@+id/petDetailFragment"
-        android:name="com.teammovil.pettracker.ui.PetDetailFragment"
+        android:name="com.teammovil.pettracker.ui.petdetail.PetDetailFragment"
         android:label="fragment_pet_detail"
         tools:layout="@layout/fragment_pet_detail" />
     <fragment
         android:id="@+id/adopterRegistrationFragment"
-        android:name="com.teammovil.pettracker.ui.AdopterRegistrationFragment"
+        android:name="com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationFragment"
         android:label="fragment_adopter_registration"
         tools:layout="@layout/fragment_adopter_registration" />
     <fragment
