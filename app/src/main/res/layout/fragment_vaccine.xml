@@ -35,6 +35,11 @@
             android:id="@+id/vaccine_applicationDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
