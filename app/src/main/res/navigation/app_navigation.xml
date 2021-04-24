@@ -21,11 +21,6 @@
         android:label="fragment_adopter_registration"
         tools:layout="@layout/fragment_adopter_registration" />
     <fragment
-        android:id="@+id/petRegistrationFragment"
-        android:name="com.teammovil.pettracker.ui.petregistration.PetRegistrationFragment"
-        android:label="fragment_pet_registration"
-        tools:layout="@layout/fragment_pet_registration" />
-    <fragment
         android:id="@+id/screenSelectionFragment"
         android:name="com.teammovil.pettracker.ui.ScreenSelectionFragment"
         android:label="fragment_screen_selection"
@@ -39,9 +34,6 @@
         <action
             android:id="@+id/action_screenSelectionFragment_to_registerPetsFragment"
             app:destination="@id/registerPetsFragment" />
-        <action
-            android:id="@+id/action_screenSelectionFragment_to_petRegistrationFragment"
-            app:destination="@id/petRegistrationFragment" />
         <action
             android:id="@+id/action_screenSelectionFragment_to_editPetFragment"
             app:destination="@id/editPetFragment" />
