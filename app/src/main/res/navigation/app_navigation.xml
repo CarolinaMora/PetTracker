@@ -48,6 +48,6 @@
     </fragment>
     <fragment
         android:id="@+id/editPetFragment"
-        android:name="com.teammovil.pettracker.ui.editpet.EditPetFragment"
+        android:name="com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetFragment"
         android:label="EditPetFragment" />
 </navigation>

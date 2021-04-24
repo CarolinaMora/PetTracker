@@ -90,11 +90,13 @@ class PetFakeExternalDataAccess: PetExternalDataAccess{
     }
 
     override suspend fun registerPet(pet: Pet): Boolean {
+        Thread.sleep(5000)
         fakePetList.add(pet)
         return true
     }
 
     override suspend fun updatePet(pet: Pet): Boolean {
+        Thread.sleep(5000)
         fakePetList[pet.id.toInt()-1] = pet
         return true
     }

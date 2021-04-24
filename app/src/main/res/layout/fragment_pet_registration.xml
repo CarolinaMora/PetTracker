@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.teammovil.pettracker.ui.editpet.EditPetViewModel" />
+            type="com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel" />
 
     </data>
 
@@ -204,6 +204,14 @@
                     android:textOn="@string/action_yes"
                     />
 
+                <TextView
+                    android:id="@+id/pet_registration_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@{viewModel.petView.status.value.name()}"
+                    />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -246,10 +254,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.core.widget.ContentLoadingProgressBar
+        <ProgressBar
             android:id="@+id/pet_registration_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

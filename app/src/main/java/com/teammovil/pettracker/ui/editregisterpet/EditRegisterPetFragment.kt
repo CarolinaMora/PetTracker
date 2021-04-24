@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui.editpet
+package com.teammovil.pettracker.ui.editregisterpet
 
 import android.content.Intent
 import android.os.Bundle
@@ -21,25 +21,29 @@ import com.teammovil.pettracker.domain.PetType
 import com.teammovil.pettracker.domain.Vaccine
 import com.teammovil.pettracker.ui.common.*
 import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
+import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import java.util.*
 
 
-class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
+class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentPetRegistrationBinding
-    private lateinit var viewModel : EditPetViewModel
+    private lateinit var viewModel : EditRegisterPetViewModel
     private var photoTaker : PhotoTaker? = null
+    private var petId : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        petId = arguments?.getString(ARG_PET_ID)
+
         viewModel = ViewModelProvider(
                         this,
-                        EditPetViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
-                )[EditPetViewModel::class.java]
+                        EditRegisterPetViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
+                )[EditRegisterPetViewModel::class.java]
 
         binding = FragmentPetRegistrationBinding.inflate(inflater)
         binding.viewModel = viewModel
@@ -57,7 +61,7 @@ class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.onStartView("1")
+        viewModel.onStartView(petId)
     }
 
     override fun onStop() {
@@ -117,11 +121,11 @@ class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListene
         }
     }
 
-    private fun updateUI(model: EditPetViewModel.UiModel) {
+    private fun updateUI(model: EditRegisterPetViewModel.UiModel) {
         when(model){
-            is EditPetViewModel.UiModel.Loading -> binding.petRegistrationProgress.visibility = if (model.show) View.VISIBLE else View.GONE
-            is EditPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
-            is EditPetViewModel.UiModel.SuccessAdvice -> showSuccessAdvice(model.message)
+            is EditRegisterPetViewModel.UiModel.Loading -> binding.petRegistrationProgress.visibility = if (model.show) View.VISIBLE else View.GONE
+            is EditRegisterPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
+            is EditRegisterPetViewModel.UiModel.SuccessAdvice -> showSuccessAdvice()
         }
     }
 
@@ -171,9 +175,9 @@ class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListene
         view?.findNavController()?.navigateUp()
     }
 
-    private fun showSuccessAdvice (message: String){
+    private fun showSuccessAdvice (){
         val builder = AlertDialog.Builder(requireContext())
-                .setMessage(message)
+                .setMessage(R.string.alert_message_pet_saved)
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_accept) { dialog, _ ->
                     dialog.dismiss()
@@ -224,7 +228,7 @@ class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListene
 
         with(binding) {
             val pet = PetView(
-                "1",
+                petId ?: "",
                 FieldView(petRegistrationName.text.toString()),
                 SelectFieldView(
                     petRegistrationGender.selectedItem.toString(),
@@ -242,7 +246,9 @@ class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListene
                 FieldView(vaccinesList),
                 FieldView(dewormingsList),
                 FieldView(photoTaker?.currentPhotoPath),
-                FieldView(PetStatus.RESCUED),
+                FieldView(
+                    if(petRegistrationStatus.text.toString().isEmpty()) PetStatus.RESCUED
+                    else  PetStatus.valueOf(petRegistrationStatus.text.toString())),
                 FieldView(null)
             )
             return pet
