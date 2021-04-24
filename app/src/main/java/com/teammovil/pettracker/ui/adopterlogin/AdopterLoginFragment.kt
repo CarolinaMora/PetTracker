@@ -76,8 +76,8 @@ class AdopterLoginFragment : Fragment() {
     }
 
     private fun showAdopterError(userView: UserView){
-        binding.emailAdopted.error = if (userView.email.valid) null else userView.email.message
-        binding.passAdopted.error = if (userView.password.valid) null else userView.password.message
+        binding.emailAdopted.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
+        binding.passAdopted.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
     }
 
     private fun navigateToMainActivity(){

@@ -9,4 +9,6 @@ class PetRepository(private val externalDataAccess: PetExternalDataAccess) {
     suspend fun getPetById (petId: String) = externalDataAccess.getPetById(petId)
 
     suspend fun registerPet (pet: Pet) = externalDataAccess.registerPet(pet)
+
+    suspend fun updatePet (pet: Pet) = externalDataAccess.updatePet(pet)
 }

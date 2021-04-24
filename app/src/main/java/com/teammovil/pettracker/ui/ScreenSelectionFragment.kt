@@ -66,7 +66,8 @@ class ScreenSelectionFragment : Fragment() {
         val petRegistrationButton = view.findViewById<AppCompatButton>(R.id.bt_pet_registration)
         petRegistrationButton.setOnClickListener{
             view?.findNavController()
-                ?.navigate(R.id.action_screenSelectionFragment_to_petRegistrationFragment)
+                //?.navigate(R.id.action_screenSelectionFragment_to_petRegistrationFragment)
+                ?.navigate(R.id.action_screenSelectionFragment_to_editPetFragment)
         }
 
         return view

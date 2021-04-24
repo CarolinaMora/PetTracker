@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui.petregistration
+package com.teammovil.pettracker.ui.editpet
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,23 +26,24 @@ import com.teammovil.pettracker.ui.views.DatePickerFragment
 import java.util.*
 
 
-class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
+class EditPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentPetRegistrationBinding
-    private lateinit var viewModel : PetRegistrationViewModel
+    private lateinit var viewModel : EditPetViewModel
     private var photoTaker : PhotoTaker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentPetRegistrationBinding.inflate(inflater)
-
         viewModel = ViewModelProvider(
                         this,
-                        PetRegistrationViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
-                )[PetRegistrationViewModel::class.java]
+                        EditPetViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
+                )[EditPetViewModel::class.java]
+
+        binding = FragmentPetRegistrationBinding.inflate(inflater)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         photoTaker =
             PhotoTaker(requireContext())
@@ -54,9 +55,21 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.onStartView("1")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val pet = savePet()
+        viewModel.onSavePetLocal(pet)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         photoTaker?.onActivityResult(requestCode, resultCode, data, binding.petRegistrationMainPhoto)
+        viewModel.onSavePhotoUrl(photoTaker?.currentPhotoPath)
     }
 
     override fun onRequestPermissionsResult(
@@ -76,17 +89,39 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun setObservers (){
+        viewModel.petView.observe(viewLifecycleOwner, Observer { updateRestPet(it) })
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
     }
 
-    private fun updateUI(model: PetRegistrationViewModel.UiModel) {
-        binding.petRegistrationProgress.visibility = if (model is PetRegistrationViewModel.UiModel.Loading) View.VISIBLE else View.GONE
+    private fun updateRestPet(petView: PetView?) {
+        petView?.let{ pet ->
+            pet.vaccines.value?.let{ list ->
+                val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
+                if(vaccinesFragment is VaccinesListFragment){
+                    vaccinesFragment.setVaccinesList(Mapper.mapVaccineViewList(list))
+                }
+            }
 
+            pet.dewormings.value?.let{ list ->
+                val dewormingsFragment = childFragmentManager.findFragmentById(R.id.pet_registration_dewormings)
+                if(dewormingsFragment is DewormingsListFragment){
+                    dewormingsFragment.setDewormingsList(Mapper.mapDewormingViewList(list))
+                }
+            }
+
+            pet.mainPhoto.value?.let{url ->
+                photoTaker?.currentPhotoPath = url
+            }
+
+        }
+    }
+
+    private fun updateUI(model: EditPetViewModel.UiModel) {
         when(model){
-            is PetRegistrationViewModel.UiModel.PetError -> showPetError(model.petView)
-            is PetRegistrationViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
-            is PetRegistrationViewModel.UiModel.SuccessAdvice -> showSuccessAdvice(model.message)
+            is EditPetViewModel.UiModel.Loading -> binding.petRegistrationProgress.visibility = if (model.show) View.VISIBLE else View.GONE
+            is EditPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
+            is EditPetViewModel.UiModel.SuccessAdvice -> showSuccessAdvice(model.message)
         }
     }
 
@@ -132,17 +167,6 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     }
 
-    private fun showPetError (petView: PetView){
-        binding.petRegistrationName.error = if(petView.name.valid) null else getString(petView.name.messageResourceId)
-        binding.petRegistrationDescription.error = if(petView.description.valid) null else getString(petView.description.messageResourceId)
-        binding.petRegistrationRace.error = if(petView.race.valid) null else getString(petView.race.messageResourceId)
-        binding.petRegistrationBirthDate.error = if(petView.approximateDateOfBirth.valid) null else getString(petView.approximateDateOfBirth.messageResourceId)
-        binding.petRegistrationRescueDate.error = if(petView.rescueDate.valid) null else getString(petView.rescueDate.messageResourceId)
-        binding.petRegistrationGenderError.text = if(petView.gender.valid) "" else getString(petView.gender.messageResourceId)
-        binding.petRegistrationTypeError.text = if(petView.petType.valid) "" else getString(petView.petType.messageResourceId)
-        binding.petRegistrationPhotoError.text = if(petView.mainPhoto.valid) "" else getString(petView.mainPhoto.messageResourceId)
-    }
-
     private fun navigateUp (){
         view?.findNavController()?.navigateUp()
     }
@@ -179,7 +203,11 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun onClickRegister (){
+        val pet = savePet()
+        viewModel.onSavePet(pet)
+    }
 
+    private fun savePet (): PetView{
         //Vaccines
         var vaccinesList : List<Vaccine>? = null
         val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
@@ -196,7 +224,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
         with(binding) {
             val pet = PetView(
-                "",
+                "1",
                 FieldView(petRegistrationName.text.toString()),
                 SelectFieldView(
                     petRegistrationGender.selectedItem.toString(),
@@ -217,7 +245,7 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                 FieldView(PetStatus.RESCUED),
                 FieldView(null)
             )
-            viewModel?.onSavePet(pet)
+            return pet
         }
     }
 
