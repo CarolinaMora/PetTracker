@@ -42,5 +42,13 @@
         <action
             android:id="@+id/action_screenSelectionFragment_to_petRegistrationFragment"
             app:destination="@id/petRegistrationFragment" />
+        <action
+            android:id="@+id/action_screenSelectionFragment_to_assignAdopterToPetFragment"
+            app:destination="@id/assignAdopterToPetFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/assignAdopterToPetFragment"
+        android:name="com.teammovil.pettracker.ui.assigningadoptertopet.AssignAdopterToPetFragment"
+        android:label="fragment_assign_adopter_to_pet"
+        tools:layout="@layout/fragment_assign_adopter_to_pet" />
 </navigation>
