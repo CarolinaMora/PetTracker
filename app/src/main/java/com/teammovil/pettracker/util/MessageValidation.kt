@@ -10,5 +10,7 @@ object MessageValidation {
     const val SELECT_FIELD_VALID = "Selecione una opción valida"
     const val ADOPTER_REGISTER_SUCCESS = "Adoptante registrado correctamente"
     const val ADOPTER_REGISTER_FAILURE = "Hubo un error al registrarse cómo adoptante. ¡Intente más tarde!"
+    const val RESCUER_REGISTER_SUCCESS = "Rescatista registrado correctamente"
+    const val RESCUER_REGISTER_FAILURE = "Hubo un error al registrarse cómo rescatista. ¡Intente más tarde!"
 
 }

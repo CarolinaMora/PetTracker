@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
@@ -17,13 +15,13 @@ import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
+import com.teammovil.pettracker.ui.common.EventObserver
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class RegisterPetsFragment : Fragment() {
+class RegisteredPetsFragment : Fragment() {
 
     lateinit var binding: FragmentRegisteredPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
@@ -65,6 +63,9 @@ class RegisterPetsFragment : Fragment() {
         viewModel.model.observe(viewLifecycleOwner, Observer {
             updateUI(it)
         })
+        viewModel.events.observe(viewLifecycleOwner, EventObserver{
+            updateUI(it)
+        })
     }
 
     private fun updateUI(uiModel: RegisteredPetsViewModel.UiModel){
@@ -75,19 +76,33 @@ class RegisterPetsFragment : Fragment() {
         }
     }
 
+    private fun updateUI (uiEvents: RegisteredPetsViewModel.UiEvents){
+        when(uiEvents){
+            is RegisteredPetsViewModel.UiEvents.GoToDetail -> goToPetDetail(uiEvents.petId)
+            is RegisteredPetsViewModel.UiEvents.GoTORegistration -> goToPetRegistration()
+        }
+    }
+
     private fun updateList (petsList: List<Pet>) {
         petsAdapter.items = petsList
     }
 
     private fun onClickPet (pet: Pet){
-        val bundle = bundleOf(Pair(ARG_PET_ID, pet.id ))
-        view?.findNavController()
-            ?.navigate(R.id.action_registerPetsFragment_to_petDetailFragment, bundle)
+        viewModel.onDetailPet(pet)
     }
 
     private fun onClickAddPet (){
-        view?.findNavController()
-            ?.navigate(R.id.action_registerPetsFragment_to_petRegistrationFragment)
+        viewModel.onRegisterPet()
+    }
+
+    private fun goToPetDetail (petId: String){
+        val action = RegisteredPetsFragmentDirections.actionRegisterPetsFragmentToPetDetailFragment(petId)
+        view?.findNavController()?.navigate(action)
+    }
+
+    private fun goToPetRegistration (){
+        val action = RegisteredPetsFragmentDirections.actionRegisterPetsFragmentToPetRegistrationFragment()
+        view?.findNavController()?.navigate(action)
     }
 
 }

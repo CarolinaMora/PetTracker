@@ -18,19 +18,19 @@
             android:textSize="25dp"
             android:textColor="#FFCA28"
             android:padding="30dp"
-            android:text="Login Adopted"/>
+            android:text="@string/title_login"/>
         <EditText
             android:id="@+id/email_adopted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
+            android:hint="@string/prompt_email"
             android:textColor="#FFA040"
             android:textColorHint="#FFA040"/>
         <EditText
             android:id="@+id/pass_adopted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/prompt_password"
             android:textColor="#6bfff7"
             android:textColorHint="#FFA040"
             android:inputType="textPassword"/>
@@ -39,14 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/adopter_login_Btn"
-            android:text="Log in"
+            android:text="@string/action_login"
             android:textAllCaps="false"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Btn_cancel"
-            android:text="Registro"
+            android:text="@string/action_register"
             android:textAllCaps="false"/>
 
     </LinearLayout>

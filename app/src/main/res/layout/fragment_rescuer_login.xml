@@ -17,45 +17,37 @@
             android:textSize="25dp"
             android:textColor="#FFCA28"
             android:padding="30dp"
-            android:text="Login Rescuer"/>
+            android:text="@string/title_login"/>
         <EditText
             android:id="@+id/rescuer_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
+            android:hint="@string/prompt_email"
             android:textColor="#FFA040"
             android:textColorHint="#FFA040"/>
         <EditText
             android:id="@+id/rescuer_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/prompt_password"
             android:textColor="#6bfff7"
             android:textColorHint="#FFA040"
             android:inputType="textPassword"/>
-        <LinearLayout
+
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="25dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rescuer_login_Btn"
-                android:text="Log in"
+            android:id="@+id/rescuer_login_Btn"
+            android:text="@string/action_login"
+            android:textAllCaps="false"/>
 
-                android:textAllCaps="false"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/Btn_cancel"
-                android:text="Cancel"
-                android:textAllCaps="false"/>
-
-
-
-        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Btn_cancel"
+            android:text="@string/action_register"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

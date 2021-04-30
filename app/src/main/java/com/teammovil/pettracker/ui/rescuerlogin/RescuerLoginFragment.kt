@@ -90,11 +90,14 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun navigateToMainActivity(){
-        view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_mainRescuerActivity)
+        val action = RescuerLoginFragmentDirections.actionRescuerLoginFragmentToMainRescuerActivity()
+        view?.findNavController()?.navigate(action)
+        activity?.finish()
     }
 
     private fun navigateToRescuerRegistration() {
-        view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_rescuerRegistrationFragment)
+        val action = RescuerLoginFragmentDirections.actionRescuerLoginFragmentToRescuerRegistrationFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     private fun onClickLogin(){

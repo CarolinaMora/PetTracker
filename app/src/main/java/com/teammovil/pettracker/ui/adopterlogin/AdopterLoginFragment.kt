@@ -89,11 +89,14 @@ class AdopterLoginFragment : Fragment() {
     }
 
     private fun navigateToMainActivity(){
-        view?.findNavController()?.navigate(R.id.action_adopterLoginFragment_to_mainActivity)
+        val action = AdopterLoginFragmentDirections.actionAdopterLoginFragmentToMainActivity()
+        view?.findNavController()?.navigate(action)
+        activity?.finish()
     }
 
     private fun navigateToAdopterRegistration (){
-        view?.findNavController()?.navigate(R.id.action_adopterLoginFragment_to_adopterRegistrationFragment2)
+        val action = AdopterLoginFragmentDirections.actionAdopterLoginFragmentToAdopterRegistrationFragment2()
+        view?.findNavController()?.navigate(action)
     }
 
     private fun onClickLogin(){

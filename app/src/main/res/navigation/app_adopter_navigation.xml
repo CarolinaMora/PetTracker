@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/registerPetsFragment"
-        android:name="com.teammovil.pettracker.ui.registeredpets.RegisterPetsFragment"
-        android:label="fragment_registered_pets"
+        android:name="com.teammovil.pettracker.ui.registeredpets.RegisteredPetsFragment"
+        android:label="@string/title_register_pets_fragment"
         tools:layout="@layout/fragment_registered_pets" >
         <action
             android:id="@+id/action_registerPetsFragment_to_petDetailFragment"
@@ -20,10 +20,13 @@
     <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.teammovil.pettracker.ui.petdetail.PetDetailFragment"
-        android:label="fragment_pet_detail"
+        android:label="@string/title_pet_detail_fragment"
         tools:layout="@layout/fragment_pet_detail" >
         <action
             android:id="@+id/action_petDetailFragment_to_petRegistrationFragment"
             app:destination="@id/petRegistrationFragment" />
+        <argument
+            android:name="petId"
+            app:argType="string" />
     </fragment>
 </navigation>

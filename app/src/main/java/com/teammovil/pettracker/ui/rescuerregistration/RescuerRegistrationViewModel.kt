@@ -111,11 +111,11 @@ class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : V
     }
 
     private fun showSuccessAdvice (){
-        _model.value = UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS)
+        _model.value = UiModel.SuccessNotification(MessageValidation.RESCUER_REGISTER_SUCCESS)
     }
 
     private fun showRegistrationError (){
-        _model.value = UiModel.ErrorNotification(MessageValidation.ADOPTER_REGISTER_FAILURE)
+        _model.value = UiModel.ErrorNotification(MessageValidation.RESCUER_REGISTER_FAILURE)
     }
 
 }

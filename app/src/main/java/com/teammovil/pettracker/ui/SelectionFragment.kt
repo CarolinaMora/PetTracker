@@ -30,14 +30,14 @@ class SelectionFragment : Fragment() {
 
         val adoptedButton = view.findViewById<AppCompatButton>(R.id.adoptante_Btn)
         adoptedButton.setOnClickListener{
-            view?.findNavController()
-                    ?.navigate(R.id.action_selectionFragment_to_adopterLoginFragment)
+            val action = SelectionFragmentDirections.actionSelectionFragmentToAdopterLoginFragment()
+            view?.findNavController()?.navigate(action)
         }
 
         val rescatistaButton = view.findViewById<AppCompatButton>(R.id.rescatista_Btn)
         rescatistaButton.setOnClickListener{
-            view?.findNavController()
-                    ?.navigate(R.id.action_selectionFragment_to_rescuerLoginFragment)
+            val action = SelectionFragmentDirections.actionSelectionFragmentToRescuerLoginFragment()
+            view?.findNavController()?.navigate(action)
         }
         return view
 

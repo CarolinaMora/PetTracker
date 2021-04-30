@@ -58,4 +58,20 @@
     <string name="prompt_rescuer_phone">Teléfono</string>
     <string name="prompt_rescuer_address">Direccion</string>
     <string name="action_register">Registrar</string>
+
+    <!-- Titles -->
+    <string name="title_register_pets_fragment">Mis Mascotas</string>
+    <string name="title_pet_detail_fragment">Mi Mascota</string>
+    <string name="title_pet_registration_fragment">Mi Mascota</string>
+    <string name="title_selection_fragment">Bienvenido</string>
+    <string name="title_adopter_login_fragment">Bienvenido Adoptante</string>
+    <string name="title_rescuer_login_fragment">Bienvenido Rescatista</string>
+    <string name="title_adopter_registration_fragment">Registro Adoptante</string>
+    <string name="title_rescuer_registration_fragment">Registro Rescatista</string>
+
+    <!-- Login -->
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_login">Entrar</string>
+    <string name="title_login">Iniciar sesión</string>
 </resources>
