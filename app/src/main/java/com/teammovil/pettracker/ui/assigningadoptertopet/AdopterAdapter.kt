@@ -9,7 +9,7 @@ import com.teammovil.pettracker.databinding.ViewAdopterItemBinding
 import com.teammovil.pettracker.domain.Adopter
 import com.teammovil.pettracker.domain.Pet
 
-class AdopterAdapter() :
+class AdopterAdapter(val listener: ((item: Adopter) -> Unit)? = null) :
     RecyclerView.Adapter<AdopterAdapter.ViewHolder>() {
 
     var items : List<Adopter> = listOf()
@@ -31,15 +31,22 @@ class AdopterAdapter() :
 
     override fun getItemCount() = items.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         private val binding = ViewAdopterItemBinding.bind(view)
+
         fun bind(adopter: Adopter) {
-            binding.actvName.text = adopter.name
-            binding.actvFistLastName.text = adopter.firstLastName
-            binding.actvSecondLastName.text = adopter.secondLastName
-            binding.actvAdopterMail.text = adopter.email
-            binding.actvAdopterPhone.text = adopter.phone
-            binding.actvAdopterAddress.text = adopter.address
+            with(binding){
+                actvName.text = adopter.name
+                actvFistLastName.text = adopter.firstLastName
+                actvSecondLastName.text = adopter.secondLastName
+                actvAdopterMail.text = adopter.email
+                actvAdopterPhone.text = adopter.phone
+                actvAdopterAddress.text = adopter.address
+
+                root.setOnClickListener { listener?.invoke(adopter) }
+            }
+
         }
     }
 

@@ -71,7 +71,8 @@ class ScreenSelectionFragment : Fragment() {
 
         val assignAdopterToPetButton = view.findViewById<AppCompatButton>(R.id.btn_assign_adopter_to_pet)
         assignAdopterToPetButton.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_screenSelectionFragment_to_assignAdopterToPetFragment)
+            val bundle = bundleOf(Pair(ARG_PET_ID, "1" ))
+            view?.findNavController()?.navigate(R.id.action_screenSelectionFragment_to_assignAdopterToPetFragment,bundle)
         }
 
         return view
