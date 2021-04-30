@@ -9,7 +9,9 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.databinding.PetsItemBinding
 import com.teammovil.pettracker.domain.Pet
 
-class RegisteredPetsAdapter() : RecyclerView.Adapter<RegisteredPetsAdapter.ViewHolder>(){
+class RegisteredPetsAdapter(
+    val listener: ((item: Pet) -> Unit)? = null
+) : RecyclerView.Adapter<RegisteredPetsAdapter.ViewHolder>(){
 
     var items : List<Pet> = listOf()
     set(value){
@@ -31,14 +33,20 @@ class RegisteredPetsAdapter() : RecyclerView.Adapter<RegisteredPetsAdapter.ViewH
         return items.size
     }
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
         private val binding = PetsItemBinding.bind(view)
 
         fun bind(pet: Pet){
-            binding.petTitle.text = pet.name
-            binding.petDescription.text = pet.description
-            Glide.with(binding.petPicture).load(pet.mainPhoto).into(binding.petPicture)
+            with(binding) {
+                petTitle.text = pet.name
+                petDescription.text = pet.description
+                Glide.with(petPicture).load(pet.mainPhoto).into(petPicture)
+
+                root.setOnClickListener {
+                    listener?.invoke(pet)
+                }
+            }
         }
     }
 }

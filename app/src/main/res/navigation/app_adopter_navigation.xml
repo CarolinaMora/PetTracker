@@ -3,44 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/screenSelectionFragment">
+    app:startDestination="@id/registerPetsFragment">
 
     <fragment
         android:id="@+id/registerPetsFragment"
-        android:name="com.teammovil.pettracker.ui.RegisterPetsFragment"
+        android:name="com.teammovil.pettracker.ui.registeredpets.RegisterPetsFragment"
         android:label="fragment_registered_pets"
-        tools:layout="@layout/fragment_registered_pets" />
+        tools:layout="@layout/fragment_registered_pets" >
+        <action
+            android:id="@+id/action_registerPetsFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+        <action
+            android:id="@+id/action_registerPetsFragment_to_petRegistrationFragment"
+            app:destination="@id/petRegistrationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.teammovil.pettracker.ui.petdetail.PetDetailFragment"
         android:label="fragment_pet_detail"
-        tools:layout="@layout/fragment_pet_detail" />
-    <fragment
-        android:id="@+id/adopterRegistrationFragment"
-        android:name="com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationFragment"
-        android:label="fragment_adopter_registration"
-        tools:layout="@layout/fragment_adopter_registration" />
-    <fragment
-        android:id="@+id/petRegistrationFragment"
-        android:name="com.teammovil.pettracker.ui.petregistration.PetRegistrationFragment"
-        android:label="fragment_pet_registration"
-        tools:layout="@layout/fragment_pet_registration" />
-    <fragment
-        android:id="@+id/screenSelectionFragment"
-        android:name="com.teammovil.pettracker.ui.ScreenSelectionFragment"
-        android:label="fragment_screen_selection"
-        tools:layout="@layout/fragment_screen_selection" >
+        tools:layout="@layout/fragment_pet_detail" >
         <action
-            android:id="@+id/action_screenSelectionFragment_to_petDetailFragment"
-            app:destination="@id/petDetailFragment" />
-        <action
-            android:id="@+id/action_screenSelectionFragment_to_adopterRegistrationFragment"
-            app:destination="@id/adopterRegistrationFragment" />
-        <action
-            android:id="@+id/action_screenSelectionFragment_to_registerPetsFragment"
-            app:destination="@id/registerPetsFragment" />
-        <action
-            android:id="@+id/action_screenSelectionFragment_to_petRegistrationFragment"
+            android:id="@+id/action_petDetailFragment_to_petRegistrationFragment"
             app:destination="@id/petRegistrationFragment" />
     </fragment>
 </navigation>

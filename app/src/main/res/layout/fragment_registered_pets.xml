@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".ui.RegisterPetsFragment">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/registered_pets_recycler"
@@ -20,5 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/resgistered_pets_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/default_margin"
+        android:src="@android:drawable/ic_input_add"
+        />
 
 </FrameLayout>

@@ -7,6 +7,6 @@ import com.teammovil.pettracker.R
 class MainRescuerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_adopter)
+        setContentView(R.layout.activity_main_rescuer)
     }
 }

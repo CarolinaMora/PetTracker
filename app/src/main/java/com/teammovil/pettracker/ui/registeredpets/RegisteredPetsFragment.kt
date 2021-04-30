@@ -1,11 +1,15 @@
-package com.teammovil.pettracker.ui
+package com.teammovil.pettracker.ui.registeredpets
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.*
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
@@ -13,15 +17,11 @@ import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
-import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
-import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModelFactory
+import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RegisterPetsFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class RegisterPetsFragment : Fragment() {
 
@@ -31,11 +31,6 @@ class RegisterPetsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRegisteredPetsBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         val petFake = PetFakeExternalDataAccess()
         val rescuerFake = RescuerFakeExternalDataAccess()
@@ -45,27 +40,54 @@ class RegisterPetsFragment : Fragment() {
         val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)
 
         viewModel = ViewModelProvider(this, RegisteredPetsViewModelFactory(petsRepo, rescuerRepo))[RegisteredPetsViewModel::class.java]
-        petsAdapter = RegisteredPetsAdapter()
-        binding.registeredPetsRecycler.adapter = petsAdapter
 
+        setViews()
+        setListeners()
+        setObservers()
+
+        return binding.root
+    }
+
+    private fun setViews (){
+        petsAdapter = RegisteredPetsAdapter{
+            onClickPet(it)
+        }
+        binding.registeredPetsRecycler.adapter = petsAdapter
+    }
+
+    private fun setListeners (){
+        binding.resgisteredPetsAdd.setOnClickListener {
+            onClickAddPet()
+        }
+    }
+
+    private fun setObservers(){
         viewModel.model.observe(viewLifecycleOwner, Observer {
             updateUI(it)
         })
-
     }
 
     private fun updateUI(uiModel: RegisteredPetsViewModel.UiModel){
         binding.progress.visibility = if (uiModel is RegisteredPetsViewModel.UiModel.Loading) View.VISIBLE else View.GONE
 
         when(uiModel){
-            is RegisteredPetsViewModel.UiModel.PetsContent -> setView(uiModel.pets)
+            is RegisteredPetsViewModel.UiModel.PetsContent -> updateList(uiModel.pets)
         }
     }
 
-    private fun setView(petsList: List<Pet>) {
+    private fun updateList (petsList: List<Pet>) {
         petsAdapter.items = petsList
     }
 
+    private fun onClickPet (pet: Pet){
+        val bundle = bundleOf(Pair(ARG_PET_ID, pet.id ))
+        view?.findNavController()
+            ?.navigate(R.id.action_registerPetsFragment_to_petDetailFragment, bundle)
+    }
 
+    private fun onClickAddPet (){
+        view?.findNavController()
+            ?.navigate(R.id.action_registerPetsFragment_to_petRegistrationFragment)
+    }
 
 }
