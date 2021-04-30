@@ -20,17 +20,26 @@ class AdopterLoginViewModel(private val adopterRepository: AdopterRepository): V
         class ErrorNotification(val message: String) : UiModel()
     }
 
+    sealed class UiNavigation {
+        object GoHome : UiNavigation()
+        object GoRegister : UiNavigation()
+    }
+
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel> get() = _model
 
-    private val _navigation = MutableLiveData<Event<Unit>>()
-    val navigation: LiveData<Event<Unit>> get() = _navigation
+    private val _navigation = MutableLiveData<Event<UiNavigation>>()
+    val navigation: LiveData<Event<UiNavigation>> get() = _navigation
 
     fun onLoginAdopter(user: UserView){
         if(validateView((user))){
             loginAdopter(user)
         }else
             _model.value = UiModel.LoginError(user)
+    }
+
+    fun onRegisterAdopter (){
+        navigateToRegistration()
     }
 
     private fun loginAdopter (user: UserView){
@@ -41,7 +50,7 @@ class AdopterLoginViewModel(private val adopterRepository: AdopterRepository): V
                 adopterRepository.login(user.email.value!!, user.password.value!!)
             }
             if(result){
-                navigateTo()
+                navigateToHome()
             } else showLoginError()
         }
     }
@@ -66,8 +75,12 @@ class AdopterLoginViewModel(private val adopterRepository: AdopterRepository): V
         return valid
     }
 
-    private fun navigateTo (){
-        _navigation.value = Event(Unit)
+    private fun navigateToHome (){
+        _navigation.value = Event(UiNavigation.GoHome)
+    }
+
+    private fun navigateToRegistration (){
+        _navigation.value = Event (UiNavigation.GoRegister)
     }
 
     private fun showLoginError () {

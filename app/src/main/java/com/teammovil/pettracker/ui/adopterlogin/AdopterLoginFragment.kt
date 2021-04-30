@@ -14,6 +14,7 @@ import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
+import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
 
@@ -45,7 +46,7 @@ class AdopterLoginFragment : Fragment() {
 
     private fun setObservers(){
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
-        viewModel.navigation.observe(viewLifecycleOwner, Observer { navigateToMainActivity() })
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver { navigateTo(it) })
     }
 
     private fun updateUI(model:  AdopterLoginViewModel.UiModel){
@@ -56,13 +57,20 @@ class AdopterLoginFragment : Fragment() {
         }
     }
 
+    private fun navigateTo (model: AdopterLoginViewModel.UiNavigation){
+        when(model){
+            is AdopterLoginViewModel.UiNavigation.GoHome -> navigateToMainActivity()
+            is AdopterLoginViewModel.UiNavigation.GoRegister -> navigateToAdopterRegistration()
+        }
+    }
+
     private fun setListener() {
         binding.adopterLoginBtn.setOnClickListener{
             onClickLogin()
 
         }
         binding.BtnCancel.setOnClickListener(){
-
+            onClickRegister()
         }
     }
 
@@ -84,6 +92,10 @@ class AdopterLoginFragment : Fragment() {
         view?.findNavController()?.navigate(R.id.action_adopterLoginFragment_to_mainActivity)
     }
 
+    private fun navigateToAdopterRegistration (){
+        view?.findNavController()?.navigate(R.id.action_adopterLoginFragment_to_adopterRegistrationFragment2)
+    }
+
     private fun onClickLogin(){
         with(binding){
             val user = UserView(
@@ -92,6 +104,10 @@ class AdopterLoginFragment : Fragment() {
             )
             viewModel.onLoginAdopter(user)
         }
+    }
+
+    private fun onClickRegister(){
+        viewModel.onRegisterAdopter()
     }
 
 }

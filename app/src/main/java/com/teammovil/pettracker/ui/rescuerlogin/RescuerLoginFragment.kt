@@ -82,7 +82,7 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun navigateToMainActivity(){
-        view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_mainActivity)
+        view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_mainRescuerActivity)
     }
 
     private fun onClickLogin(){

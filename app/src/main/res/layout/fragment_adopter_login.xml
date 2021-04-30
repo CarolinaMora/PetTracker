@@ -34,28 +34,20 @@
             android:textColor="#6bfff7"
             android:textColorHint="#FFA040"
             android:inputType="textPassword"/>
-        <LinearLayout
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="25dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/adopter_login_Btn"
-                android:text="Log in"
-                android:textAllCaps="false"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/Btn_cancel"
-                android:text="Cancel"
-                android:textAllCaps="false"/>
+            android:id="@+id/adopter_login_Btn"
+            android:text="Log in"
+            android:textAllCaps="false"/>
 
-
-
-        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Btn_cancel"
+            android:text="Registro"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
