@@ -14,6 +14,7 @@ import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentRescuerLoginBinding
+import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
 
@@ -46,7 +47,7 @@ class RescuerLoginFragment : Fragment() {
 
     private fun setObservers(){
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
-        viewModel.navigation.observe(viewLifecycleOwner, Observer { navigateToMainActivity() })
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver { navigateTo(it) })
     }
 
     private fun updateUI(model:  RescuerLoginViewModel.UiModel){
@@ -57,13 +58,20 @@ class RescuerLoginFragment : Fragment() {
         }
     }
 
+    private fun navigateTo (model: RescuerLoginViewModel.UiNavigation){
+        when(model){
+            is RescuerLoginViewModel.UiNavigation.GoHome -> navigateToMainActivity()
+            is RescuerLoginViewModel.UiNavigation.GoRegister -> navigateToRescuerRegistration()
+        }
+    }
+
     private fun setListener() {
         binding.rescuerLoginBtn.setOnClickListener{
             onClickLogin()
 
         }
         binding.BtnCancel.setOnClickListener(){
-
+            onClickRegister()
         }
     }
 
@@ -85,6 +93,10 @@ class RescuerLoginFragment : Fragment() {
         view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_mainRescuerActivity)
     }
 
+    private fun navigateToRescuerRegistration() {
+        view?.findNavController()?.navigate(R.id.action_rescuerLoginFragment_to_rescuerRegistrationFragment)
+    }
+
     private fun onClickLogin(){
         with(binding){
             val user = UserView(
@@ -93,6 +105,10 @@ class RescuerLoginFragment : Fragment() {
             )
             viewModel.onLoginAdopter(user)
         }
+    }
+
+    private fun onClickRegister(){
+        viewModel.onRegisterRescuer()
     }
 
 }

@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_rescuerLoginFragment_to_mainRescuerActivity"
             app:destination="@id/mainRescuerActivity" />
+        <action
+            android:id="@+id/action_rescuerLoginFragment_to_rescuerRegistrationFragment"
+            app:destination="@id/rescuerRegistrationFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -53,4 +56,9 @@
         android:name="com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationFragment"
         android:label="fragment_adopter_registration"
         tools:layout="@layout/fragment_adopter_registration" />
+    <fragment
+        android:id="@+id/rescuerRegistrationFragment"
+        android:name="com.teammovil.pettracker.ui.rescuerregistration.RescuerRegistrationFragment"
+        android:label="RescuerRegistrationFragment"
+        tools:layout="@layout/fragment_rescuer_registration"/>
 </navigation>
