@@ -9,7 +9,7 @@ import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.domain.Pet
 import kotlinx.coroutines.launch
 
-class AdopterPetsViewModel(val petRepository: PetRepository, val adopterRepository: AdopterRepository) : ViewModel() {
+class AdopterPetsViewModel(private val petRepository: PetRepository, private val adopterRepository: AdopterRepository) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
