@@ -75,6 +75,12 @@ class ScreenSelectionFragment : Fragment() {
             view?.findNavController()?.navigate(R.id.action_screenSelectionFragment_to_assignAdopterToPetFragment,bundle)
         }
 
+        val sendEvidenceButton = view.findViewById<AppCompatButton>(R.id.bt_send_evidence)
+        sendEvidenceButton.setOnClickListener{
+            val bundle = bundleOf(Pair(ARG_PET_ID,"1"))
+            view?.findNavController()
+                ?.navigate(R.id.action_screenSelectionFragment_to_sendEvidenceFragment, bundle)
+        }
         return view
     }
 
