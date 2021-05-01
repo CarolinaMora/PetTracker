@@ -83,6 +83,10 @@ class PetFakeExternalDataAccess: PetExternalDataAccess{
         return fakePetList
     }
 
+    override suspend fun getAllPetsFromAdopter(adopterId: String): List<Pet> {
+        return fakePetList
+    }
+
     override suspend fun getPetById(petId: String): Pet {
         val petFound = fakePetList.find { petId == it.id }
         return petFound?.let{it}?: fakePetList[0]
