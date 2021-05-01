@@ -13,6 +13,7 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRescuerLoginBinding
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
@@ -32,7 +33,7 @@ class RescuerLoginFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
             RescuerRepository(
-                RescuerFakeExternalDataAccess(),
+                RescuerExternalDataAccessServiceImpl(),
                 RescuerFakeStorageDataAccess()
             )
         )
