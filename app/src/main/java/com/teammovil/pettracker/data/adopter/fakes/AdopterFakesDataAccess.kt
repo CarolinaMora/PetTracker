@@ -9,13 +9,12 @@ import java.util.*
 
 
 val fakeAdopter = Adopter(
-    "1",
+    "karen@gmai.com",
     "Karen",
     "Pérez",
     "García",
     GenderType.FEMALE,
     getDateFromString("1981-05-27")?.let{it}?: Date(),
-    "karen@gmai.com",
     "hola1234",
     "5566778899",
     "Ciudad de México"
