@@ -26,7 +26,7 @@ class FakeAdopterExternalDataAccess: AdopterExternalDataAccess{
         return fakeAdopter
     }
 
-    override suspend fun saveAdopter(adopter: Adopter):Boolean {
+    override suspend fun registerAdopter(adopter: Adopter):Boolean {
         return true
     }
 }

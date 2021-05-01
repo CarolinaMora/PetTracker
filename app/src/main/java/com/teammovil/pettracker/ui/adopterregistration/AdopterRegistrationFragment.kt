@@ -12,6 +12,7 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.ui.common.EventObserver
@@ -32,7 +33,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
             this,
             AdopterRegistrationViewModelFactory(
                 AdopterRepository(
-                    FakeAdopterExternalDataAccess(),
+                    AdopterExternalDataAccessServiceImpl(),
                     FakeAdopterStorageDataAccess()
                 )
             )

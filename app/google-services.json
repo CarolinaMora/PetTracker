@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "161495135267",
+    "project_id": "pettracker-312323",
+    "storage_bucket": "pettracker-312323.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161495135267:android:df92558a2aca09b6f3ad96",
+        "android_client_info": {
+          "package_name": "com.teammovil.pettracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161495135267-58g6acpfp2c64ip7usgvsl7njiouhe0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMsNrfJf9oBoj38ad4PIFqUCCcAx-ZMaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161495135267-58g6acpfp2c64ip7usgvsl7njiouhe0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

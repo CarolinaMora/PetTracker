@@ -21,6 +21,10 @@ class RescuerFakeExternalDataAccess : RescuerExternalDataAccess{
     override suspend fun login(user: String, password: String): Rescuer {
         return fakeRescuer
     }
+
+    override suspend fun registerRescuer(rescuer: Rescuer): Boolean {
+        return true
+    }
 }
 
 class RescuerFakeStorageDataAccess : RescuerStorageDataAccess{

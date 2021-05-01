@@ -6,11 +6,14 @@ class AdopterRepository (private val externalDataAccess: AdopterExternalDataAcce
 
     suspend fun login(user: String, password: String): Boolean{
         val adopter = externalDataAccess.login(user, password)
-        storageDataAccess.saveAdopter(adopter)
-        return true
+        if(adopter!=null) {
+            storageDataAccess.saveAdopter(adopter)
+            return true
+        }
+        return false
     }
 
     suspend fun getAdopter () = storageDataAccess.getAdopter()
 
-    suspend fun saveAdopter (adopter:Adopter) = externalDataAccess.saveAdopter(adopter)
+    suspend fun registerAdopter (adopter:Adopter) = externalDataAccess.registerAdopter(adopter)
 }

@@ -13,6 +13,7 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
@@ -32,7 +33,7 @@ class AdopterLoginFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, AdopterLoginViewModelFactory(
             AdopterRepository(
-                FakeAdopterExternalDataAccess(),
+                AdopterExternalDataAccessServiceImpl(),
                 FakeAdopterStorageDataAccess()
             ))
         )[AdopterLoginViewModel::class.java]
