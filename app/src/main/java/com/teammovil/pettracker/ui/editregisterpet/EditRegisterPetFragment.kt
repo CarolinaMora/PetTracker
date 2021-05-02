@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui.petregistration
+package com.teammovil.pettracker.ui.editregisterpet
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,32 +19,38 @@ import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.domain.PetStatus
 import com.teammovil.pettracker.domain.PetType
 import com.teammovil.pettracker.domain.Vaccine
-import com.teammovil.pettracker.ui.common.EventObserver
+import com.teammovil.pettracker.ui.common.*
 import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
+import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import java.util.*
 
 
-class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
+class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentPetRegistrationBinding
-    private lateinit var viewModel : PetRegistrationViewModel
+    private lateinit var viewModel : EditRegisterPetViewModel
     private var photoTaker : PhotoTaker? = null
+    private var petId : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentPetRegistrationBinding.inflate(inflater)
+        petId = arguments?.getString(ARG_PET_ID)
 
         viewModel = ViewModelProvider(
                         this,
-                        PetRegistrationViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
-                )[PetRegistrationViewModel::class.java]
+                        EditRegisterPetViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
+                )[EditRegisterPetViewModel::class.java]
 
-        photoTaker = PhotoTaker(requireContext())
+        binding = FragmentPetRegistrationBinding.inflate(inflater)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        photoTaker =
+            PhotoTaker(requireContext())
         photoTaker?.fragment = this
         setViews()
         setListeners()
@@ -53,9 +59,21 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.onStartView(petId)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val pet = savePet()
+        viewModel.onSavePetLocal(pet)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         photoTaker?.onActivityResult(requestCode, resultCode, data, binding.petRegistrationMainPhoto)
+        viewModel.onSavePhotoUrl(photoTaker?.currentPhotoPath)
     }
 
     override fun onRequestPermissionsResult(
@@ -75,17 +93,39 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun setObservers (){
+        viewModel.petView.observe(viewLifecycleOwner, Observer { updateRestPet(it) })
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
     }
 
-    private fun updateUI(model: PetRegistrationViewModel.UiModel) {
-        binding.petRegistrationProgress.visibility = if (model is PetRegistrationViewModel.UiModel.Loading) View.VISIBLE else View.GONE
+    private fun updateRestPet(petView: PetView?) {
+        petView?.let{ pet ->
+            pet.vaccines.value?.let{ list ->
+                val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
+                if(vaccinesFragment is VaccinesListFragment){
+                    vaccinesFragment.setVaccinesList(Mapper.mapVaccineViewList(list))
+                }
+            }
 
+            pet.dewormings.value?.let{ list ->
+                val dewormingsFragment = childFragmentManager.findFragmentById(R.id.pet_registration_dewormings)
+                if(dewormingsFragment is DewormingsListFragment){
+                    dewormingsFragment.setDewormingsList(Mapper.mapDewormingViewList(list))
+                }
+            }
+
+            pet.mainPhoto.value?.let{url ->
+                photoTaker?.currentPhotoPath = url
+            }
+
+        }
+    }
+
+    private fun updateUI(model: EditRegisterPetViewModel.UiModel) {
         when(model){
-            is PetRegistrationViewModel.UiModel.PetError -> showPetError(model.petView)
-            is PetRegistrationViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
-            is PetRegistrationViewModel.UiModel.SuccessAdvice -> showSuccessAdvice(model.message)
+            is EditRegisterPetViewModel.UiModel.Loading -> binding.petRegistrationProgress.visibility = if (model.show) View.VISIBLE else View.GONE
+            is EditRegisterPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
+            is EditRegisterPetViewModel.UiModel.SuccessAdvice -> showSuccessAdvice()
         }
     }
 
@@ -131,24 +171,13 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     }
 
-    private fun showPetError (petView: PetView){
-        binding.petRegistrationName.error = if(petView.name.valid) null else getString(petView.name.messageResourceId)
-        binding.petRegistrationDescription.error = if(petView.description.valid) null else getString(petView.description.messageResourceId)
-        binding.petRegistrationRace.error = if(petView.race.valid) null else getString(petView.race.messageResourceId)
-        binding.petRegistrationBirthDate.error = if(petView.approximateDateOfBirth.valid) null else getString(petView.approximateDateOfBirth.messageResourceId)
-        binding.petRegistrationRescueDate.error = if(petView.rescueDate.valid) null else getString(petView.rescueDate.messageResourceId)
-        binding.petRegistrationGenderError.text = if(petView.gender.valid) "" else getString(petView.gender.messageResourceId)
-        binding.petRegistrationTypeError.text = if(petView.petType.valid) "" else getString(petView.petType.messageResourceId)
-        binding.petRegistrationPhotoError.text = if(petView.mainPhoto.valid) "" else getString(petView.mainPhoto.messageResourceId)
-    }
-
     private fun navigateUp (){
         view?.findNavController()?.navigateUp()
     }
 
-    private fun showSuccessAdvice (message: String){
+    private fun showSuccessAdvice (){
         val builder = AlertDialog.Builder(requireContext())
-                .setMessage(message)
+                .setMessage(R.string.alert_message_pet_saved)
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_accept) { dialog, _ ->
                     dialog.dismiss()
@@ -178,7 +207,11 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun onClickRegister (){
+        val pet = savePet()
+        viewModel.onSavePet(pet)
+    }
 
+    private fun savePet (): PetView{
         //Vaccines
         var vaccinesList : List<Vaccine>? = null
         val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
@@ -195,22 +228,30 @@ class PetRegistrationFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
         with(binding) {
             val pet = PetView(
-                    null,
-                    FieldView(petRegistrationName.text.toString()),
-                    SelectFieldView(petRegistrationGender.selectedItem.toString(), petRegistrationGender.selectedItemPosition),
-                    FieldView(petRegistrationRace.text.toString()),
-                    FieldView(petRegistrationDescription.text.toString()),
-                    FieldView(petRegistrationBirthDate.text.toString()),
-                    FieldView(petRegistrationRescueDate.text.toString()),
-                    SelectFieldView(petRegistrationType.selectedItem.toString(), petRegistrationType.selectedItemPosition),
-                    FieldView(petRegistrationSterilized.isChecked),
-                    FieldView(vaccinesList),
-                    FieldView(dewormingsList),
-                    FieldView(photoTaker?.currentPhotoPath),
-                    FieldView(PetStatus.RESCUED),
-                    FieldView(null)
+                petId ?: "",
+                FieldView(petRegistrationName.text.toString()),
+                SelectFieldView(
+                    petRegistrationGender.selectedItem.toString(),
+                    petRegistrationGender.selectedItemPosition
+                ),
+                FieldView(petRegistrationRace.text.toString()),
+                FieldView(petRegistrationDescription.text.toString()),
+                FieldView(petRegistrationBirthDate.text.toString()),
+                FieldView(petRegistrationRescueDate.text.toString()),
+                SelectFieldView(
+                    petRegistrationType.selectedItem.toString(),
+                    petRegistrationType.selectedItemPosition
+                ),
+                FieldView(petRegistrationSterilized.isChecked),
+                FieldView(vaccinesList),
+                FieldView(dewormingsList),
+                FieldView(photoTaker?.currentPhotoPath),
+                FieldView(
+                    if(petRegistrationStatus.text.toString().isEmpty()) PetStatus.RESCUED
+                    else  PetStatus.valueOf(petRegistrationStatus.text.toString())),
+                FieldView(null)
             )
-            viewModel.onSavePet(pet)
+            return pet
         }
     }
 

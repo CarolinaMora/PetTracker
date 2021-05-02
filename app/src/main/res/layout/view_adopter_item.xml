@@ -1,87 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="5dp"
-        android:background="?android:attr/listDivider" />
+    <data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="16dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Name"
-            android:paddingRight="8dp"
-            android:textAppearance="?attr/textAppearanceHeadline6"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_fist_last_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="fist last name"
-            android:paddingRight="8dp"
-            android:textAppearance="?attr/textAppearanceHeadline6"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_second_last_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="fist last name"
-            android:textAppearance="?attr/textAppearanceHeadline6"/>
-
-    </LinearLayout>
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_adopter_mail"
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Name"
+                android:paddingRight="8dp"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_fist_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="fist last name"
+                android:paddingRight="8dp"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_second_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="fist last name"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="mail"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="?android:attr/textColorSecondary"/>
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_adopter_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="phone"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="?android:attr/textColorSecondary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_adopter_mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="mail"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actv_adopter_address"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_adopter_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="phone"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/actv_adopter_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="address"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="address"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="?android:attr/textColorSecondary"/>
+            android:layout_height="3dp"
+            android:background="?android:attr/listDivider" />
 
     </LinearLayout>
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="?android:attr/listDivider" />
-
-</LinearLayout>
+</layout>

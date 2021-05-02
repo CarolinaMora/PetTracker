@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui.petregistration
+package com.teammovil.pettracker.ui.common
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
