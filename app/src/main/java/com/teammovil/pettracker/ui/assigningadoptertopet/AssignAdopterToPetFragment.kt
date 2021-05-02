@@ -1,19 +1,18 @@
 package com.teammovil.pettracker.ui.assigningadoptertopet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.AdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAssignAdopterToPetBinding
 import com.teammovil.pettracker.domain.Adopter
 
@@ -40,7 +39,7 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         binding = FragmentAssignAdopterToPetBinding.bind(view)
 
         val petFake = PetFakeExternalDataAccess()
-        val adopterFake = FakeAdopterExternalDataAccess()
+        val adopterFake = AdopterExternalDataAccessServiceImpl()
         val adopterStorage = FakeAdopterStorageDataAccess()
 
         val petRepository = PetRepository(petFake)

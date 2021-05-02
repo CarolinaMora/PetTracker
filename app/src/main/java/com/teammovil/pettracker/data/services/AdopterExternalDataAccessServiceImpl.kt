@@ -29,7 +29,7 @@ class AdopterExternalDataAccessServiceImpl(): AdopterExternalDataAccess {
             val result = serviceFirebaseAuth
                 .createUserWithEmailAndPassword(adopter.email, adopter.password).await()
             return if(result != null) {
-                FirebaseFirestore.getInstance().collection(Constants.ADOPTER_COLLECTION)
+                serviceFirebaseFirestore.collection(Constants.ADOPTER_COLLECTION)
                     .document(adopter.email).set(
                         Mapper.map(adopter)
                     )
@@ -38,6 +38,16 @@ class AdopterExternalDataAccessServiceImpl(): AdopterExternalDataAccess {
         }
         catch (e: Exception){
             return false
+        }
+    }
+
+    override suspend fun getAllAdopters(): List<Adopter> {
+        try{
+            val result = serviceFirebaseFirestore.collection(Constants.ADOPTER_COLLECTION).get().await()
+            return result.documents.map { Mapper.mapAdopter(it) }
+        }
+        catch (e: Exception){
+            return listOf()
         }
     }
 }
