@@ -15,5 +15,7 @@ class AdopterRepository (private val externalDataAccess: AdopterExternalDataAcce
 
     suspend fun getAdopter () = storageDataAccess.getAdopter()
 
+    suspend fun getAllAdopters() = externalDataAccess.getAllAdopters()
+
     suspend fun registerAdopter (adopter:Adopter) = externalDataAccess.registerAdopter(adopter)
 }
