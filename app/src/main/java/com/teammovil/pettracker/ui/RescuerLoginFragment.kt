@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import com.teammovil.pettracker.R
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import kotlinx.coroutines.Dispatchers
+
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,11 +37,11 @@ class RescuerLoginFragment : Fragment() {
         var buttonAccess = view.findViewById<Button>(R.id.rescuer_login_Btn)
 
         buttonAccess.setOnClickListener {
-            val repository = RescuerRepository(RescuerFakeExternalDataAccess(), RescuerFakeStorageDataAccess())
+            val repository = RescuerRepository(RescuerFakeExternalDataAccess(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
             viewLifecycleOwner.lifecycleScope.launch {
                 val user = ""
                 val password = ""
-                val data = repository.login(user, password)
+                val data = withContext(Dispatchers.IO) { repository.login(user, password) }
                 if (data){
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)

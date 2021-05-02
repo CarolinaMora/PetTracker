@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.*
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
@@ -39,7 +39,7 @@ class RegisterPetsFragment : Fragment() {
 
         val petFake = PetFakeExternalDataAccess()
         val rescuerFake = RescuerFakeExternalDataAccess()
-        val rescuerStorage = RescuerFakeStorageDataAccess()
+        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petFake)
         val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)
