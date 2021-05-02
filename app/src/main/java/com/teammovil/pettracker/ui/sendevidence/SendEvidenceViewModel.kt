@@ -7,13 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.domain.Evidence
-import com.teammovil.pettracker.domain.GenderType
-import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.domain.PetType
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
-import com.teammovil.pettracker.ui.petregistration.PetRegistrationViewModel
-import com.teammovil.pettracker.ui.petregistration.PetView
 import kotlinx.coroutines.launch
 
 class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {

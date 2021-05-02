@@ -1,62 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.RescuerLoginFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="#444444"
-        android:padding="25dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textColor="#FFCA28"
-            android:padding="30dp"
-            android:text="Login Rescuer"/>
-        <EditText
-            android:id="@+id/rescuer_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:textColor="#FFA040"
-            android:textColorHint="#FFA040"/>
-        <EditText
-            android:id="@+id/rescuer_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:textColor="#6bfff7"
-            android:textColorHint="#FFA040"
-            android:inputType="textPassword"/>
+        tools:context=".ui.RescuerLoginFragment">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
+            android:background="#444444"
             android:padding="25dp"
-            android:orientation="horizontal">
-            <Button
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rescuer_login_Btn"
-                android:text="Log in"
+                android:textSize="25dp"
+                android:textColor="#FFCA28"
+                android:padding="30dp"
+                android:text="Login Rescuer" />
 
-                android:textAllCaps="false"/>
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/rescuer_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Btn_cancel"
-                android:text="Cancel"
-                android:textAllCaps="false"/>
+                android:hint="Email Address"
+                android:textColor="#FFA040"
+                android:textColorHint="#FFA040" />
+
+            <EditText
+                android:id="@+id/rescuer_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:textColor="#6bfff7"
+                android:textColorHint="#FFA040"
+                android:inputType="textPassword" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="25dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rescuer_login_Btn"
+                    android:text="Log in"
+
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Btn_cancel"
+                    android:text="Cancel"
+                    android:textAllCaps="false" />
 
 
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

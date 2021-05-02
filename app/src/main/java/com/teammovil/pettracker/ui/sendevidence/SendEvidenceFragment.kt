@@ -2,11 +2,11 @@ package com.teammovil.pettracker.ui.sendevidence
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -14,10 +14,10 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.databinding.FragmentSendEvidenceBinding
-import com.teammovil.pettracker.domain.PetStatus
 import com.teammovil.pettracker.ui.common.EventObserver
+import com.teammovil.pettracker.ui.common.FieldView
+import com.teammovil.pettracker.ui.common.PhotoTaker
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
-import com.teammovil.pettracker.ui.petregistration.*
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 
 
