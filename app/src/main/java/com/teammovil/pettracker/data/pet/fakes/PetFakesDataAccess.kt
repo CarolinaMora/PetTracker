@@ -107,4 +107,8 @@ class PetFakeExternalDataAccess: PetExternalDataAccess{
 
         return true
     }
+
+    override suspend fun assignAdopterToPet(petId: String, adopterId: String): Boolean {
+        return true
+    }
 }

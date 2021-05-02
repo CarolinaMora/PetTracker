@@ -13,5 +13,7 @@ interface PetExternalDataAccess {
 
     suspend fun registerPet (pet: Pet): Boolean
 
+    suspend fun assignAdopterToPet(petId: String, adopterId: String): Boolean
+
     suspend fun saveEvidence (petId: String, evidence: Evidence): Boolean
 }
