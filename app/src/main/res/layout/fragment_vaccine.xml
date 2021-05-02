@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minWidth="800dp"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/default_margin"
-    android:padding="@dimen/default_margin"
-    tools:context=".ui.vaccines.VaccineFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <data>
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_description"
-        >
+        android:minWidth="800dp"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/default_margin"
+        android:padding="@dimen/default_margin"
+        tools:context=".ui.vaccines.VaccineFragment">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/vaccine_name"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:hint="@string/prompt_description">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/vaccine_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:hint="@string/prompt_date"
-        >
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/vaccine_applicationDate"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_calendar"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            />
+            android:layout_marginTop="@dimen/default_margin"
+            android:hint="@string/prompt_date">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/vaccine_applicationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/vaccine_save_action"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_save"
-        />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/vaccine_save_action"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_save" />
+
+    </LinearLayout>
+</layout>

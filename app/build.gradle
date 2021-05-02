@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -33,8 +34,8 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
-        viewBinding = true
+    dataBinding{
+        enabled = true
     }
 
     androidExtensions {
