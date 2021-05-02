@@ -47,4 +47,8 @@
     <string name="genred_male_adopter_registration">Hombre</string>
     <string name="gender_female_adopter_registration">Mujer</string>
     <string name="action_accept">Aceptar</string>
+
+    <!-- Fragment assign adopter to pet -->
+    <string name="tittle_assign_adopter_to_pet">Asignar adoptante a la mascota</string>
+
 </resources>
