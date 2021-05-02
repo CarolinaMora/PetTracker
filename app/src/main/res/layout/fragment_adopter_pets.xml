@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".ui.adopterpets.AdoperPetsFragment">
+    tools:context=".ui.adopterpets.AdopterPetsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/adopter_pets_recycler"

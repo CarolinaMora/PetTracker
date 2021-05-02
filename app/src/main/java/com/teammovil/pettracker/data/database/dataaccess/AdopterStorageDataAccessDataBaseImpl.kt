@@ -8,12 +8,12 @@ import com.teammovil.pettracker.data.database.dao.AdopterDao
 import com.teammovil.pettracker.data.database.entities.AdopterEntity
 import com.teammovil.pettracker.domain.Adopter
 
-class AdopterStorageDataAccessDataBaseImp(val context: Context): AdopterStorageDataAccess {
+class AdopterStorageDataAccessDataBaseImpl(val context: Context): AdopterStorageDataAccess {
     private val database: PetsDataBase = PetsDataBase.getDatabase(context)
 
     override suspend fun saveAdopter(adopter: Adopter) {
         val adopterMapToEntity = Mapper.adopterEntityMap(adopter)
-        database.adopterDao().deleteAdopter(adopterMapToEntity)
+        database.adopterDao().deleteAdopter()
         database.adopterDao().addAdopter(adopterMapToEntity)
 
     }

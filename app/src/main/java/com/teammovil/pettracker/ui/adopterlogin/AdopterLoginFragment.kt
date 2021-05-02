@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
@@ -33,7 +33,7 @@ class AdopterLoginFragment : Fragment() {
         viewModel = ViewModelProvider(this, AdopterLoginViewModelFactory(
             AdopterRepository(
                 FakeAdopterExternalDataAccess(),
-                FakeAdopterStorageDataAccess()
+                AdopterStorageDataAccessDataBaseImpl(requireActivity())
             ))
         )[AdopterLoginViewModel::class.java]
 

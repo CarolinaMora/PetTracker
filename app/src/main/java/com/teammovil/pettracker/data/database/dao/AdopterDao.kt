@@ -13,8 +13,8 @@ interface AdopterDao {
     @Insert
     fun addAdopter(adopter: AdopterEntity)
 
-    @Delete
-    fun deleteAdopter(adopter: AdopterEntity)
+    @Query("DELETE FROM Adopter")
+    fun deleteAdopter()
 
     @Query("SELECT * FROM Adopter")
     fun getAdopter(): AdopterEntity
