@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="15dp"
-    tools:context=".ui.adopterpets.AdoperPetsFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/adopter_pets_recycler"
+    <data>
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:padding="2dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        tools:context=".ui.adopterpets.AdoperPetsFragment">
 
-    <ProgressBar
-        android:id="@+id/adopter_pets_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/adopter_pets_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="2dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</FrameLayout>
+        <ProgressBar
+            android:id="@+id/adopter_pets_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</layout>
