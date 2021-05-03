@@ -6,5 +6,5 @@ interface RescuerStorageDataAccess {
 
     suspend fun saveRescuer (rescuer: Rescuer)
 
-    suspend fun getRescuer (): Rescuer
+    suspend fun getRescuer (): Rescuer?
 }

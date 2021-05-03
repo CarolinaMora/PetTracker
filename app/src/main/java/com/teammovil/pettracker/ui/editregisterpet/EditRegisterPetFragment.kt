@@ -12,13 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
+import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.RescuerExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
+import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
-import com.teammovil.pettracker.domain.GenderType
-import com.teammovil.pettracker.domain.PetStatus
-import com.teammovil.pettracker.domain.PetType
-import com.teammovil.pettracker.domain.Vaccine
+import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.ui.common.*
 import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
@@ -42,7 +45,10 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
         viewModel = ViewModelProvider(
                         this,
-                        EditRegisterPetViewModelFactory(PetRepository(PetFakeExternalDataAccess()))
+                        EditRegisterPetViewModelFactory(
+                            PetRepository(PetExternalDataAccessServiceImpl()),
+                            RescuerRepository(RescuerFakeExternalDataAccess(), RescuerFakeStorageDataAccess())
+                        )
                 )[EditRegisterPetViewModel::class.java]
 
         binding = FragmentPetRegistrationBinding.inflate(inflater)
@@ -220,7 +226,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         }
 
         //Dewormings
-        var dewormingsList : List<Date>? = null
+        var dewormingsList : List<Deworming>? = null
         val dewormingsFragment = childFragmentManager.findFragmentById(R.id.pet_registration_dewormings)
         if(dewormingsFragment is DewormingsListFragment){
             dewormingsList = Mapper.mapDewormingList(dewormingsFragment.getDewormingsList())

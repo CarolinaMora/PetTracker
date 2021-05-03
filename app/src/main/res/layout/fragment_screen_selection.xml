@@ -17,12 +17,23 @@
         android:id="@+id/bt_pet_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Listado de mascotas"
+        android:text="Listado de mascotas resgistradas"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bt_detail_option"
+        app:layout_constraintBottom_toTopOf="@id/bt_adopter_pets"
         />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_adopter_pets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Listado de mascotas adoptadas"
+            app:layout_constraintTop_toBottomOf="@+id/bt_pet_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bt_detail_option"
+            />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_detail_option"

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditRegisterPetViewModel(
-    var petRepository: PetRepository
+    var petRepository: PetRepository,
+    var rescuerRepository: RescuerRepository
 ): ViewModel() {
 
     sealed class UiModel {
@@ -68,14 +70,22 @@ class EditRegisterPetViewModel(
     private fun savePet (pet: Pet){
         viewModelScope.launch {
             _model.value = UiModel.Loading(true)
-            val result =
-                if(pet.id.isEmpty())
-                    withContext(Dispatchers.IO){petRepository.registerPet(pet)}
-                else
-                    withContext(Dispatchers.IO){petRepository.updatePet(pet)}
-            _model.value = UiModel.Loading(false)
-            if(result) showSuccessAdvice()
-            else showRegistrationError()
+            val resultRescuer = withContext(Dispatchers.IO) {rescuerRepository.getRescuer() }
+            if(resultRescuer!=null) {
+                val result =
+                    if (pet.id.isEmpty())
+                        withContext(Dispatchers.IO) {
+                            petRepository.registerPet(
+                                pet,
+                                resultRescuer.email
+                            )
+                        }
+                    else
+                        withContext(Dispatchers.IO) { petRepository.updatePet(pet) }
+                _model.value = UiModel.Loading(false)
+                if (result) showSuccessAdvice()
+                else showRegistrationError()
+            } else showRegistrationError()
         }
     }
 

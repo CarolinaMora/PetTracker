@@ -11,6 +11,7 @@ import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
@@ -37,7 +38,7 @@ class RegisterPetsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val petFake = PetFakeExternalDataAccess()
+        val petFake = PetExternalDataAccessServiceImpl()
         val rescuerFake = RescuerFakeExternalDataAccess()
         val rescuerStorage = RescuerFakeStorageDataAccess()
 

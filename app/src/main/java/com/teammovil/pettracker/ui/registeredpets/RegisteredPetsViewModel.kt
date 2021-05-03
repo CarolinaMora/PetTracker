@@ -26,9 +26,11 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
 
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            var rescuer = rescuerRepository.getRescuer()
-            var result = petRepository.getAllPatsFromRescuer(rescuer.id)
-            setView(result)
+            val rescuer = rescuerRepository.getRescuer()
+            if(rescuer!=null) {
+                var result = petRepository.getAllPatsFromRescuer(rescuer.email)
+                setView(result)
+            }
         }
     }
 

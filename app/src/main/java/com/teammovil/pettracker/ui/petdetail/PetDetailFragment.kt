@@ -82,7 +82,7 @@ class PetDetailFragment: Fragment() {
             txtType.text = pet.petType.name
             txtSterilized.text = pet.sterilized.toString()
             rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
-            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings)
+            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
             txtStatus.text = pet.status.name
             rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
             Glide

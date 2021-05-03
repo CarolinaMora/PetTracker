@@ -107,6 +107,7 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
     private fun onClickSendEvidence() {
         with(binding) {
             val evidence = EvidenceView (
+                "",
                 FieldView(photoTaker?.currentPhotoPath),
                 FieldView(sendEvidenceComments.text.toString()),
                 FieldView(sendEvidenceDate.text.toString())

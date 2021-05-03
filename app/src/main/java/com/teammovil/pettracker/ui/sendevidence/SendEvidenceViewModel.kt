@@ -72,6 +72,7 @@ class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
 
     private fun mapEvidence (origin: EvidenceView): Evidence{
         return Evidence(
+            origin.externalId,
             origin.comments.value,
             origin.photo.value!!,
             getDateFromString(origin.evidenceDate.value)!!

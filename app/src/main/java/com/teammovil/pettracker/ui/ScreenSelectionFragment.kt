@@ -48,6 +48,12 @@ class ScreenSelectionFragment : Fragment() {
                 ?.navigate(R.id.action_screenSelectionFragment_to_registerPetsFragment)
         }
 
+        val petAdopterListButton = view.findViewById<AppCompatButton>(R.id.bt_adopter_pets)
+        petAdopterListButton.setOnClickListener{
+            view?.findNavController()
+                ?.navigate(R.id.action_screenSelectionFragment_to_adoperPetsFragment)
+        }
+
         val detailButton = view.findViewById<AppCompatButton>(R.id.bt_detail_option)
         detailButton.setOnClickListener{
             //val bundle = TODO CREAR EL BUNDLE, mandar el misma contastne ARG_ID_PET = "1"
