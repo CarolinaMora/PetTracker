@@ -50,13 +50,12 @@ object Mapper {
 
     fun mapAdopter (document: DocumentSnapshot): Adopter{
         return Adopter(
-            "",
+            document.get(Constants.ADOPTER_EMAIL_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_NAME_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_FIRST_LAST_NAME_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_SECOND_LAST_NAME_FIELD) as String? ?:"",
             GenderType.values()[(document.get(Constants.ADOPTER_GENDER_FIELD) as Long?)?.toInt() ?: 0],
             getDateFromString(document.get(Constants.ADOPTER_BIRTH_DATE) as String?) ?:Date(),
-            document.get(Constants.ADOPTER_EMAIL_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_PASSWORD_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_PHONE_FIELD) as String? ?:"",
             document.get(Constants.ADOPTER_ADDRESS_FIELD) as String? ?:""

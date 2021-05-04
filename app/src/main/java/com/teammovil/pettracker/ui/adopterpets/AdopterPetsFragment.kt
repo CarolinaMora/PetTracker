@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterPetsBinding
 import com.teammovil.pettracker.domain.Pet
@@ -43,12 +43,12 @@ class AdopterPetsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val petFake = PetFakeExternalDataAccess()
-        val adopterFake = FakeAdopterExternalDataAccess()
+        val petExternal = PetExternalDataAccessServiceImpl()
+        val adopterExternal = AdopterExternalDataAccessServiceImpl()
         val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petExternal)
-        val adopterRepo = AdopterRepository(adopterFake, adopterStorage)
+        val adopterRepo = AdopterRepository(adopterExternal, adopterStorage)
 
         viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(petsRepo, adopterRepo))[AdopterPetsViewModel::class.java]
         petsAdapter = RegisteredPetsAdapter()

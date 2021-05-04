@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
+import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import kotlinx.coroutines.Dispatchers
 
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class RescuerLoginFragment : Fragment() {
         var buttonAccess = view.findViewById<Button>(R.id.rescuer_login_Btn)
 
         buttonAccess.setOnClickListener {
-            val repository = RescuerRepository(RescuerFakeExternalDataAccess(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
+            val repository = RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
             viewLifecycleOwner.lifecycleScope.launch {
                 val user = ""
                 val password = ""

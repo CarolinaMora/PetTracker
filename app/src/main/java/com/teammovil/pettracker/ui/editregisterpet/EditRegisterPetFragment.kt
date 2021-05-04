@@ -12,14 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.RescuerExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
+import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
 import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.ui.common.*
@@ -27,7 +24,6 @@ import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
-import java.util.*
 
 
 class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
@@ -47,7 +43,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                         this,
                         EditRegisterPetViewModelFactory(
                             PetRepository(PetExternalDataAccessServiceImpl()),
-                            RescuerRepository(RescuerFakeExternalDataAccess(), RescuerFakeStorageDataAccess())
+                            RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
                         )
                 )[EditRegisterPetViewModel::class.java]
 
