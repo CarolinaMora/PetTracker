@@ -4,6 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.teammovil.pettracker.data.pet.PetExternalDataAccess
 import com.teammovil.pettracker.domain.Evidence
 import com.teammovil.pettracker.domain.Pet
+import com.teammovil.pettracker.domain.PetStatus
 import kotlinx.coroutines.tasks.await
 
 class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
@@ -152,7 +153,10 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
     override suspend fun assignAdopterToPet(petId: String, adopterId: String): Boolean {
         try {
             serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
-                .update(mapOf(Constants.PET_ADOPTER_ID_FIELD to adopterId)).await()
+                .update(mapOf(
+                    Constants.PET_ADOPTER_ID_FIELD to adopterId,
+                    Constants.PET_STATUS_FIELD to PetStatus.ADOPTED.ordinal)
+                ).await()
             return true
         }catch (e: Exception){
             return false

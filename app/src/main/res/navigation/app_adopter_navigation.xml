@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/adoperPetsFragment">
+    app:startDestination="@id/adopterPetsFragment">
 
     <fragment
         android:id="@+id/petDetailFragment"
@@ -19,12 +19,12 @@
             app:destination="@id/petRegistrationFragment" />
     </fragment>
     <fragment
-        android:id="@+id/adoperPetsFragment"
-        android:name="com.teammovil.pettracker.ui.adopterpets.AdoperPetsFragment"
+        android:id="@+id/adopterPetsFragment"
+        android:name="com.teammovil.pettracker.ui.adopterpets.AdopterPetsFragment"
         android:label="@string/title_adopter_pets_fragment"
-        tools:layout="@layout/fragment_adoper_pets">
+        tools:layout="@layout/fragment_adopter_pets">
         <action
-            android:id="@+id/action_adoperPetsFragment_to_petDetailFragment"
+            android:id="@+id/action_adopterPetsFragment_to_petDetailFragment"
             app:destination="@id/petDetailFragment" />
     </fragment>
     <fragment

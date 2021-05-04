@@ -75,7 +75,7 @@ class AdopterPetsFragment : Fragment() {
     }
 
     private fun goToPetDetail (petId: String){
-        val action = AdoperPetsFragmentDirections.actionAdoperPetsFragmentToPetDetailFragment(petId)
+        val action = AdopterPetsFragmentDirections.actionAdopterPetsFragmentToPetDetailFragment(petId)
         view?.findNavController()?.navigate(action)
     }
 
