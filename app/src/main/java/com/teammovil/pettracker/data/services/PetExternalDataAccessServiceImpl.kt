@@ -31,7 +31,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
 
     override suspend fun getPetById(petId: String): Pet? {
         try {
-            //Update new pet
+            //Get pet
             val petDocument = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId).get().await()
             val pet = Mapper.mapPet(petDocument)
 
@@ -98,7 +98,55 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
     }
 
     override suspend fun updatePet(pet: Pet): Boolean {
-        TODO("Not yet implemented")
+        try {
+            //Update image and update url in pet
+
+            //Update pet
+            serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(pet.id)
+                .update(Mapper.map(pet)).await()
+
+            //Dewormings
+            for (deworming in pet.dewormings) {
+                if(deworming.id.isEmpty()) {
+                    val dewormingRef =
+                        serviceFirebaseFirestore.collection(Constants.PET_COLLECTION)
+                            .document(pet.id)
+                            .collection(Constants.DEWORMING_COLLECTION).document()
+                    deworming.id = dewormingRef.id
+                    serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(pet.id)
+                        .collection(Constants.DEWORMING_COLLECTION).document(dewormingRef.id)
+                        .set(Mapper.map(deworming)).await()
+                }
+                else{
+                    serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(pet.id)
+                        .collection(Constants.DEWORMING_COLLECTION).document(deworming.id)
+                        .update(Mapper.map(deworming)).await()
+                }
+            }
+
+            //Vaccines
+            for (vaccine in pet.vaccines) {
+                if(vaccine.id.isEmpty()) {
+                    val vaccineRef =
+                        serviceFirebaseFirestore.collection(Constants.PET_COLLECTION)
+                            .document(pet.id)
+                            .collection(Constants.VACCINE_COLLECTION).document()
+                    vaccine.id = vaccineRef.id
+                    serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(pet.id)
+                        .collection(Constants.VACCINE_COLLECTION).document(vaccineRef.id)
+                        .set(Mapper.map(vaccine)).await()
+                }
+                else{
+                    serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(pet.id)
+                        .collection(Constants.VACCINE_COLLECTION).document(vaccine.id)
+                        .update(Mapper.map(vaccine)).await()
+                }
+            }
+            return true
+
+        }catch(e: Exception){
+            return false
+        }
     }
 
     override suspend fun assignAdopterToPet(petId: String, adopterId: String): Boolean {
