@@ -72,7 +72,13 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
     }
 
     override suspend fun assignAdopterToPet(petId: String, adopterId: String): Boolean {
-        TODO("Not yet implemented")
+        try {
+            serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                .update(mapOf(Constants.PET_ADOPTER_ID_FIELD to adopterId)).await()
+            return true
+        }catch (e: Exception){
+            return false
+        }
     }
 
     override suspend fun saveEvidence(petId: String, evidence: Evidence): Boolean {

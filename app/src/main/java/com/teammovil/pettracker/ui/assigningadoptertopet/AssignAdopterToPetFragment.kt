@@ -11,8 +11,8 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAssignAdopterToPetBinding
 import com.teammovil.pettracker.domain.Adopter
 
@@ -38,11 +38,11 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
 
         binding = FragmentAssignAdopterToPetBinding.bind(view)
 
-        val petFake = PetFakeExternalDataAccess()
+        val petExternal = PetExternalDataAccessServiceImpl()
         val adopterFake = AdopterExternalDataAccessServiceImpl()
         val adopterStorage = FakeAdopterStorageDataAccess()
 
-        val petRepository = PetRepository(petFake)
+        val petRepository = PetRepository(petExternal)
         val adopterRepository = AdopterRepository(adopterFake,adopterStorage)
 
         viewModel = ViewModelProvider(this,AdopterViewModelFactory(petRepository,adopterRepository))[AdopterViewModel::class.java]

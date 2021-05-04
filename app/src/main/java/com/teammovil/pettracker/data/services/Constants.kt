@@ -1,7 +1,5 @@
 package com.teammovil.pettracker.data.services
 
-import com.teammovil.pettracker.domain.Evidence
-
 object Constants {
 
     const val RESCUER_COLLECTION = "rescuers"
