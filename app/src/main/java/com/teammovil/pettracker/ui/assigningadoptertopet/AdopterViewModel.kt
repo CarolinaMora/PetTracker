@@ -43,7 +43,7 @@ class AdopterViewModel(val adopterRepository: AdopterRepository,val petRepositor
     }
 
     fun onAdopterClicked(adopter: Adopter){
-        showConfirmation(adopter.id,adopter.name)
+        showConfirmation(adopter.email, adopter.name)
     }
 
     private fun showConfirmation (adopterId: String, adopterName: String){

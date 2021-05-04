@@ -45,7 +45,7 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
     private fun saveAdopter (adopter: Adopter){
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO){adopterRepository.saveAdopter(adopter)}
+            val result = withContext(Dispatchers.IO){adopterRepository.registerAdopter(adopter)}
             if(result) showSuccessAdvice()
             else showRegistrationError()
         }
@@ -111,13 +111,12 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
 
     private fun mapAdopter (origin: AdopterView): Adopter{
         return Adopter(
-            "",
+            origin.email.value!!,
             origin.name.value!!,
             origin.firstLastName.value!!,
             origin.secondLastName.value!!,
             GenderType.valueOf(origin.genderType.value!!),
             getDateFromString(origin.birthDay.value!!)!!,
-            origin.email.value!!,
             origin.password.value!!,
             origin.phone.value!!,
             origin.address.value!!

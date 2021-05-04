@@ -9,73 +9,67 @@ import java.util.*
 
 val fakeAdopterList: MutableList<Adopter> = listOf(
     Adopter(
-        "1",
+        "example@gmail.com",
         "María",
         "Cardenaz",
         "Gonzalez",
         GenderType.FEMALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "7471879475",
         "Eje 23 Sur 39, Ciudad de México"
     ),
     Adopter(
-        "2",
+        "example@gmail.com",
         "Alberto",
         "Martínez",
     "Robledo",
         GenderType.MALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "747187947389",
         "Eje 8 Sur 84, Ciudad de México"
     ),
     Adopter(
-        "3",
+        "example@gmail.com",
         "Adrian",
         "Guzman",
         "Ramirez",
         GenderType.MALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "7471879473",
         "Eje 7 Norte 45, Ciudad de México"
     ),
     Adopter(
-        "4",
+        "example@gmail.com",
         "Fernanda",
         "Castro",
         "Robledo",
         GenderType.FEMALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "7471879473",
         "Eje 9 Este 145, Ciudad de México"
     ),
     Adopter(
-        "5",
+        "example@gmail.com",
         "Carolina",
         "Caballero",
         "Ramirez",
         GenderType.FEMALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "7471879475",
         "Eje 23 Sur 39, Ciudad de México"
     ),
     Adopter(
-        "6",
+        "example@gmail.com",
         "Jorge",
         "Crespo",
         "Ramirez",
         GenderType.MALE,
         getDateFromString("2020-09-01")?.let { it }?: Date(),
-        "example@gmail.com",
         "password123",
         "7471879475",
         "Eje 12 Sur 39, Estado de México"
@@ -83,13 +77,12 @@ val fakeAdopterList: MutableList<Adopter> = listOf(
 ).toMutableList()
 
 val fakeAdopter = Adopter(
-    "1",
+    "karen@gmail.com",
     "Karen",
     "Pérez",
     "García",
     GenderType.FEMALE,
     getDateFromString("1981-05-27")?.let{it}?: Date(),
-    "karen@gmai.com",
     "hola1234",
     "5566778899",
     "Ciudad de México"
@@ -100,7 +93,7 @@ class FakeAdopterExternalDataAccess: AdopterExternalDataAccess{
         return fakeAdopter
     }
 
-    override suspend fun saveAdopter(adopter: Adopter):Boolean {
+    override suspend fun registerAdopter(adopter: Adopter):Boolean {
         return true
     }
 

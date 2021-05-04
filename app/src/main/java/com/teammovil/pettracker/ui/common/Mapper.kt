@@ -6,7 +6,6 @@ import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
 import java.util.*
-import kotlin.collections.ArrayList
 
 object Mapper {
 
@@ -27,6 +26,7 @@ object Mapper {
     fun map (origin: Vaccine, position: Int): VaccineView{
         return VaccineView(
             position,
+            origin.id,
             origin.name,
             getStringFromDate(origin.applicationDate ) ?: ""
         )
@@ -34,30 +34,32 @@ object Mapper {
 
     fun mapVaccine (vaccineView: VaccineView): Vaccine{
         return Vaccine(
+            id = vaccineView.idExternal,
             name = vaccineView.name,
             applicationDate = getDateFromString(vaccineView.applicationDate)?.let{it}?: Date()
         )
     }
 
-    fun mapDewormingList (dewormingViewList: List<DewormingView>): List<Date>{
+    fun mapDewormingList (dewormingViewList: List<DewormingView>): List<Deworming>{
         return dewormingViewList.map {
-            getDateFromString(it.applicationDate)?.let{it} ?: Date()
+            Deworming(it.idExternal, it.name, getDateFromString(it.applicationDate)?.let{it} ?: Date())
         }
     }
 
-    fun mapDewormingViewList (origin: List<Date>): List<DewormingView>{
+    fun mapDewormingViewList (origin: List<Deworming>): List<DewormingView>{
         val dewormingList = listOf<DewormingView>().toMutableList()
-        origin.forEachIndexed { index, date ->  dewormingList.add(
-            map(date, index))
+        origin.forEachIndexed { index, deworming ->  dewormingList.add(
+            map(deworming, index))
         }
         return dewormingList
     }
 
-    fun map (date: Date, position: Int): DewormingView{
+    fun map (deworming: Deworming, position: Int): DewormingView{
         return DewormingView(
             position,
-            "Desparacitación $position",
-            getStringFromDate(date) ?: ""
+            deworming.id,
+            deworming.name,
+            getStringFromDate(deworming.applicationDate) ?: ""
         )
     }
 

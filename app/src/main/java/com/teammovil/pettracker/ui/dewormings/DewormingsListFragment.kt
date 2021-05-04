@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.teammovil.pettracker.databinding.FragmentListPlusButtonBinding
 import com.teammovil.pettracker.ui.views.BasicOptionsSwipeHelper
 
@@ -40,7 +38,7 @@ class DewormingsListFragment: Fragment(), DewormingAdapter.OnClickListenerItem,
 
     private fun onClickAddDeworming (){
         dewormingAdapter?.let{
-            val deworming = DewormingView(it.itemCount, "", "")
+            val deworming = DewormingView(it.itemCount, "", "", "")
             showDialog(deworming)
         }
     }

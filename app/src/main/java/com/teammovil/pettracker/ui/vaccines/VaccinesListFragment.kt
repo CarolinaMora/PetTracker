@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.teammovil.pettracker.databinding.FragmentListPlusButtonBinding
 import com.teammovil.pettracker.ui.views.BasicOptionsSwipeHelper
 
@@ -40,7 +38,7 @@ class VaccinesListFragment: Fragment(), VaccineAdapter.OnClickListenerItem,
 
     private fun onClickAddVaccine (){
         vaccineAdapter?.let{
-            val vaccine = VaccineView(it.itemCount, "", "")
+            val vaccine = VaccineView(it.itemCount, "", "", "")
             showDialog(vaccine)
         }
     }

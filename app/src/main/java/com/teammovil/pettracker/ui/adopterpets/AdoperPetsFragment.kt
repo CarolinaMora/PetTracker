@@ -9,35 +9,35 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
-import com.teammovil.pettracker.databinding.FragmentAdoperPetsBinding
+import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
+import com.teammovil.pettracker.databinding.FragmentAdopterPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
 
-class AdoperPetsFragment : Fragment() {
+class AdopterPetsFragment : Fragment() {
 
-    lateinit var binding: FragmentAdoperPetsBinding
+    lateinit var binding: FragmentAdopterPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
     private lateinit var viewModel: AdopterPetsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentAdoperPetsBinding.inflate(inflater)
+        binding = FragmentAdopterPetsBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val petFake = PetFakeExternalDataAccess()
-        val adopterFake = FakeAdopterExternalDataAccess()
-        val adopterStorage = FakeAdopterStorageDataAccess()
+        val petExternal = PetExternalDataAccessServiceImpl()
+        val adopterExternal = AdopterExternalDataAccessServiceImpl()
+        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
-        val petsRepo = PetRepository(petFake)
-        val adopterRepo = AdopterRepository(adopterFake, adopterStorage)
+        val petsRepo = PetRepository(petExternal)
+        val adopterRepo = AdopterRepository(adopterExternal, adopterStorage)
 
         viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(petsRepo, adopterRepo))[AdopterPetsViewModel::class.java]
         petsAdapter = RegisteredPetsAdapter{

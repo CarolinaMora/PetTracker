@@ -9,9 +9,9 @@ interface PetExternalDataAccess {
 
     suspend fun getAllPetsFromAdopter (adopterId: String): List<Pet>
 
-    suspend fun getPetById (petId: String): Pet
+    suspend fun getPetById (petId: String): Pet?
 
-    suspend fun registerPet (pet: Pet): Boolean
+    suspend fun registerPet (pet: Pet, rescuerId: String): Boolean
 
     suspend fun updatePet (pet: Pet): Boolean
 

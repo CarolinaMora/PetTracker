@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRescuerLoginBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
@@ -33,8 +33,8 @@ class RescuerLoginFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
             RescuerRepository(
-                RescuerFakeExternalDataAccess(),
-                RescuerFakeStorageDataAccess()
+                RescuerExternalDataAccessServiceImpl(),
+                RescuerStorageDataAccessDataBaseImpl(requireContext())
             )
         )
         )[RescuerLoginViewModel::class.java]

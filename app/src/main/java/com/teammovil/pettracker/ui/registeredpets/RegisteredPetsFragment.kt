@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
+import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.common.EventObserver
@@ -30,9 +30,9 @@ class RegisteredPetsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRegisteredPetsBinding.inflate(inflater)
 
-        val petFake = PetFakeExternalDataAccess()
-        val rescuerFake = RescuerFakeExternalDataAccess()
-        val rescuerStorage = RescuerFakeStorageDataAccess()
+        val petFake = PetExternalDataAccessServiceImpl()
+        val rescuerFake = RescuerExternalDataAccessServiceImpl()
+        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petFake)
         val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)

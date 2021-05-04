@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
 import com.teammovil.pettracker.domain.Pet
 import kotlinx.coroutines.launch
@@ -48,7 +49,7 @@ class PetDetailFragment: Fragment() {
         binding = FragmentPetDetailBinding.inflate (inflater)
 
         viewModel = ViewModelProvider(this,
-                PetDetailViewModelFactory (PetRepository(PetFakeExternalDataAccess()))
+                PetDetailViewModelFactory (PetRepository(PetExternalDataAccessServiceImpl()))
         ) [PetDetailViewModel::class.java]
         viewModel.model.observe(viewLifecycleOwner, Observer {
             updateUi(it)
@@ -92,7 +93,7 @@ class PetDetailFragment: Fragment() {
             txtType.text = pet.petType.name
             txtSterilized.text = pet.sterilized.toString()
             rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
-            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings)
+            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
             txtStatus.text = pet.status.name
             rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
             Glide
