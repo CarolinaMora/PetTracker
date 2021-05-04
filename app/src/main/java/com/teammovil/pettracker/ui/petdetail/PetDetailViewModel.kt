@@ -35,8 +35,8 @@ class PetDetailViewModel (var petRepository: PetRepository): ViewModel() {
             var resultPet = withContext( Dispatchers.IO ) {
                 petRepository.getPetById(petId)
             }
-
-            _model.value = UiModel.PetDetailContent(resultPet)
+            if(resultPet!=null)
+                _model.value = UiModel.PetDetailContent(resultPet)
         }
     }
 

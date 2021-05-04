@@ -51,7 +51,7 @@ object Constants {
 
     //Evicence
     const val EVIDENCE_ID_FIELD = "id"
-    const val EVIDENCE_NAME_FIELD = "name"
+    const val EVIDENCE_COMMENT_FIELD = "comment"
     const val EVIDENCE_MADIA_URL_FIELD = "url"
     const val EVIDENCE_DATE_TAKEN_FIELD = "date_taken"
 

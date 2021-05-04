@@ -87,7 +87,7 @@ class PetFakeExternalDataAccess: PetExternalDataAccess{
         return fakePetList
     }
 
-    override suspend fun getPetById(petId: String): Pet {
+    override suspend fun getPetById(petId: String): Pet? {
         Thread.sleep(5000)
         val petFound = fakePetList.find { petId == it.id }
         return petFound?.let{it}?: fakePetList[0]

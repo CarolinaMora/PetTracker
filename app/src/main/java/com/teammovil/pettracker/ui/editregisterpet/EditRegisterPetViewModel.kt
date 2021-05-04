@@ -93,8 +93,9 @@ class EditRegisterPetViewModel(
         viewModelScope.launch {
             _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){petRepository.getPetById(id)}
-            _petView.value = Mapper.mapPet(result)
             _model.value = UiModel.Loading(false)
+            if(result!=null)
+                _petView.value = Mapper.mapPet(result)
         }
     }
 

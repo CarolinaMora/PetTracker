@@ -75,7 +75,7 @@ object Mapper {
             Constants.PET_TYPE_FIELD to pet.petType.ordinal,
             Constants.PET_STERILIZED_FIELD to pet.sterilized,
             Constants.PET_STATUS_FIELD to pet.status.ordinal,
-            Constants.EVIDENCE_MADIA_URL_FIELD to pet.mainPhoto
+            Constants.PET_PHOTO_URL_FIELD to pet.mainPhoto
         )
     }
 
@@ -111,6 +111,31 @@ object Mapper {
             Constants.DEWORMING_ID_FIELD to deworming.id,
             Constants.DEWORMING_NAME_FIELD to deworming.name,
             Constants.DEWORMING_APPLICATION_FIELD to getStringFromDate(deworming.applicationDate)
+        )
+    }
+
+    fun mapDeworming(document: DocumentSnapshot): Deworming {
+        return Deworming(
+            document.get(Constants.DEWORMING_ID_FIELD) as String? ?:"",
+            document.get(Constants.DEWORMING_NAME_FIELD) as String? ?:"",
+            getDateFromString(document.get(Constants.DEWORMING_APPLICATION_FIELD) as String? ?:"") ?: Date()
+        )
+    }
+
+    fun mapVaccine(document: DocumentSnapshot): Vaccine {
+        return Vaccine(
+            document.get(Constants.VACCINE_ID_FIELD) as String? ?:"",
+            document.get(Constants.VACCINE_NAME_FIELD) as String? ?:"",
+            getDateFromString(document.get(Constants.VACCINE_APPLICATION_DATE_FIELD) as String? ?:"") ?: Date()
+        )
+    }
+
+    fun mapEvidence(document: DocumentSnapshot): Evidence {
+        return Evidence(
+            document.get(Constants.EVIDENCE_ID_FIELD) as String? ?:"",
+            document.get(Constants.EVIDENCE_COMMENT_FIELD) as String? ?:"",
+            document.get(Constants.EVIDENCE_MADIA_URL_FIELD) as String? ?:"",
+            getDateFromString(document.get(Constants.EVIDENCE_DATE_TAKEN_FIELD) as String? ?:"") ?: Date()
         )
     }
 }

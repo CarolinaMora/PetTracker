@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
 import com.teammovil.pettracker.domain.Pet
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ class PetDetailFragment: Fragment() {
         binding = FragmentPetDetailBinding.inflate (inflater)
 
         viewModel = ViewModelProvider(this,
-                PetDetailViewModelFactory (PetRepository(PetFakeExternalDataAccess()))
+                PetDetailViewModelFactory (PetRepository(PetExternalDataAccessServiceImpl()))
         ) [PetDetailViewModel::class.java]
         viewModel.model.observe(viewLifecycleOwner, Observer {
             updateUi(it)

@@ -29,8 +29,32 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun getPetById(petId: String): Pet {
-        TODO("Not yet implemented")
+    override suspend fun getPetById(petId: String): Pet? {
+        try {
+            //Update new pet
+            val petDocument = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId).get().await()
+            val pet = Mapper.mapPet(petDocument)
+
+            //Dewormings
+            val dewormings = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                    .collection(Constants.DEWORMING_COLLECTION).get().await().documents
+            pet.dewormings = dewormings.map { Mapper.mapDeworming(it) }
+
+            //Vaccines
+            val vaccines = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                .collection(Constants.VACCINE_COLLECTION).get().await().documents
+            pet.vaccines = vaccines.map { Mapper.mapVaccine(it) }
+
+            //Evidences
+            val evidences = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                .collection(Constants.EVIDENCE_COLLECTION).get().await().documents
+            pet.evidences = evidences.map { Mapper.mapEvidence(it) }
+
+            return pet
+
+        }catch(e: Exception){
+            return null
+        }
     }
 
     override suspend fun registerPet(pet: Pet, rescuerId: String): Boolean {

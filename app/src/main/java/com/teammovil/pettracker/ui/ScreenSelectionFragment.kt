@@ -57,7 +57,7 @@ class ScreenSelectionFragment : Fragment() {
         val detailButton = view.findViewById<AppCompatButton>(R.id.bt_detail_option)
         detailButton.setOnClickListener{
             //val bundle = TODO CREAR EL BUNDLE, mandar el misma contastne ARG_ID_PET = "1"
-            val bundle = bundleOf(Pair(ARG_PET_ID, "1" ))
+            val bundle = bundleOf(Pair(ARG_PET_ID, "69BsSWW4IjxNvDRbJOVv" ))
             view?.findNavController()
                 ?.navigate(R.id.action_screenSelectionFragment_to_petDetailFragment, bundle)
             //, bundle dentro del navigate
