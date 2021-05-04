@@ -78,5 +78,10 @@
 
     <!-- Fragment assign adopter to pet -->
     <string name="tittle_assign_adopter_to_pet">Asignar adoptante a la mascota</string>
+    <string name="title_adopter_pets_fragment">Mis Mascotas</string>
+    <string name="title_send_evidence_fragment">Enviar Evidencia</string>
+    <string name="title_assign_adopter_fragment">Asignar Adoptante</string>
+    <string name="action_send_evidence">Enviar evidencia</string>
+    <string name="action_assing_adopter">Asignar adoptante</string>
 
 </resources>

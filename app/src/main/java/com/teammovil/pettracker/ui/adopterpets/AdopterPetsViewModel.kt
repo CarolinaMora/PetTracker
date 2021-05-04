@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.domain.Pet
+import com.teammovil.pettracker.ui.common.Event
 import kotlinx.coroutines.launch
 
 class AdopterPetsViewModel(private val petRepository: PetRepository, private val adopterRepository: AdopterRepository) : ViewModel() {
@@ -18,6 +19,9 @@ class AdopterPetsViewModel(private val petRepository: PetRepository, private val
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel> get() = _model
+
+    private val _navigation = MutableLiveData<Event<String>>()
+    val navigation: LiveData<Event<String>> get() = _navigation
 
     init {
         viewModelScope.launch {
@@ -33,10 +37,10 @@ class AdopterPetsViewModel(private val petRepository: PetRepository, private val
         _model.value = UiModel.AdopterPetsContent(petsList)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 
+    fun onDetailPet(pet: Pet) {
+        _navigation.value = Event(pet.id)
+    }
 
 
 }

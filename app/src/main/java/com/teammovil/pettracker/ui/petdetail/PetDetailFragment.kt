@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
@@ -56,8 +57,17 @@ class PetDetailFragment: Fragment() {
         petId?.let{
             viewModel.onGetPetDetail(it)
         }
+        
+        setListeners()
 
         return binding.root
+    }
+    
+    private fun setListeners(){
+        binding.btEdit.setOnClickListener { 
+            val action = PetDetailFragmentDirections.actionPetDetailFragmentToPetRegistrationFragment(petId)
+            view?.findNavController()?.navigate(action)
+        }
     }
 
     private fun updateUi (uiModel: PetDetailViewModel.UiModel) {

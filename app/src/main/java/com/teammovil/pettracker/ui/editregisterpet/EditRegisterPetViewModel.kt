@@ -24,14 +24,20 @@ class EditRegisterPetViewModel(
         class ErrorAdvice (val message: String): UiModel()
     }
 
+    sealed class UiEvents {
+        class GoToSendEvidence(val petId: String): UiEvents()
+        class GoToAssignAdopter(val petId: String): UiEvents()
+        object GoBack: UiEvents()
+    }
+
     private val _petView = MutableLiveData<PetView>()
     val petView: LiveData<PetView> get() = _petView
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel> get() = _model
     
-    private val _navigation = MutableLiveData<Event<Unit>>()
-    val navigation: LiveData<Event<Unit>> get() = _navigation
+    private val _navigation = MutableLiveData<Event<UiEvents>>()
+    val navigation: LiveData<Event<UiEvents>> get() = _navigation
 
     private var getPetFirstTime = true
 
@@ -58,7 +64,7 @@ class EditRegisterPetViewModel(
     }
 
     fun onClickOkAdvice (){
-        _navigation.value = Event(Unit)
+        _navigation.value = Event(UiEvents.GoBack)
     }
 
     fun onSavePhotoUrl (url: String?){
@@ -94,6 +100,14 @@ class EditRegisterPetViewModel(
 
     private fun showRegistrationError (){
         _model.value = UiModel.ErrorAdvice("Hubo un error al registrar su mascota. Intente más tarde.")
+    }
+
+    fun onSendEvidence(petId: String) {
+        _navigation.value = Event(UiEvents.GoToSendEvidence(petId))
+    }
+
+    fun onAssignAdopter (petId: String){
+        _navigation.value = Event(UiEvents.GoToAssignAdopter(petId))
     }
 }
 

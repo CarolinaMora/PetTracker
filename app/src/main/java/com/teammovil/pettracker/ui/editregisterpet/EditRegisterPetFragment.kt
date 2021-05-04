@@ -95,7 +95,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     private fun setObservers (){
         viewModel.petView.observe(viewLifecycleOwner, Observer { updateRestPet(it) })
         viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
-        viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ updateUI(it) })
     }
 
     private fun updateRestPet(petView: PetView?) {
@@ -129,6 +129,14 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         }
     }
 
+    private fun updateUI (navigation: EditRegisterPetViewModel.UiEvents){
+        when(navigation){
+            is EditRegisterPetViewModel.UiEvents.GoToAssignAdopter -> navigateToAssignAdopter()
+            is EditRegisterPetViewModel.UiEvents.GoToSendEvidence -> navigateToSendEvidence()
+            is EditRegisterPetViewModel.UiEvents.GoBack -> navigateUp()
+        }
+    }
+
     private fun setListeners (){
         //Register button
         binding.petRegistrationRegisterAction.setOnClickListener{
@@ -147,6 +155,26 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
         binding.petRegistrationRescueDate.setOnClickListener {
             onClickDate(it.id)
+        }
+
+        binding.btAssignAdopter.setOnClickListener {
+            onClickAssignAdopter()
+        }
+
+        binding.btSendEvidence.setOnClickListener {
+            onClickSendEvidence()
+        }
+    }
+
+    private fun onClickSendEvidence() {
+        petId?.let{
+            viewModel.onSendEvidence(it)
+        }
+    }
+
+    private fun onClickAssignAdopter() {
+        petId?.let{
+            viewModel.onAssignAdopter(it)
         }
     }
 
@@ -169,10 +197,30 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.petRegistrationGender.adapter = adapterGender
 
+        //Buttons
+        if(petId.isNullOrEmpty()){
+            binding.btAssignAdopter.visibility = View.GONE
+            binding.btSendEvidence.visibility = View.GONE
+        }
+
     }
 
     private fun navigateUp (){
         view?.findNavController()?.navigateUp()
+    }
+
+    private fun navigateToSendEvidence (){
+        petId?.let {
+            val action = EditRegisterPetFragmentDirections.actionAdopterRegistrationFragmentToSendEvidenceFragment(it)
+            view?.findNavController()?.navigate(action)
+        }
+    }
+
+    private fun navigateToAssignAdopter (){
+        petId?.let {
+            val action = EditRegisterPetFragmentDirections.actionAdopterRegistrationFragmentToAssignAdopterToPetFragment(it)
+            view?.findNavController()?.navigate(action)
+        }
     }
 
     private fun showSuccessAdvice (){

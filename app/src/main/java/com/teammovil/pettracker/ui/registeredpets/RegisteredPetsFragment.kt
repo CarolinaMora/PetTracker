@@ -101,7 +101,7 @@ class RegisteredPetsFragment : Fragment() {
     }
 
     private fun goToPetRegistration (){
-        val action = RegisteredPetsFragmentDirections.actionRegisterPetsFragmentToPetRegistrationFragment()
+        val action = RegisteredPetsFragmentDirections.actionRegisterPetsFragmentToPetRegistrationFragment(null)
         view?.findNavController()?.navigate(action)
     }
 

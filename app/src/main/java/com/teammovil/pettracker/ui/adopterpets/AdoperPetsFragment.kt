@@ -1,12 +1,13 @@
 package com.teammovil.pettracker.ui.adopterpets
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
@@ -14,26 +15,14 @@ import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.databinding.FragmentAdoperPetsBinding
 import com.teammovil.pettracker.domain.Pet
+import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class AdoperPetsFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var binding: FragmentAdoperPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
     private lateinit var viewModel: AdopterPetsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAdoperPetsBinding.inflate(inflater)
@@ -51,13 +40,21 @@ class AdoperPetsFragment : Fragment() {
         val adopterRepo = AdopterRepository(adopterFake, adopterStorage)
 
         viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(petsRepo, adopterRepo))[AdopterPetsViewModel::class.java]
-        petsAdapter = RegisteredPetsAdapter()
+        petsAdapter = RegisteredPetsAdapter{
+            onClickPet(it)
+        }
         binding.adopterPetsRecycler.adapter = petsAdapter
 
+        setObservers()
+    }
+
+    private fun setObservers(){
         viewModel.model.observe(viewLifecycleOwner, Observer {
-
+            updateUI(it)
         })
-
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver {
+            goToPetDetail(it)
+        })
     }
 
     private fun updateUI(uiModel: AdopterPetsViewModel.UiModel){
@@ -70,6 +67,16 @@ class AdoperPetsFragment : Fragment() {
 
     private fun setView(petsList: List<Pet>){
         petsAdapter.items = petsList
+    }
+
+
+    private fun onClickPet (pet: Pet){
+        viewModel.onDetailPet(pet)
+    }
+
+    private fun goToPetDetail (petId: String){
+        val action = AdoperPetsFragmentDirections.actionAdoperPetsFragmentToPetDetailFragment(petId)
+        view?.findNavController()?.navigate(action)
     }
 
 }

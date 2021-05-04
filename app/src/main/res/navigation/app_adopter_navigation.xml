@@ -3,30 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/registerPetsFragment">
+    app:startDestination="@id/adoperPetsFragment">
 
-    <fragment
-        android:id="@+id/registerPetsFragment"
-        android:name="com.teammovil.pettracker.ui.registeredpets.RegisteredPetsFragment"
-        android:label="@string/title_register_pets_fragment"
-        tools:layout="@layout/fragment_registered_pets" >
-        <action
-            android:id="@+id/action_registerPetsFragment_to_petDetailFragment"
-            app:destination="@id/petDetailFragment" />
-        <action
-            android:id="@+id/action_registerPetsFragment_to_petRegistrationFragment"
-            app:destination="@id/petRegistrationFragment" />
-    </fragment>
     <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.teammovil.pettracker.ui.petdetail.PetDetailFragment"
         android:label="@string/title_pet_detail_fragment"
         tools:layout="@layout/fragment_pet_detail" >
+        <argument
+            android:name="petId"
+            app:argType="string"
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_petDetailFragment_to_petRegistrationFragment"
             app:destination="@id/petRegistrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adoperPetsFragment"
+        android:name="com.teammovil.pettracker.ui.adopterpets.AdoperPetsFragment"
+        android:label="@string/title_adopter_pets_fragment"
+        tools:layout="@layout/fragment_adoper_pets">
+        <action
+            android:id="@+id/action_adoperPetsFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendEvidenceFragment"
+        android:name="com.teammovil.pettracker.ui.sendevidence.SendEvidenceFragment"
+        android:label="@string/title_send_evidence_fragment"
+        tools:layout="@layout/fragment_send_evidence">
         <argument
             android:name="petId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/assignAdopterToPetFragment"
+        android:name="com.teammovil.pettracker.ui.assigningadoptertopet.AssignAdopterToPetFragment"
+        android:label="@string/title_assign_adopter_fragment"
+        tools:layout="@layout/fragment_assign_adopter_to_pet">
+        <argument
+            android:name="petId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/petRegistrationFragment"
+        android:name="com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetFragment"
+        android:label="@string/title_pet_registration_fragment"
+        tools:layout="@layout/fragment_pet_registration">
+        <argument
+            android:name="petId"
+            app:argType="string"
+            app:nullable="true"/>
+        <action
+            android:id="@+id/action_adopterRegistrationFragment_to_assignAdopterToPetFragment"
+            app:destination="@id/assignAdopterToPetFragment" />
+        <action
+            android:id="@+id/action_adopterRegistrationFragment_to_sendEvidenceFragment"
+            app:destination="@id/sendEvidenceFragment" />
     </fragment>
 </navigation>

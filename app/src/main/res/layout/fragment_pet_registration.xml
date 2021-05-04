@@ -212,6 +212,26 @@
                     android:text="@{viewModel.petView.status.value.name()}"
                     />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_send_evidence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:background="@color/yellow_dark"
+                    android:textColor="@android:color/white"
+                    android:text="@string/action_send_evidence"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_assign_adopter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:background="@color/yellow_dark"
+                    android:textColor="@android:color/white"
+                    android:text="@string/action_assing_adopter"
+                    />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
