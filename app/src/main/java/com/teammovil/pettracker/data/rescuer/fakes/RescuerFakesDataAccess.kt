@@ -27,7 +27,7 @@ class RescuerFakeExternalDataAccess : RescuerExternalDataAccess{
     }
 }
 
-class RescuerFakeStorageDataAccess : RescuerStorageDataAccess{
+class RescuerFakeStorageDataAccessNOTUSEANYMORE : RescuerStorageDataAccess {
     override suspend fun saveRescuer(rescuer: Rescuer) {
 
     }

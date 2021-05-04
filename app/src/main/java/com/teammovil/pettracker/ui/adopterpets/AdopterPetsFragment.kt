@@ -9,21 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
-import com.teammovil.pettracker.databinding.FragmentAdoperPetsBinding
+import com.teammovil.pettracker.databinding.FragmentAdopterPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class AdoperPetsFragment : Fragment() {
+class AdopterPetsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var binding: FragmentAdoperPetsBinding
+    lateinit var binding: FragmentAdopterPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
     private lateinit var viewModel: AdopterPetsViewModel
 
@@ -36,16 +36,16 @@ class AdoperPetsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentAdoperPetsBinding.inflate(inflater)
+        binding = FragmentAdopterPetsBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val petExternal = PetExternalDataAccessServiceImpl()
+        val petFake = PetFakeExternalDataAccess()
         val adopterFake = FakeAdopterExternalDataAccess()
-        val adopterStorage = FakeAdopterStorageDataAccess()
+        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petExternal)
         val adopterRepo = AdopterRepository(adopterFake, adopterStorage)

@@ -1,17 +1,16 @@
 package com.teammovil.pettracker.ui.adopterregistration
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.domain.GenderType
@@ -34,7 +33,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
             AdopterRegistrationViewModelFactory(
                 AdopterRepository(
                     AdopterExternalDataAccessServiceImpl(),
-                    FakeAdopterStorageDataAccess()
+                    AdopterStorageDataAccessDataBaseImpl(requireContext())
                 )
             )
         )[AdopterRegistrationViewModel::class.java]

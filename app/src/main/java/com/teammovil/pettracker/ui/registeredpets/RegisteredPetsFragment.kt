@@ -1,16 +1,16 @@
 package com.teammovil.pettracker.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.domain.Pet
@@ -40,7 +40,7 @@ class RegisterPetsFragment : Fragment() {
 
         val petFake = PetExternalDataAccessServiceImpl()
         val rescuerFake = RescuerFakeExternalDataAccess()
-        val rescuerStorage = RescuerFakeStorageDataAccess()
+        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petFake)
         val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)

@@ -26,6 +26,11 @@
         android:label="fragment_send_evidence"
         tools:layout="@layout/fragment_send_evidence" />
     <fragment
+        android:id="@+id/adopterPetsFragment"
+        android:name="com.teammovil.pettracker.ui.adopterpets.AdopterPetsFragment"
+        android:label="fragment_adopter_pets"
+        tools:layout="@layout/fragment_adopter_pets" />
+    <fragment
         android:id="@+id/screenSelectionFragment"
         android:name="com.teammovil.pettracker.ui.ScreenSelectionFragment"
         android:label="fragment_screen_selection"
@@ -51,8 +56,9 @@
         <action
             android:id="@+id/action_screenSelectionFragment_to_adoperPetsFragment"
             app:destination="@id/adoperPetsFragment" />
-
-
+        <action
+            android:id="@+id/action_screenSelectionFragment_to_adopterPets"
+            app:destination="@+id/adopterPetsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/editPetFragment"

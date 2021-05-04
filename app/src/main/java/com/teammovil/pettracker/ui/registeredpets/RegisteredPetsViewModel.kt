@@ -1,13 +1,15 @@
 package com.teammovil.pettracker.ui.registeredpets
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeExternalDataAccess
-import com.teammovil.pettracker.data.rescuer.fakes.RescuerFakeStorageDataAccess
 import com.teammovil.pettracker.domain.Pet
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepository: RescuerRepository) : ViewModel() {
 
@@ -26,9 +28,9 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
 
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val rescuer = rescuerRepository.getRescuer()
+            val rescuer = withContext(Dispatchers.IO) {rescuerRepository.getRescuer()}
             if(rescuer!=null) {
-                var result = petRepository.getAllPatsFromRescuer(rescuer.email)
+                val result = withContext(Dispatchers.IO) {petRepository.getAllPatsFromRescuer(rescuer.email)}
                 setView(result)
             }
         }

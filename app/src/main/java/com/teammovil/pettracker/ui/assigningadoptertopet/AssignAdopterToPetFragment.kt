@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
+import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.pet.PetRepository
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
@@ -40,7 +40,7 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
 
         val petExternal = PetExternalDataAccessServiceImpl()
         val adopterFake = AdopterExternalDataAccessServiceImpl()
-        val adopterStorage = FakeAdopterStorageDataAccess()
+        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
         val petRepository = PetRepository(petExternal)
         val adopterRepository = AdopterRepository(adopterFake,adopterStorage)
