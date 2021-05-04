@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.AdopterRepository
+import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
@@ -35,7 +35,8 @@ class AdopterLoginFragment : Fragment() {
             AdopterRepository(
                 AdopterExternalDataAccessServiceImpl(),
                 AdopterStorageDataAccessDataBaseImpl(requireActivity())
-            ))
+            )
+        )
         )[AdopterLoginViewModel::class.java]
 
         setListener()

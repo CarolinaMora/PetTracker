@@ -13,12 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.data.pet.PetRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
-import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.ui.common.*
 import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
@@ -42,8 +41,13 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         viewModel = ViewModelProvider(
                         this,
                         EditRegisterPetViewModelFactory(
-                            PetRepository(PetExternalDataAccessServiceImpl()),
-                            RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
+                            PetRepository(
+                                PetExternalDataAccessServiceImpl()
+                            ),
+                            RescuerRepository(
+                                RescuerExternalDataAccessServiceImpl(),
+                                RescuerStorageDataAccessDataBaseImpl(requireContext())
+                            )
                         )
                 )[EditRegisterPetViewModel::class.java]
 
@@ -182,7 +186,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     private fun setViews (){
         //Type selection
-        val arrayType = listOf(getString(R.string.prompt_select_option)) + PetType.values().map{it.name}
+        val arrayType = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.PetType.values().map{it.name}
         val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayType
@@ -191,7 +195,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.petRegistrationType.adapter = adapterType
 
         //Gender selection
-        val arrayGender = listOf(getString(R.string.prompt_select_option)) + GenderType.values().map{it.name}
+        val arrayGender = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.GenderType.values().map{it.name}
         val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayGender
@@ -263,14 +267,14 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     private fun savePet (): PetView{
         //Vaccines
-        var vaccinesList : List<Vaccine>? = null
+        var vaccinesList : List<com.teammovil.domain.Vaccine>? = null
         val vaccinesFragment = childFragmentManager.findFragmentById(R.id.pet_registration_vaccines)
         if(vaccinesFragment is VaccinesListFragment){
             vaccinesList = Mapper.mapVaccineList(vaccinesFragment.getVaccinesList())
         }
 
         //Dewormings
-        var dewormingsList : List<Deworming>? = null
+        var dewormingsList : List<com.teammovil.domain.Deworming>? = null
         val dewormingsFragment = childFragmentManager.findFragmentById(R.id.pet_registration_dewormings)
         if(dewormingsFragment is DewormingsListFragment){
             dewormingsList = Mapper.mapDewormingList(dewormingsFragment.getDewormingsList())
@@ -297,8 +301,8 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                 FieldView(dewormingsList),
                 FieldView(photoTaker?.currentPhotoPath),
                 FieldView(
-                    if(petRegistrationStatus.text.toString().isEmpty()) PetStatus.RESCUED
-                    else  PetStatus.valueOf(petRegistrationStatus.text.toString())),
+                    if(petRegistrationStatus.text.toString().isEmpty()) com.teammovil.domain.PetStatus.RESCUED
+                    else  com.teammovil.domain.PetStatus.valueOf(petRegistrationStatus.text.toString())),
                 FieldView(null)
             )
             return pet

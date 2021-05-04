@@ -2,7 +2,7 @@ package com.teammovil.pettracker.ui.petdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.data.pet.PetRepository
 import java.lang.IllegalArgumentException
 
 class PetDetailViewModelFactory (val repository: PetRepository): ViewModelProvider.Factory {

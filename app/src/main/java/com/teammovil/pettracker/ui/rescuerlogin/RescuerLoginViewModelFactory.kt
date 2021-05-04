@@ -2,8 +2,7 @@ package com.teammovil.pettracker.ui.rescuerlogin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.data.rescuer.RescuerRepository
 
 class RescuerLoginViewModelFactory (private val rescuerRepository: RescuerRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

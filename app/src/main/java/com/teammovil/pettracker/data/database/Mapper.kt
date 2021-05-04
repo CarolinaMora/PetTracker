@@ -2,13 +2,13 @@ package com.teammovil.pettracker.data.database
 
 import com.teammovil.pettracker.data.database.entities.AdopterEntity
 import com.teammovil.pettracker.data.database.entities.RescuerEntity
-import com.teammovil.pettracker.domain.Adopter
-import com.teammovil.pettracker.domain.Rescuer
+import com.teammovil.domain.Adopter
+import com.teammovil.domain.Rescuer
 
 object Mapper {
 
-    fun map(adopterEntity: AdopterEntity): Adopter{
-        return Adopter(
+    fun map(adopterEntity: AdopterEntity): com.teammovil.domain.Adopter {
+        return com.teammovil.domain.Adopter(
             adopterEntity.email,
             adopterEntity.name,
             adopterEntity.firstLastName,
@@ -21,7 +21,7 @@ object Mapper {
         )
     }
 
-    fun adopterEntityMap(adopter: Adopter): AdopterEntity{
+    fun adopterEntityMap(adopter: com.teammovil.domain.Adopter): AdopterEntity{
         return AdopterEntity(
             adopter.email,
             adopter.name,
@@ -35,7 +35,7 @@ object Mapper {
         )
     }
 
-    fun map(rescuerEntity: RescuerEntity) = Rescuer (
+    fun map(rescuerEntity: RescuerEntity) = com.teammovil.domain.Rescuer(
         rescuerEntity.id,
         rescuerEntity.name,
         rescuerEntity.description,
@@ -46,7 +46,7 @@ object Mapper {
         rescuerEntity.activityStartDate
     )
 
-    fun map(rescuer: Rescuer) = RescuerEntity (
+    fun map(rescuer: com.teammovil.domain.Rescuer) = RescuerEntity (
         rescuer.id,
         rescuer.name,
         rescuer.description,

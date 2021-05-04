@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.pettracker.util.MessageValidation

@@ -1,6 +1,5 @@
 package com.teammovil.pettracker.ui.common
 
-import com.teammovil.pettracker.domain.*
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
@@ -9,13 +8,13 @@ import java.util.*
 
 object Mapper {
 
-    fun mapVaccineList (vaccineViewList: List<VaccineView>): List<Vaccine>{
+    fun mapVaccineList (vaccineViewList: List<VaccineView>): List<com.teammovil.domain.Vaccine>{
         return vaccineViewList.map {
             mapVaccine(it)
         }
     }
 
-    fun mapVaccineViewList (origin: List<Vaccine>): List<VaccineView>{
+    fun mapVaccineViewList (origin: List<com.teammovil.domain.Vaccine>): List<VaccineView>{
         val vaccineList = listOf<VaccineView>().toMutableList()
         origin.forEachIndexed { index, vaccine ->  vaccineList.add(
             map(vaccine, index))
@@ -23,7 +22,7 @@ object Mapper {
         return vaccineList
     }
 
-    fun map (origin: Vaccine, position: Int): VaccineView{
+    fun map (origin: com.teammovil.domain.Vaccine, position: Int): VaccineView{
         return VaccineView(
             position,
             origin.id,
@@ -32,21 +31,24 @@ object Mapper {
         )
     }
 
-    fun mapVaccine (vaccineView: VaccineView): Vaccine{
-        return Vaccine(
+    fun mapVaccine (vaccineView: VaccineView): com.teammovil.domain.Vaccine {
+        return com.teammovil.domain.Vaccine(
             id = vaccineView.idExternal,
             name = vaccineView.name,
-            applicationDate = getDateFromString(vaccineView.applicationDate)?.let{it}?: Date()
+            applicationDate = getDateFromString(vaccineView.applicationDate)?.let { it } ?: Date()
         )
     }
 
-    fun mapDewormingList (dewormingViewList: List<DewormingView>): List<Deworming>{
+    fun mapDewormingList (dewormingViewList: List<DewormingView>): List<com.teammovil.domain.Deworming>{
         return dewormingViewList.map {
-            Deworming(it.idExternal, it.name, getDateFromString(it.applicationDate)?.let{it} ?: Date())
+            com.teammovil.domain.Deworming(
+                it.idExternal,
+                it.name,
+                getDateFromString(it.applicationDate)?.let { it } ?: Date())
         }
     }
 
-    fun mapDewormingViewList (origin: List<Deworming>): List<DewormingView>{
+    fun mapDewormingViewList (origin: List<com.teammovil.domain.Deworming>): List<DewormingView>{
         val dewormingList = listOf<DewormingView>().toMutableList()
         origin.forEachIndexed { index, deworming ->  dewormingList.add(
             map(deworming, index))
@@ -54,7 +56,7 @@ object Mapper {
         return dewormingList
     }
 
-    fun map (deworming: Deworming, position: Int): DewormingView{
+    fun map (deworming: com.teammovil.domain.Deworming, position: Int): DewormingView{
         return DewormingView(
             position,
             deworming.id,
@@ -63,16 +65,20 @@ object Mapper {
         )
     }
 
-    fun mapPet (origin: PetView): Pet {
-        return Pet(
+    fun mapPet (origin: PetView): com.teammovil.domain.Pet {
+        return com.teammovil.domain.Pet(
             origin.id,
-            origin.name.value?:"",
-            GenderType.valueOf(origin.gender.value?:GenderType.MALE.name),
-            origin.race.value?:"",
-            origin.description.value?:"",
-            getDateFromString(origin.approximateDateOfBirth.value?:"")?:Date(),
-            getDateFromString(origin.rescueDate.value?:"")?: Date(),
-            PetType.valueOf(origin.petType.value?:PetType.DOG.name),
+            origin.name.value ?: "",
+            com.teammovil.domain.GenderType.valueOf(
+                origin.gender.value ?: com.teammovil.domain.GenderType.MALE.name
+            ),
+            origin.race.value ?: "",
+            origin.description.value ?: "",
+            getDateFromString(origin.approximateDateOfBirth.value ?: "") ?: Date(),
+            getDateFromString(origin.rescueDate.value ?: "") ?: Date(),
+            com.teammovil.domain.PetType.valueOf(
+                origin.petType.value ?: com.teammovil.domain.PetType.DOG.name
+            ),
             origin.sterilized.value,
             origin.vaccines.value ?: listOf(),
             origin.dewormings.value ?: listOf(),
@@ -82,7 +88,7 @@ object Mapper {
         )
     }
 
-    fun mapPet (origin: Pet): PetView{
+    fun mapPet (origin: com.teammovil.domain.Pet): PetView{
         return PetView(
             "",
             FieldView(origin.name),

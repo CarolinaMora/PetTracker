@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.domain.Rescuer
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
@@ -42,7 +41,7 @@ class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : V
         _navigation.value = Event(Unit)
     }
 
-    private fun saveRescuer (rescuer: Rescuer){
+    private fun saveRescuer (rescuer: com.teammovil.domain.Rescuer){
         viewModelScope.launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){rescuerRepository.registerRescuer(rescuer)}
@@ -97,8 +96,8 @@ class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : V
         return valid
     }
 
-    private fun mapRescuer (origin: RescuerView): Rescuer{
-        return Rescuer(
+    private fun mapRescuer (origin: RescuerView): com.teammovil.domain.Rescuer {
+        return com.teammovil.domain.Rescuer(
             "",
             origin.name.value!!,
             origin.descripion.value!!,

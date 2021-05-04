@@ -8,13 +8,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.AdopterRepository
+import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
-import com.teammovil.pettracker.data.pet.PetRepository
+import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAssignAdopterToPetBinding
-import com.teammovil.pettracker.domain.Adopter
 
 const val ARG_PET_ID= "petId"
 
@@ -43,7 +42,10 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
         val petRepository = PetRepository(petExternal)
-        val adopterRepository = AdopterRepository(adopterFake,adopterStorage)
+        val adopterRepository = AdopterRepository(
+            adopterFake,
+            adopterStorage
+        )
 
         viewModel = ViewModelProvider(this,AdopterViewModelFactory(petRepository,adopterRepository))[AdopterViewModel::class.java]
 
@@ -65,7 +67,7 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
 
     }
 
-    private fun onClickAdopter(it: Adopter) {
+    private fun onClickAdopter(it: com.teammovil.domain.Adopter) {
         viewModel.onAdopterClicked(it)
     }
 
@@ -84,7 +86,7 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         }
     }
 
-    private fun setView(adopterList: List<Adopter>){
+    private fun setView(adopterList: List<com.teammovil.domain.Adopter>){
         adoptersAdapter.items = adopterList
     }
 

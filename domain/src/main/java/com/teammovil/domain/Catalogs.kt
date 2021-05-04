@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.domain
+package com.teammovil.domain
 
 enum class PetType {
     DOG,

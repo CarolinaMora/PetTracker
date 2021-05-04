@@ -2,15 +2,15 @@ package com.teammovil.pettracker.data.services
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.teammovil.pettracker.data.rescuer.RescuerExternalDataAccess
-import com.teammovil.pettracker.domain.Rescuer
+import com.teammovil.data.rescuer.RescuerExternalDataAccess
 import kotlinx.coroutines.tasks.await
 
-class RescuerExternalDataAccessServiceImpl(): RescuerExternalDataAccess {
+class RescuerExternalDataAccessServiceImpl():
+    RescuerExternalDataAccess {
     private val serviceFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val serviceFirebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    override suspend fun login(user: String, password: String): Rescuer? {
+    override suspend fun login(user: String, password: String): com.teammovil.domain.Rescuer? {
         try {
             val result = serviceFirebaseAuth.signInWithEmailAndPassword(user, password).await()
             if (result != null) {
@@ -24,7 +24,7 @@ class RescuerExternalDataAccessServiceImpl(): RescuerExternalDataAccess {
         return null
     }
 
-    override suspend fun registerRescuer(rescuer: Rescuer): Boolean {
+    override suspend fun registerRescuer(rescuer: com.teammovil.domain.Rescuer): Boolean {
         try {
             val result = serviceFirebaseAuth
                 .createUserWithEmailAndPassword(rescuer.email, rescuer.password).await()

@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.databinding.PetsItemBinding
-import com.teammovil.pettracker.domain.Pet
+import com.teammovil.domain.Pet
 
 class RegisteredPetsAdapter(
-    val listener: ((item: Pet) -> Unit)? = null
+    val listener: ((item: com.teammovil.domain.Pet) -> Unit)? = null
 ) : RecyclerView.Adapter<RegisteredPetsAdapter.ViewHolder>(){
 
-    var items : List<Pet> = listOf()
+    var items : List<com.teammovil.domain.Pet> = listOf()
     set(value){
         field = value
         notifyDataSetChanged()
@@ -37,7 +37,7 @@ class RegisteredPetsAdapter(
 
         private val binding = PetsItemBinding.bind(view)
 
-        fun bind(pet: Pet){
+        fun bind(pet: com.teammovil.domain.Pet){
             with(binding) {
                 petTitle.text = pet.name
                 petDescription.text = pet.description

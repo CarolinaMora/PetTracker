@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.domain.Adopter
-import com.teammovil.pettracker.domain.GenderType
+import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
@@ -42,7 +40,7 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
         _navigation.value = Event(Unit)
     }
 
-    private fun saveAdopter (adopter: Adopter){
+    private fun saveAdopter (adopter: com.teammovil.domain.Adopter){
         viewModelScope.launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){adopterRepository.registerAdopter(adopter)}
@@ -109,13 +107,13 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
         return valid
     }
 
-    private fun mapAdopter (origin: AdopterView): Adopter{
-        return Adopter(
+    private fun mapAdopter (origin: AdopterView): com.teammovil.domain.Adopter {
+        return com.teammovil.domain.Adopter(
             origin.email.value!!,
             origin.name.value!!,
             origin.firstLastName.value!!,
             origin.secondLastName.value!!,
-            GenderType.valueOf(origin.genderType.value!!),
+            com.teammovil.domain.GenderType.valueOf(origin.genderType.value!!),
             getDateFromString(origin.birthDay.value!!)!!,
             origin.password.value!!,
             origin.phone.value!!,

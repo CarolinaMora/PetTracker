@@ -9,12 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
 import androidx.navigation.findNavController
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.data.pet.PetRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
-import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.common.EventObserver
 
 
@@ -35,7 +34,10 @@ class RegisteredPetsFragment : Fragment() {
         val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireContext())
 
         val petsRepo = PetRepository(petFake)
-        val rescuerRepo = RescuerRepository(rescuerFake, rescuerStorage)
+        val rescuerRepo = RescuerRepository(
+            rescuerFake,
+            rescuerStorage
+        )
 
         viewModel = ViewModelProvider(this, RegisteredPetsViewModelFactory(petsRepo, rescuerRepo))[RegisteredPetsViewModel::class.java]
 
@@ -83,11 +85,11 @@ class RegisteredPetsFragment : Fragment() {
         }
     }
 
-    private fun updateList (petsList: List<Pet>) {
+    private fun updateList (petsList: List<com.teammovil.domain.Pet>) {
         petsAdapter.items = petsList
     }
 
-    private fun onClickPet (pet: Pet){
+    private fun onClickPet (pet: com.teammovil.domain.Pet){
         viewModel.onDetailPet(pet)
     }
 

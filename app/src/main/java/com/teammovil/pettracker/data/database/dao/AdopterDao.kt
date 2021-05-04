@@ -1,11 +1,10 @@
 package com.teammovil.pettracker.data.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.teammovil.pettracker.data.database.entities.AdopterEntity
-import com.teammovil.pettracker.domain.Adopter
+import com.teammovil.domain.Adopter
 
 @Dao
 interface AdopterDao {

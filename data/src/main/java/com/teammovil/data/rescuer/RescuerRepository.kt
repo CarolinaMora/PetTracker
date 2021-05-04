@@ -1,10 +1,12 @@
-package com.teammovil.pettracker.data.rescuer
+package com.teammovil.data.rescuer
 
-import com.teammovil.pettracker.domain.Rescuer
+import com.teammovil.data.rescuer.RescuerExternalDataAccess
+import com.teammovil.data.rescuer.RescuerStorageDataAccess
 
 class RescuerRepository(
     private val externalDataAccess: RescuerExternalDataAccess,
-    private val storageDataAccess: RescuerStorageDataAccess) {
+    private val storageDataAccess: RescuerStorageDataAccess
+) {
 
     suspend fun login(user: String, password: String): Boolean{
         val rescuer = externalDataAccess.login(user, password)
@@ -17,5 +19,5 @@ class RescuerRepository(
 
     suspend fun getRescuer () = storageDataAccess.getRescuer()
 
-    suspend fun registerRescuer (rescuer: Rescuer) = externalDataAccess.registerRescuer(rescuer)
+    suspend fun registerRescuer (rescuer: com.teammovil.domain.Rescuer) = externalDataAccess.registerRescuer(rescuer)
 }

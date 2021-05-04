@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRescuerRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver

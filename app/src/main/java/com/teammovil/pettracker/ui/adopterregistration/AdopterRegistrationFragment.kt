@@ -9,11 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.adopter.AdopterRepository
+import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
-import com.teammovil.pettracker.domain.GenderType
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 
@@ -59,7 +58,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
 
     private fun setViews(){
         //Gender selection
-        val arrayGender = listOf("Seleccione el género") + GenderType.values().map{it.name}
+        val arrayGender = listOf("Seleccione el género") + com.teammovil.domain.GenderType.values().map{it.name}
         val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayGender

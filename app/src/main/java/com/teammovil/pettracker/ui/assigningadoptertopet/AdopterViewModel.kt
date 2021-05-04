@@ -4,21 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.domain.Adopter
-import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
+import com.teammovil.data.adopter.AdopterRepository
+import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdopterViewModel(val adopterRepository: AdopterRepository,val petRepository: PetRepository):ViewModel() {
+class AdopterViewModel(val adopterRepository: AdopterRepository, val petRepository: PetRepository):ViewModel() {
 
     sealed class UiModel{
         object Loading: UiModel()
-        class AdoptersContent(val adopter: List<Adopter>) :UiModel()
+        class AdoptersContent(val adopter: List<com.teammovil.domain.Adopter>) :UiModel()
         class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
         class SuccessConfimation(val adopterId: String, val adopterName: String): UiModel()
@@ -42,7 +40,7 @@ class AdopterViewModel(val adopterRepository: AdopterRepository,val petRepositor
         _navigation.value = Event(Unit)
     }
 
-    fun onAdopterClicked(adopter: Adopter){
+    fun onAdopterClicked(adopter: com.teammovil.domain.Adopter){
         showConfirmation(adopter.email, adopter.name)
     }
 
@@ -58,7 +56,7 @@ class AdopterViewModel(val adopterRepository: AdopterRepository,val petRepositor
         _model.value = UiModel.ErrorNotification(MessageValidation.ADOPTER_REGISTER_FAILURE)
     }
 
-    private fun setView(adopterList: List<Adopter>){
+    private fun setView(adopterList: List<com.teammovil.domain.Adopter>){
         _model.value = UiModel.AdoptersContent(adopterList)
     }
 

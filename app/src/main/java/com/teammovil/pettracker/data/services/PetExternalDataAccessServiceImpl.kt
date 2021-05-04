@@ -1,16 +1,14 @@
 package com.teammovil.pettracker.data.services
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.teammovil.pettracker.data.pet.PetExternalDataAccess
-import com.teammovil.pettracker.domain.Evidence
-import com.teammovil.pettracker.domain.Pet
-import com.teammovil.pettracker.domain.PetStatus
+import com.teammovil.data.pet.PetExternalDataAccess
 import kotlinx.coroutines.tasks.await
 
-class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
+class PetExternalDataAccessServiceImpl:
+    PetExternalDataAccess {
     private val serviceFirebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    override suspend fun getAllPatsFromRescuer(rescuerId: String): List<Pet> {
+    override suspend fun getAllPatsFromRescuer(rescuerId: String): List<com.teammovil.domain.Pet> {
         try{
             val result = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).whereEqualTo(Constants.PET_RESCUER_ID_FIELD, rescuerId).get().await()
             return result.documents.map { Mapper.mapPet(it) }
@@ -20,7 +18,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun getAllPetsFromAdopter(adopterId: String): List<Pet> {
+    override suspend fun getAllPetsFromAdopter(adopterId: String): List<com.teammovil.domain.Pet> {
         try{
             val result = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).whereEqualTo(Constants.PET_ADOPTER_ID_FIELD, adopterId).get().await()
             return result.documents.map { Mapper.mapPet(it) }
@@ -30,7 +28,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun getPetById(petId: String): Pet? {
+    override suspend fun getPetById(petId: String): com.teammovil.domain.Pet? {
         try {
             //Get pet
             val petDocument = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId).get().await()
@@ -58,7 +56,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun registerPet(pet: Pet, rescuerId: String): Boolean {
+    override suspend fun registerPet(pet: com.teammovil.domain.Pet, rescuerId: String): Boolean {
         try {
             //Upload image and update url in pet
 
@@ -98,7 +96,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun updatePet(pet: Pet): Boolean {
+    override suspend fun updatePet(pet: com.teammovil.domain.Pet): Boolean {
         try {
             //Update image and update url in pet
 
@@ -155,7 +153,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
             serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
                 .update(mapOf(
                     Constants.PET_ADOPTER_ID_FIELD to adopterId,
-                    Constants.PET_STATUS_FIELD to PetStatus.ADOPTED.ordinal)
+                    Constants.PET_STATUS_FIELD to com.teammovil.domain.PetStatus.ADOPTED.ordinal)
                 ).await()
             return true
         }catch (e: Exception){
@@ -163,7 +161,7 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
         }
     }
 
-    override suspend fun saveEvidence(petId: String, evidence: Evidence): Boolean {
+    override suspend fun saveEvidence(petId: String, evidence: com.teammovil.domain.Evidence): Boolean {
         //Upload image and update url in evidence
 
         try {

@@ -1,6 +1,4 @@
-package com.teammovil.pettracker.data.adopter
-
-import com.teammovil.pettracker.domain.Adopter
+package com.teammovil.data.adopter
 
 class AdopterRepository (private val externalDataAccess: AdopterExternalDataAccess, private val storageDataAccess: AdopterStorageDataAccess) {
 
@@ -17,5 +15,5 @@ class AdopterRepository (private val externalDataAccess: AdopterExternalDataAcce
 
     suspend fun getAllAdopters() = externalDataAccess.getAllAdopters()
 
-    suspend fun registerAdopter (adopter:Adopter) = externalDataAccess.registerAdopter(adopter)
+    suspend fun registerAdopter (adopter: com.teammovil.domain.Adopter) = externalDataAccess.registerAdopter(adopter)
 }

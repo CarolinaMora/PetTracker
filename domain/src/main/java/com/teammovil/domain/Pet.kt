@@ -1,21 +1,21 @@
-package com.teammovil.pettracker.domain
+package com.teammovil.domain
 
 import java.util.*
 
 data class Pet (
     var id: String,
     var name: String,
-    var gender: GenderType,
+    var gender: com.teammovil.domain.GenderType,
     var race: String,
     var description: String,
     var approximateDateOfBirth: Date,
     var rescueDate: Date,
-    var petType: PetType,
+    var petType: com.teammovil.domain.PetType,
     var sterilized: Boolean,
     var vaccines: List<Vaccine>,
     var dewormings: List<Deworming>,
     var mainPhoto: String,
-    var status: PetStatus,
+    var status: com.teammovil.domain.PetStatus,
     var evidences: List<Evidence>
     )
 

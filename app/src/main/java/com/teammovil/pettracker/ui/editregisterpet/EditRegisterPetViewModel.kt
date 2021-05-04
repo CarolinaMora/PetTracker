@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.domain.Pet
+import com.teammovil.data.pet.PetRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.PetView
@@ -73,7 +72,7 @@ class EditRegisterPetViewModel(
         petView.value?.mainPhoto?.value = url
     }
 
-    private fun savePet (pet: Pet){
+    private fun savePet (pet: com.teammovil.domain.Pet){
         viewModelScope.launch {
             _model.value = UiModel.Loading(true)
             val resultRescuer = withContext(Dispatchers.IO) {rescuerRepository.getRescuer() }

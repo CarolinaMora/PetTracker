@@ -3,13 +3,13 @@ package com.teammovil.pettracker.data.database.dataaccess
 import android.content.Context
 import com.teammovil.pettracker.data.database.Mapper
 import com.teammovil.pettracker.data.database.PetsDataBase
-import com.teammovil.pettracker.data.rescuer.RescuerStorageDataAccess
-import com.teammovil.pettracker.domain.Rescuer
+import com.teammovil.data.rescuer.RescuerStorageDataAccess
 
-class RescuerStorageDataAccessDataBaseImpl(val context: Context): RescuerStorageDataAccess {
+class RescuerStorageDataAccessDataBaseImpl(val context: Context):
+    RescuerStorageDataAccess {
     private val database: PetsDataBase = PetsDataBase.getDatabase(context)
 
-    override suspend fun saveRescuer(rescuer: Rescuer) {
+    override suspend fun saveRescuer(rescuer: com.teammovil.domain.Rescuer) {
         val rescuerEntity = Mapper.map(rescuer)
 
         database.rescuerDao().deleteRescuer()
@@ -17,7 +17,7 @@ class RescuerStorageDataAccessDataBaseImpl(val context: Context): RescuerStorage
 
     }
 
-    override suspend fun getRescuer(): Rescuer {
+    override suspend fun getRescuer(): com.teammovil.domain.Rescuer {
         val rescuerResult = database.rescuerDao().getRescuer()
         return Mapper.map(rescuerResult)
     }

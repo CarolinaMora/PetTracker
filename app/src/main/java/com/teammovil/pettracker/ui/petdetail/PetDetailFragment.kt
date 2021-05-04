@@ -7,16 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.*
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
-import com.teammovil.pettracker.domain.Pet
-import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +45,11 @@ class PetDetailFragment: Fragment() {
         binding = FragmentPetDetailBinding.inflate (inflater)
 
         viewModel = ViewModelProvider(this,
-                PetDetailViewModelFactory (PetRepository(PetExternalDataAccessServiceImpl()))
+                PetDetailViewModelFactory (
+                    PetRepository(
+                        PetExternalDataAccessServiceImpl()
+                    )
+                )
         ) [PetDetailViewModel::class.java]
         viewModel.model.observe(viewLifecycleOwner, Observer {
             updateUi(it)
@@ -81,7 +81,7 @@ class PetDetailFragment: Fragment() {
 
     }
 
-    private fun setView(pet: Pet) {
+    private fun setView(pet: com.teammovil.domain.Pet) {
         with(binding){
 
             txtName.text = pet.name

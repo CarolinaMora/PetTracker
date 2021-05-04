@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.domain.Evidence
+import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
 import kotlinx.coroutines.launch
@@ -60,7 +59,7 @@ class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
         return valid
     }
 
-    private fun saveEvidence(petId:String, evidence: Evidence) {
+    private fun saveEvidence(petId:String, evidence: com.teammovil.domain.Evidence) {
         viewModelScope.launch {
             _model.value = SendEvidenceViewModel.UiModel.Loading
             val result = petRepository.saveEvidence(petId, evidence)
@@ -70,8 +69,8 @@ class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
     }
 
 
-    private fun mapEvidence (origin: EvidenceView): Evidence{
-        return Evidence(
+    private fun mapEvidence (origin: EvidenceView): com.teammovil.domain.Evidence {
+        return com.teammovil.domain.Evidence(
             origin.externalId,
             origin.comments.value,
             origin.photo.value!!,

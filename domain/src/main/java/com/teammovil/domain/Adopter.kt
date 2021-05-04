@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.domain
+package com.teammovil.domain
 
 import java.util.*
 

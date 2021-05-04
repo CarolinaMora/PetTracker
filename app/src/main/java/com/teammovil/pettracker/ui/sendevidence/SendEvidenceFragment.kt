@@ -11,8 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentSendEvidenceBinding
 import com.teammovil.pettracker.ui.common.EventObserver
@@ -46,7 +45,11 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         binding = FragmentSendEvidenceBinding.inflate(inflater)
         viewModel = ViewModelProvider(
             this,
-            SendEvidenceViewModelFactory(PetRepository(PetExternalDataAccessServiceImpl()))
+            SendEvidenceViewModelFactory(
+                PetRepository(
+                    PetExternalDataAccessServiceImpl()
+                )
+            )
         )[SendEvidenceViewModel::class.java]
         photoTaker = PhotoTaker(requireContext())
         photoTaker?.fragment = this

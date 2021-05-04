@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.domain.Pet
+import com.teammovil.data.pet.PetRepository
+import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
 
     sealed class UiModel {
         object Loading: UiModel()
-        class PetsContent(val pets: List<Pet>) : UiModel()
+        class PetsContent(val pets: List<com.teammovil.domain.Pet>) : UiModel()
     }
 
     sealed class UiEvents {
@@ -43,7 +42,7 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
         }
     }
 
-    fun onDetailPet (pet: Pet){
+    fun onDetailPet (pet: com.teammovil.domain.Pet){
         _events.value = Event(UiEvents.GoToDetail(pet.id))
     }
 
@@ -51,7 +50,7 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
         _events.value = Event(UiEvents.GoTORegistration)
     }
 
-    private fun setView(petsList: List<Pet>) {
+    private fun setView(petsList: List<com.teammovil.domain.Pet>) {
         _model.value = UiModel.PetsContent(petsList)
     }
 
