@@ -47,6 +47,7 @@
     <string name="genred_male_adopter_registration">Hombre</string>
     <string name="gender_female_adopter_registration">Mujer</string>
     <string name="action_accept">Aceptar</string>
+    <string name="alert_message_pet_saved">Mascota guardada correctamente</string>
 
     <!-- Rescuer Registration-->
     <string name="tittle_rescuer_registration">Registro de Rescatista</string>
@@ -74,4 +75,8 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_login">Entrar</string>
     <string name="title_login">Iniciar sesión</string>
+
+    <!-- Fragment assign adopter to pet -->
+    <string name="tittle_assign_adopter_to_pet">Asignar adoptante a la mascota</string>
+
 </resources>

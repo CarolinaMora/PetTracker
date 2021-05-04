@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
@@ -63,13 +64,13 @@ class RescuerLoginViewModel(private val rescuerRepository: RescuerRepository): V
         if (user.email.value.isNullOrEmpty()) {
             valid = false
             user.email.valid = false
-            user.email.message = MessageValidation.FIELD_REQUIERED
+            user.email.messageResourceId = R.string.error_field_required
         }
 
         if (user.password.value.isNullOrEmpty()) {
             valid = false
             user.password.valid = false
-            user.password.message = MessageValidation.FIELD_REQUIERED
+            user.password.messageResourceId = R.string.error_field_required
         }
 
 

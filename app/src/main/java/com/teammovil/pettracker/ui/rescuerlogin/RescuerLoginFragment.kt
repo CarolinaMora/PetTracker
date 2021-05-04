@@ -85,8 +85,8 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun showRescuerError(userView: UserView){
-        binding.rescuerEmail.error = if (userView.email.valid) null else userView.email.message
-        binding.rescuerPassword.error = if (userView.password.valid) null else userView.password.message
+        binding.rescuerEmail.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
+        binding.rescuerPassword.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
     }
 
     private fun navigateToMainActivity(){
