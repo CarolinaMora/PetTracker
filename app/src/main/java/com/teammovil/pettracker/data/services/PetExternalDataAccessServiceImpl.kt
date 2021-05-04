@@ -20,7 +20,13 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
     }
 
     override suspend fun getAllPetsFromAdopter(adopterId: String): List<Pet> {
-        TODO("Not yet implemented")
+        try{
+            val result = serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).whereEqualTo(Constants.PET_ADOPTER_ID_FIELD, adopterId).get().await()
+            return result.documents.map { Mapper.mapPet(it) }
+        }
+        catch (e: Exception){
+            return listOf()
+        }
     }
 
     override suspend fun getPetById(petId: String): Pet {

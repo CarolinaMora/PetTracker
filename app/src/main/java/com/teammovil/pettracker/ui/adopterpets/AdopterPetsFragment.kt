@@ -1,17 +1,17 @@
 package com.teammovil.pettracker.ui.adopterpets
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.teammovil.pettracker.data.adopter.AdopterRepository
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.data.adopter.fakes.FakeAdopterStorageDataAccess
 import com.teammovil.pettracker.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.fakes.PetFakeExternalDataAccess
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdoperPetsBinding
 import com.teammovil.pettracker.domain.Pet
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
@@ -43,11 +43,11 @@ class AdoperPetsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val petFake = PetFakeExternalDataAccess()
+        val petExternal = PetExternalDataAccessServiceImpl()
         val adopterFake = FakeAdopterExternalDataAccess()
         val adopterStorage = FakeAdopterStorageDataAccess()
 
-        val petsRepo = PetRepository(petFake)
+        val petsRepo = PetRepository(petExternal)
         val adopterRepo = AdopterRepository(adopterFake, adopterStorage)
 
         viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(petsRepo, adopterRepo))[AdopterPetsViewModel::class.java]
@@ -55,7 +55,7 @@ class AdoperPetsFragment : Fragment() {
         binding.adopterPetsRecycler.adapter = petsAdapter
 
         viewModel.model.observe(viewLifecycleOwner, Observer {
-
+            updateUI(it)
         })
 
     }
