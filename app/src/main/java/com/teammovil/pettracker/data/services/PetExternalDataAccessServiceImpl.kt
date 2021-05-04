@@ -112,6 +112,19 @@ class PetExternalDataAccessServiceImpl: PetExternalDataAccess {
     }
 
     override suspend fun saveEvidence(petId: String, evidence: Evidence): Boolean {
-        TODO("Not yet implemented")
+        //Upload image and update url in evidence
+
+        try {
+            val evidenceRef =
+                serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                    .collection(Constants.EVIDENCE_COLLECTION).document()
+            evidence.id = evidenceRef.id
+            serviceFirebaseFirestore.collection(Constants.PET_COLLECTION).document(petId)
+                .collection(Constants.EVIDENCE_COLLECTION).document(evidenceRef.id)
+                .set(Mapper.map(evidence)).await()
+            return true
+        }catch (e: Exception){
+            return false
+        }
     }
 }

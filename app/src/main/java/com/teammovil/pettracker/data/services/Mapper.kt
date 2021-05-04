@@ -138,4 +138,13 @@ object Mapper {
             getDateFromString(document.get(Constants.EVIDENCE_DATE_TAKEN_FIELD) as String? ?:"") ?: Date()
         )
     }
+
+    fun map (evidence: Evidence): HashMap<String, Any?> {
+        return hashMapOf(
+            Constants.EVIDENCE_ID_FIELD to evidence.id,
+            Constants.EVIDENCE_COMMENT_FIELD to evidence.comment,
+            Constants.EVIDENCE_MADIA_URL_FIELD to evidence.media,
+            Constants.EVIDENCE_DATE_TAKEN_FIELD to getStringFromDate(evidence.date)
+        )
+    }
 }
