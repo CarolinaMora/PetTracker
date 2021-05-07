@@ -1,15 +1,19 @@
 package com.teammovil.pettracker.ui.editregisterpet
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teammovil.data.pet.PetRepository
+import com.teammovil.domain.Error
 import com.teammovil.domain.Pet
+import com.teammovil.domain.Result
+import com.teammovil.pettracker.R
+import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.PetView
-import com.teammovil.domain.Error
-import com.teammovil.domain.Result
 import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.editpet.EditPetUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
@@ -25,7 +29,7 @@ class EditRegisterPetViewModel(
     sealed class UiModel {
         class Loading(val show: Boolean): UiModel()
         class SuccessAdvice (): UiModel()
-        class ErrorAdvice (val message: String): UiModel()
+        class ErrorAdvice (@StringRes val messageResourceId: Int): UiModel()
     }
 
     sealed class UiEvents {
@@ -86,11 +90,13 @@ class EditRegisterPetViewModel(
 
     private fun getPet (id: String){
         viewModelScope.launch {
-            /*_model.value = UiModel.Loading(true)
+            //TODO: Cambiar por caso de uso que obtiene el Pet
+            val petRepository = PetRepository(PetExternalDataAccessServiceImpl())
+            _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){petRepository.getPetById(id)}
             _model.value = UiModel.Loading(false)
             if(result!=null)
-                _petView.value = Mapper.mapPet(result)*/
+                _petView.value = Mapper.mapPet(result)
         }
     }
 
@@ -102,6 +108,7 @@ class EditRegisterPetViewModel(
             when{
                 result.error.isNullOrEmpty() -> {}
                 result.error!![0].code == UseCaseErrors.REGISTER_PET_GENERIC_ERROR -> {showRegistrationError()}
+                result.error!![0].code == UseCaseErrors.EDIT_PET_GENERIC_ERROR -> {showModificationError()}
                 else -> { showPetViewErrors(result.error!!) }
             }
         }
@@ -112,7 +119,11 @@ class EditRegisterPetViewModel(
     }
 
     private fun showRegistrationError (){
-        _model.value = UiModel.ErrorAdvice("Hubo un error al registrar su mascota. Intente más tarde.")
+        _model.value = UiModel.ErrorAdvice(R.string.alert_message_registration_error)
+    }
+
+    private fun showModificationError (){
+        _model.value = UiModel.ErrorAdvice(R.string.alert_message_edit_error)
     }
 
     private fun showPetViewErrors (errorList: List<Error>){

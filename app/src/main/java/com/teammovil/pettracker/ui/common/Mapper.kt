@@ -111,11 +111,11 @@ object Mapper {
 
     fun mapPet (origin: com.teammovil.domain.Pet): PetView{
         return PetView(
-            "",
+            origin.id,
             FieldView(origin.name),
             SelectFieldView(
                 origin.gender.name,
-                origin.gender.ordinal+1
+                origin.gender.ordinal
             ),
             FieldView(origin.race),
             FieldView(origin.description),
@@ -123,7 +123,7 @@ object Mapper {
             FieldView(getStringFromDate(origin.rescueDate)),
             SelectFieldView(
                 origin.petType.name,
-                origin.petType.ordinal+1
+                origin.petType.ordinal
             ),
             FieldView(origin.sterilized),
             FieldView(origin.vaccines),
