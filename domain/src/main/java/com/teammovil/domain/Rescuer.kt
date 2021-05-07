@@ -10,6 +10,6 @@ data class Rescuer (
     var email: String,
     var password: String,
     var phone: String,
-    var activityStartDate: Date
+    var activityStartDate: Date?
 
 )

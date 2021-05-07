@@ -1,5 +1,7 @@
 package com.teammovil.pettracker.ui.rescuerregistration
 
+import com.teammovil.pettracker.ui.common.FieldView
+
 class RescuerView(
     var id: String?,
     var name: FieldView<String?>,
@@ -11,8 +13,3 @@ class RescuerView(
     var activityStartDate: FieldView<String?>
 )
 
-class FieldView<T>(
-    var value: T,
-    var valid: Boolean = true,
-    var message: String = ""
-)

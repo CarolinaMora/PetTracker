@@ -1,14 +1,15 @@
 package com.teammovil.pettracker.data.database
 
-import com.teammovil.pettracker.data.database.entities.AdopterEntity
-import com.teammovil.pettracker.data.database.entities.RescuerEntity
 import com.teammovil.domain.Adopter
 import com.teammovil.domain.Rescuer
+import com.teammovil.pettracker.data.database.entities.AdopterEntity
+import com.teammovil.pettracker.data.database.entities.RescuerEntity
+import java.util.*
 
 object Mapper {
 
-    fun map(adopterEntity: AdopterEntity): com.teammovil.domain.Adopter {
-        return com.teammovil.domain.Adopter(
+    fun map(adopterEntity: AdopterEntity): Adopter {
+        return Adopter(
             adopterEntity.email,
             adopterEntity.name,
             adopterEntity.firstLastName,
@@ -21,7 +22,7 @@ object Mapper {
         )
     }
 
-    fun adopterEntityMap(adopter: com.teammovil.domain.Adopter): AdopterEntity{
+    fun adopterEntityMap(adopter: Adopter): AdopterEntity{
         return AdopterEntity(
             adopter.email,
             adopter.name,
@@ -35,7 +36,7 @@ object Mapper {
         )
     }
 
-    fun map(rescuerEntity: RescuerEntity) = com.teammovil.domain.Rescuer(
+    fun map(rescuerEntity: RescuerEntity) = Rescuer(
         rescuerEntity.id,
         rescuerEntity.name,
         rescuerEntity.description,
@@ -46,7 +47,7 @@ object Mapper {
         rescuerEntity.activityStartDate
     )
 
-    fun map(rescuer: com.teammovil.domain.Rescuer) = RescuerEntity (
+    fun map(rescuer: Rescuer) = RescuerEntity (
         rescuer.id,
         rescuer.name,
         rescuer.description,
@@ -54,7 +55,7 @@ object Mapper {
         rescuer.email,
         rescuer.password,
         rescuer.phone,
-        rescuer.activityStartDate
+        rescuer.activityStartDate ?: Date()
     )
 
 }
