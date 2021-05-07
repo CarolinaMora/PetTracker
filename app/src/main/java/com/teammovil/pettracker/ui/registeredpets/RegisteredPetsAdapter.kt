@@ -10,10 +10,10 @@ import com.teammovil.pettracker.databinding.PetsItemBinding
 import com.teammovil.domain.Pet
 
 class RegisteredPetsAdapter(
-    val listener: ((item: com.teammovil.domain.Pet) -> Unit)? = null
+    val listener: ((item: Pet) -> Unit)? = null
 ) : RecyclerView.Adapter<RegisteredPetsAdapter.ViewHolder>(){
 
-    var items : List<com.teammovil.domain.Pet> = listOf()
+    var items : List<Pet> = listOf()
     set(value){
         field = value
         notifyDataSetChanged()
@@ -37,7 +37,7 @@ class RegisteredPetsAdapter(
 
         private val binding = PetsItemBinding.bind(view)
 
-        fun bind(pet: com.teammovil.domain.Pet){
+        fun bind(pet: Pet){
             with(binding) {
                 petTitle.text = pet.name
                 petDescription.text = pet.description

@@ -2,14 +2,12 @@ package com.teammovil.pettracker.ui.registeredpets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.data.rescuer.RescuerRepository
-import java.lang.IllegalArgumentException
+import com.teammovil.usecases.rescuerPets.GetRescuerData
 
-class RegisteredPetsViewModelFactory(val petRepository: PetRepository, val rescuerRepository: RescuerRepository): ViewModelProvider.Factory {
+class RegisteredPetsViewModelFactory(private val getRescuerData: GetRescuerData): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RegisteredPetsViewModel::class.java)){
-            return RegisteredPetsViewModel(petRepository, rescuerRepository) as T
+            return RegisteredPetsViewModel(getRescuerData) as T
         }
         throw IllegalArgumentException("Unknow RegisteredPetsViewModel")
     }
