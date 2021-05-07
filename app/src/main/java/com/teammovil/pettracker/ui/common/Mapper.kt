@@ -1,9 +1,14 @@
 package com.teammovil.pettracker.ui.common
 
+import com.teammovil.domain.rules.RulesErrors
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
+import com.teammovil.domain.Error
+import com.teammovil.domain.GenderType
+import com.teammovil.domain.PetType
 import java.util.*
 
 object Mapper {
@@ -69,16 +74,12 @@ object Mapper {
         return com.teammovil.domain.Pet(
             origin.id,
             origin.name.value ?: "",
-            com.teammovil.domain.GenderType.valueOf(
-                origin.gender.value ?: com.teammovil.domain.GenderType.MALE.name
-            ),
+            trueValueOfGenderType(origin.gender.value),
             origin.race.value ?: "",
             origin.description.value ?: "",
-            getDateFromString(origin.approximateDateOfBirth.value ?: "") ?: Date(),
-            getDateFromString(origin.rescueDate.value ?: "") ?: Date(),
-            com.teammovil.domain.PetType.valueOf(
-                origin.petType.value ?: com.teammovil.domain.PetType.DOG.name
-            ),
+            getDateFromString(origin.approximateDateOfBirth.value),
+            getDateFromString(origin.rescueDate.value),
+            trueValueOfPetType(origin.petType.value),
             origin.sterilized.value,
             origin.vaccines.value ?: listOf(),
             origin.dewormings.value ?: listOf(),
@@ -86,6 +87,26 @@ object Mapper {
             origin.status.value,
             origin.evidences.value ?: listOf()
         )
+    }
+
+    fun trueValueOfGenderType(data: String?) : GenderType{
+        return try {
+            GenderType.valueOf(
+                data ?: GenderType.UNKNOWN.name
+            )
+        }catch (e: IllegalArgumentException){
+            GenderType.UNKNOWN
+        }
+    }
+
+    fun trueValueOfPetType(data: String?) : PetType{
+        return try {
+            PetType.valueOf(
+                data ?: PetType.UNKNOWN.name
+            )
+        }catch (e: IllegalArgumentException){
+            PetType.UNKNOWN
+        }
     }
 
     fun mapPet (origin: com.teammovil.domain.Pet): PetView{
@@ -111,5 +132,45 @@ object Mapper {
             FieldView(origin.status),
             FieldView(origin.evidences)
         )
+    }
+
+    fun map (pet: PetView, errorList: List<Error>) : PetView{
+        for(error in errorList){
+            when (error.code){
+                RulesErrors.NAME_FIELD_EMPTY_ERROR -> {
+                    pet.name.valid = false
+                    pet.name.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.DESCRIPTION_FIELD_EMPTY_ERROR -> {
+                    pet.description.valid = false
+                    pet.description.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.RACE_FIELD_EMPTY_ERROR -> {
+                    pet.race.valid = false
+                    pet.race.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.GENDER_FIELD_EMPTY_ERROR -> {
+                    pet.gender.valid = false
+                    pet.gender.messageResourceId = R.string.prompt_select_option
+                }
+                RulesErrors.TYPE_FIELD_EMPTY_ERROR -> {
+                    pet.petType.valid = false
+                    pet.petType.messageResourceId = R.string.prompt_select_option
+                }
+                RulesErrors.BIRTH_DATE_FIELD_EMPTY_ERROR -> {
+                    pet.approximateDateOfBirth.valid = false
+                    pet.approximateDateOfBirth.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.RESCUE_DATE_FIELD_EMPTY_ERROR -> {
+                    pet.rescueDate.valid = false
+                    pet.rescueDate.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.MAIN_PHOTO_FIELD_EMPTY_ERROR -> {
+                    pet.mainPhoto.valid = false
+                    pet.mainPhoto.messageResourceId = R.string.error_photo_required
+                }
+            }
+        }
+        return pet
     }
 }

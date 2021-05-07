@@ -23,6 +23,8 @@ import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.usecases.editpet.EditPetUseCase
+import com.teammovil.usecases.registerpet.RegisterPetUseCase
 
 
 class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
@@ -38,16 +40,17 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     ): View? {
         petId = arguments?.getString(ARG_PET_ID)
 
+        val rescuerRepository = RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
+        val petRepository = PetRepository(PetExternalDataAccessServiceImpl())
+
+        val registerPetUseCase = RegisterPetUseCase(rescuerRepository, petRepository)
+        val editPetUseCase = EditPetUseCase(petRepository)
+
         viewModel = ViewModelProvider(
                         this,
                         EditRegisterPetViewModelFactory(
-                            PetRepository(
-                                PetExternalDataAccessServiceImpl()
-                            ),
-                            RescuerRepository(
-                                RescuerExternalDataAccessServiceImpl(),
-                                RescuerStorageDataAccessDataBaseImpl(requireContext())
-                            )
+                            registerPetUseCase,
+                            editPetUseCase
                         )
                 )[EditRegisterPetViewModel::class.java]
 
@@ -186,7 +189,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     private fun setViews (){
         //Type selection
-        val arrayType = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.PetType.values().map{it.name}
+        val arrayType = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.PetType.values().map{it.name}.drop(1)
         val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayType
@@ -195,7 +198,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.petRegistrationType.adapter = adapterType
 
         //Gender selection
-        val arrayGender = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.GenderType.values().map{it.name}
+        val arrayGender = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.GenderType.values().map{it.name}.drop(1)
         val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayGender

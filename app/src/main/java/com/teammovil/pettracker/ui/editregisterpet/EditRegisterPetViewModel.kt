@@ -4,19 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.data.rescuer.RescuerRepository
+import com.teammovil.domain.Pet
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.PetView
-import com.teammovil.pettracker.ui.common.Validations
+import com.teammovil.domain.Error
+import com.teammovil.domain.Result
+import com.teammovil.usecases.common.UseCaseErrors
+import com.teammovil.usecases.editpet.EditPetUseCase
+import com.teammovil.usecases.registerpet.RegisterPetUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditRegisterPetViewModel(
-    var petRepository: PetRepository,
-    var rescuerRepository: RescuerRepository
+    var editPetUseCase: EditPetUseCase,
+    var registerPetUseCase: RegisterPetUseCase
 ): ViewModel() {
 
     sealed class UiModel {
@@ -52,12 +55,8 @@ class EditRegisterPetViewModel(
     }
 
     fun onSavePet (pet: PetView){
-        if(Validations.validateView(pet)){
-            savePet(Mapper.mapPet(pet))
-        }
-        else{
-            _petView.value = pet
-        }
+        _petView.value = pet
+        savePet(Mapper.mapPet(pet))
     }
 
     fun onSavePetLocal (pet: PetView){
@@ -72,35 +71,39 @@ class EditRegisterPetViewModel(
         petView.value?.mainPhoto?.value = url
     }
 
-    private fun savePet (pet: com.teammovil.domain.Pet){
+    private fun savePet (pet: Pet){
         viewModelScope.launch {
             _model.value = UiModel.Loading(true)
-            val resultRescuer = withContext(Dispatchers.IO) {rescuerRepository.getRescuer() }
-            if(resultRescuer!=null) {
-                val result =
-                    if (pet.id.isEmpty())
-                        withContext(Dispatchers.IO) {
-                            petRepository.registerPet(
-                                pet,
-                                resultRescuer.email
-                            )
-                        }
-                    else
-                        withContext(Dispatchers.IO) { petRepository.updatePet(pet) }
-                _model.value = UiModel.Loading(false)
-                if (result) showSuccessAdvice()
-                else showRegistrationError()
-            } else showRegistrationError()
+            val result =
+                if (pet.id.isEmpty())
+                    withContext(Dispatchers.IO) { registerPetUseCase.invoke(pet) }
+                else
+                    withContext(Dispatchers.IO) { editPetUseCase.invoke(pet) }
+            _model.value = UiModel.Loading(false)
+            manageResult(result)
         }
     }
 
     private fun getPet (id: String){
         viewModelScope.launch {
-            _model.value = UiModel.Loading(true)
+            /*_model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){petRepository.getPetById(id)}
             _model.value = UiModel.Loading(false)
             if(result!=null)
-                _petView.value = Mapper.mapPet(result)
+                _petView.value = Mapper.mapPet(result)*/
+        }
+    }
+
+    private fun manageResult (result: Result<Unit, List<Error>>){
+        if(result.valid){
+            showSuccessAdvice()
+        }
+        else{
+            when{
+                result.error.isNullOrEmpty() -> {}
+                result.error!![0].code == UseCaseErrors.REGISTER_PET_GENERIC_ERROR -> {showRegistrationError()}
+                else -> { showPetViewErrors(result.error!!) }
+            }
         }
     }
 
@@ -110,6 +113,12 @@ class EditRegisterPetViewModel(
 
     private fun showRegistrationError (){
         _model.value = UiModel.ErrorAdvice("Hubo un error al registrar su mascota. Intente más tarde.")
+    }
+
+    private fun showPetViewErrors (errorList: List<Error>){
+        _petView.value?.let{
+            _petView.value = Mapper.map(it, errorList)
+        }
     }
 
     fun onSendEvidence(petId: String) {
