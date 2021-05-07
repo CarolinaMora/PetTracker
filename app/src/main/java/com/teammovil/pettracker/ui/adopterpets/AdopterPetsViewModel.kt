@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.data.adopter.AdopterRepository
-import com.teammovil.data.pet.PetRepository
-import kotlinx.coroutines.Dispatchers
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.usecases.adopterPets.GetAdopterData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdopterPetsViewModel(val petRepository: PetRepository, val adopterRepository: AdopterRepository) : ViewModel() {
+class AdopterPetsViewModel(private val getAdopterData: GetAdopterData) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -27,11 +26,9 @@ class AdopterPetsViewModel(val petRepository: PetRepository, val adopterReposito
     init {
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val adopter = withContext(Dispatchers.IO){
-                adopterRepository.getAdopter()
-            }
             val result = withContext(Dispatchers.IO){
-                petRepository.getAllPetsFromAdopter(adopter.email)
+                getAdopterData.invokeAdopter()
+                getAdopterData.invokePetsAdopter()
             }
             setView(result)
 
