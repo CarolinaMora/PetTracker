@@ -16,7 +16,7 @@ import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.ui.common.EventObserver
-import com.teammovil.usecases.rescuerPets.GetRescuerData
+import com.teammovil.usecases.rescuerPets.GetRescuerPets
 
 
 /**
@@ -41,7 +41,7 @@ class RegisteredPetsFragment : Fragment() {
             rescuerStorage
         )
 
-        viewModel = ViewModelProvider(this, RegisteredPetsViewModelFactory(GetRescuerData(petsRepo, rescuerRepo)))[RegisteredPetsViewModel::class.java]
+        viewModel = ViewModelProvider(this, RegisteredPetsViewModelFactory(GetRescuerPets(petsRepo, rescuerRepo)))[RegisteredPetsViewModel::class.java]
 
         setViews()
         setListeners()
