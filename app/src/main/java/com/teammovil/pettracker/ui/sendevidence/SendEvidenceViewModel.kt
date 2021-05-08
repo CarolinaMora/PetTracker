@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.R
-import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.Mapper
+import com.teammovil.usecases.SaveEvidenceUseCase
 import kotlinx.coroutines.launch
 
-class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
+class SendEvidenceViewModel(var saveEvidenceUseCase: SaveEvidenceUseCase): ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -28,7 +29,7 @@ class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
     fun onSaveEvidence(petId: String?, evidence: EvidenceView) {
         if (validateView(evidence)) {
             if (petId != null)
-                saveEvidence(petId, mapEvidence(evidence))
+                saveEvidence(petId, Mapper.map (evidence))
         } else {
             _model.value = SendEvidenceViewModel.UiModel.EvidenceError(evidence)
         }
@@ -62,27 +63,20 @@ class SendEvidenceViewModel(var petRepository: PetRepository): ViewModel() {
     private fun saveEvidence(petId:String, evidence: com.teammovil.domain.Evidence) {
         viewModelScope.launch {
             _model.value = SendEvidenceViewModel.UiModel.Loading
-            val result = petRepository.saveEvidence(petId, evidence)
+            val result = saveEvidenceUseCase.invoke(petId, evidence)
             if (result) showSuccessAdvice()
             else showRegistrationError()
         }
     }
 
 
-    private fun mapEvidence (origin: EvidenceView): com.teammovil.domain.Evidence {
-        return com.teammovil.domain.Evidence(
-            origin.externalId,
-            origin.comments.value,
-            origin.photo.value!!,
-            getDateFromString(origin.evidenceDate.value)!!
-        )
-    }
+
 
     private fun showSuccessAdvice (){
         _model.value = UiModel.SuccessAdvice("Evidencia enviada correctamente")
     }
 
     private fun showRegistrationError (){
-        _model.value = UiModel.ErrorAdvice("Hubo un error al enviar evidenca. Intente más tarde.")
+        _model.value = UiModel.ErrorAdvice("Hubo un error al enviar evidencia. Intente más tarde.")
     }
 }

@@ -3,6 +3,7 @@ package com.teammovil.pettracker.ui.common
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
+import com.teammovil.pettracker.ui.sendevidence.EvidenceView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
 import java.util.*
 
@@ -110,6 +111,15 @@ object Mapper {
             FieldView(origin.mainPhoto),
             FieldView(origin.status),
             FieldView(origin.evidences)
+        )
+    }
+
+    fun map (origin: EvidenceView): com.teammovil.domain.Evidence {
+        return com.teammovil.domain.Evidence(
+            origin.externalId,
+            origin.comments.value,
+            origin.photo.value!!,
+            getDateFromString(origin.evidenceDate.value)!!
         )
     }
 }

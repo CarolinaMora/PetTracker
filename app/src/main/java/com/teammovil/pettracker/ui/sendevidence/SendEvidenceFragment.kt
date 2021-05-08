@@ -19,6 +19,7 @@ import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.PhotoTaker
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.usecases.SaveEvidenceUseCase
 
 
 class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
@@ -46,9 +47,12 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         viewModel = ViewModelProvider(
             this,
             SendEvidenceViewModelFactory(
-                PetRepository(
-                    PetExternalDataAccessServiceImpl()
+                SaveEvidenceUseCase(
+                    PetRepository(
+                        PetExternalDataAccessServiceImpl()
+                    )
                 )
+
             )
         )[SendEvidenceViewModel::class.java]
         photoTaker = PhotoTaker(requireContext())
