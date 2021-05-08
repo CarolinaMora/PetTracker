@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.ui.common.Event
-import com.teammovil.usecases.adopterPets.GetAdopterData
+import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdopterPetsViewModel(private val getAdopterData: GetAdopterData) : ViewModel() {
+class AdopterPetsViewModel(private val getAdopterPetsUseCase: GetAdopterPetsUseCase) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -27,8 +27,7 @@ class AdopterPetsViewModel(private val getAdopterData: GetAdopterData) : ViewMod
         viewModelScope.launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){
-                getAdopterData.invokeAdopter()
-                getAdopterData.invokePetsAdopter()
+                getAdopterPetsUseCase.invoke()
             }
             setView(result)
 
