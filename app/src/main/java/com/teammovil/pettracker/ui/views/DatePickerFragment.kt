@@ -24,7 +24,7 @@ class DatePickerFragment(val idCaller: Int) : DialogFragment(), DatePickerDialog
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
-        val date = getString(R.string.string_format_date, year, month, day)
+        val date = getString(R.string.string_format_date, year, month+1, day)
         listener?.saveDate(date, idCaller)
         this.dismiss()
     }
