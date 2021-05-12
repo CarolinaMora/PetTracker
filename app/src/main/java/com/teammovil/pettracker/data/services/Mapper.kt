@@ -62,7 +62,7 @@ object Mapper {
         )
     }
 
-    fun map (pet: com.teammovil.domain.Pet):  HashMap<String, Any?>{
+    fun map (pet: com.teammovil.domain.Pet, fileName: String):  HashMap<String, Any?>{
         return hashMapOf(
             Constants.PET_ID_FIELD to pet.id,
             Constants.PET_NAME_FIELD to pet.name,
@@ -74,7 +74,9 @@ object Mapper {
             Constants.PET_TYPE_FIELD to pet.petType.ordinal,
             Constants.PET_STERILIZED_FIELD to pet.sterilized,
             Constants.PET_STATUS_FIELD to pet.status.ordinal,
-            Constants.PET_PHOTO_URL_FIELD to pet.mainPhoto
+            Constants.PET_PHOTO_URL_FIELD to pet.mainPhoto,
+            Constants.PET_PHOTO_FILE_NAME_ID_FIELD to fileName
+
         )
     }
 
@@ -147,12 +149,13 @@ object Mapper {
         )
     }
 
-    fun map (evidence: com.teammovil.domain.Evidence): HashMap<String, Any?> {
+    fun map (evidence: com.teammovil.domain.Evidence, fileName: String): HashMap<String, Any?> {
         return hashMapOf(
             Constants.EVIDENCE_ID_FIELD to evidence.id,
             Constants.EVIDENCE_COMMENT_FIELD to evidence.comment,
             Constants.EVIDENCE_MADIA_URL_FIELD to evidence.media,
-            Constants.EVIDENCE_DATE_TAKEN_FIELD to getStringFromDate(evidence.date)
+            Constants.EVIDENCE_DATE_TAKEN_FIELD to getStringFromDate(evidence.date),
+            Constants.EVIDENCE_MEDIA_FILE_NAME_FIELD to fileName
         )
     }
 }
