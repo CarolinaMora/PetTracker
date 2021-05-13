@@ -17,4 +17,8 @@ object RulesErrors {
     const val PHONE_FIELD_EMPTY_ERROR = 20110
     const val ADDRESS_FIELD_EMPTY_ERROR = 20120
 
+    const val FIRST_LAST_NAME_FIELD_EMPTY_ERROR = 20130
+    const val SECOND_LAST_NAME_FIELD_EMPTY_ERROR = 20140
+    const val MAIL_FIELD_EMPTY_ERROR = 20150
+
 }
