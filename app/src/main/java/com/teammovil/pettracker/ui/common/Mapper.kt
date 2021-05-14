@@ -1,5 +1,6 @@
 package com.teammovil.pettracker.ui.common
 
+import com.teammovil.domain.Adopter
 import com.teammovil.domain.Error
 import com.teammovil.domain.GenderType
 import com.teammovil.domain.PetType
@@ -7,6 +8,7 @@ import com.teammovil.domain.rules.RulesErrors
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
+import com.teammovil.pettracker.ui.adopterregistration.AdopterView
 import com.teammovil.pettracker.ui.dewormings.DewormingView
 import com.teammovil.pettracker.ui.rescuerregistration.RescuerView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
@@ -228,6 +230,72 @@ object Mapper {
             origin.password.value ?: "",
             origin.phone.value ?: "",
             getDateFromString(origin.activityStartDate.value)
+        )
+    }
+
+    fun map(adopter: AdopterView,errorList: List<Error>):AdopterView{
+        for (error in errorList){
+            when(error.code){
+                RulesErrors.NAME_FIELD_EMPTY_ERROR ->{
+                    adopter.name.valid = false
+                    adopter.name.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.FIRST_LAST_NAME_FIELD_EMPTY_ERROR->{
+                    adopter.firstLastName.valid = false
+                    adopter.firstLastName.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.SECOND_LAST_NAME_FIELD_EMPTY_ERROR ->{
+                    adopter.secondLastName.valid = false
+                    adopter.secondLastName.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.GENDER_FIELD_EMPTY_ERROR->{
+                    adopter.genderType.valid = false
+                    adopter.genderType.messageResourceId = R.string.prompt_select_option
+                }
+
+                RulesErrors.BIRTH_DATE_FIELD_EMPTY_ERROR ->{
+                    adopter.birthDay.valid = false
+                    adopter.birthDay.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.MAIL_FIELD_EMPTY_ERROR ->{
+                    adopter.email.valid = false
+                    adopter.email.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR ->{
+                    adopter.password.valid = false
+                    adopter.password.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.PHONE_FIELD_EMPTY_ERROR ->{
+                    adopter.phone.valid = false
+                    adopter.phone.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.ADDRESS_FIELD_EMPTY_ERROR ->{
+                    adopter.address.valid = false
+                    adopter.address.messageResourceId = R.string.error_field_required
+                }
+            }
+        }
+        return adopter
+    }
+
+    fun map(origin: AdopterView): Adopter {
+        return Adopter(
+            origin.email.value?:"",
+            origin.name.value?:"",
+            origin.firstLastName.value?:"",
+            origin.secondLastName.value?:"",
+            trueValueOfGenderType(origin.genderType.value),
+            getDateFromString(origin.birthDay.value),
+            origin.password.value?:"",
+            origin.phone.value?:"",
+            origin.address.value?:""
         )
     }
 

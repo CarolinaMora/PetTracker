@@ -1,5 +1,7 @@
 package com.teammovil.pettracker.ui.adopterregistration
 
+import com.teammovil.pettracker.ui.common.FieldView
+
 class AdopterView(
     var id: String?,
     var name: FieldView<String?>,
@@ -12,9 +14,9 @@ class AdopterView(
     var phone: FieldView<String?>,
     var address: FieldView<String?>
 )
-
+/*
 class FieldView<T>(
     var value: T,
     var valid: Boolean = true,
     var message: String = ""
-)
+)*/

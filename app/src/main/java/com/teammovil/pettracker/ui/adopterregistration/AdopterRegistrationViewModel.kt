@@ -5,14 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.data.adopter.AdopterRepository
+import com.teammovil.domain.Adopter
+import com.teammovil.domain.Error
+import com.teammovil.domain.Result
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.util.MessageValidation
+import com.teammovil.usecases.common.UseCaseErrors
+import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : ViewModel() {
+class AdopterRegistrationViewModel(val registerAdopterUseCase: RegisterAdopterUseCase) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -27,29 +33,46 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
     private val _navigation = MutableLiveData<Event<Unit>>()
     val navigation: LiveData<Event<Unit>> get() = _navigation
 
-    fun onSaveAdopter (adopter: AdopterView){
+    /*fun onSaveAdopter (adopter: AdopterView){
         if(validateView(adopter)){
-            saveAdopter(mapAdopter(adopter))
+            //saveAdopter(mapAdopter(adopter))
+            saveAdopter(adopter)
         }
         else{
             _model.value = UiModel.AdopterError(adopter)
         }
+    }*/
+    fun onSaveAdopter(adopter: AdopterView){
+        saveAdopter(adopter)
     }
 
     fun onClickOkAdvice (){
         _navigation.value = Event(Unit)
     }
 
-    private fun saveAdopter (adopter: com.teammovil.domain.Adopter){
+    private fun saveAdopter (adopter: AdopterView){
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO){adopterRepository.registerAdopter(adopter)}
-            if(result) showSuccessAdvice()
-            else showRegistrationError()
+            val result = withContext(Dispatchers.IO){registerAdopterUseCase.invoke(Mapper.map(adopter))}
+            manageResult(result,adopter)
+            //if(result) showSuccessAdvice()
+            //else showRegistrationError()
         }
     }
 
-    private fun validateView(adopter: AdopterView): Boolean {
+    private fun manageResult(result: Result<Unit, List<Error>>, adopter: AdopterView){
+        if (result.valid){
+            showSuccessAdvice()
+        }else{
+            when{
+                result.error.isNullOrEmpty()->{}
+                result.error!![0].code==UseCaseErrors.REGISTER_ADOPTER_GENERIC_ERROR->{showRegistrationError()}
+                else -> {showAdopterViewErrors(result.error!!,adopter)}
+            }
+        }
+    }
+
+    /*private fun validateView(adopter: AdopterView): Boolean {
         var valid = true
         if (adopter.name.value.isNullOrEmpty()) {
             valid = false
@@ -105,9 +128,9 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
             adopter.address.message = MessageValidation.FIELD_REQUIRED
         }
         return valid
-    }
+    }*/
 
-    private fun mapAdopter (origin: AdopterView): com.teammovil.domain.Adopter {
+    /*private fun mapAdopter (origin: AdopterView): com.teammovil.domain.Adopter {
         return com.teammovil.domain.Adopter(
             origin.email.value!!,
             origin.name.value!!,
@@ -119,7 +142,7 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
             origin.phone.value!!,
             origin.address.value!!
         )
-    }
+    }*/
 
     private fun showSuccessAdvice (){
         _model.value = UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS)
@@ -127,6 +150,10 @@ class AdopterRegistrationViewModel(val adopterRepository: AdopterRepository) : V
 
     private fun showRegistrationError (){
         _model.value = UiModel.ErrorNotification(MessageValidation.ADOPTER_REGISTER_FAILURE)
+    }
+
+    private fun showAdopterViewErrors(errorList: List<Error>, adopterView: AdopterView){
+        _model.value = UiModel.AdopterError(Mapper.map(adopterView,errorList))
     }
 
 }
