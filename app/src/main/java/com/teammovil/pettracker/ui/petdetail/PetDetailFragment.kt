@@ -14,8 +14,6 @@ import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 const val ARG_PET_ID= "petId"
 
 /**
