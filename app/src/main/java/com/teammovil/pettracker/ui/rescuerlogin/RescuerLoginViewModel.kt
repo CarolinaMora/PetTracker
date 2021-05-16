@@ -4,16 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.R
-import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.pettracker.util.MessageValidation
+import com.teammovil.usecases.loginrescuer.LoginRescuerUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RescuerLoginViewModel(private val rescuerRepository: RescuerRepository): ViewModel() {
+class RescuerLoginViewModel(private val getRescuer: LoginRescuerUseCase): ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -32,52 +31,30 @@ class RescuerLoginViewModel(private val rescuerRepository: RescuerRepository): V
     private val _navigation = MutableLiveData<Event<UiNavigation>>()
     val navigation: LiveData<Event<UiNavigation>> get() = _navigation
 
-    fun onLoginAdopter(user: UserView){
-        if(validateView((user))){
-            loginAdopter(user)
-        }else
-            _model.value = UiModel.LoginError(user)
+    fun onLoginRescuer(user: UserView){
+        loginRescuer(user)
     }
 
     fun onRegisterRescuer (){
         navigateToRegistration()
     }
 
-    private fun loginAdopter (user: UserView){
+    private fun loginRescuer (user: UserView){
         viewModelScope.launch{
             _model.value = UiModel.Loading
 
             val result = withContext(Dispatchers.IO){
-                rescuerRepository.login(user.email.value!!, user.password.value!!)
-            }
-            if(result){
-                navigateToHome()
-            } else showLoginError()
+                getRescuer.invoke(user.email.value!!, user.password.value!!)}
+            validateView(result)
         }
     }
 
-    private fun validateView(user: UserView): Boolean {
-
-        var valid = true
-
-        if (user.email.value.isNullOrEmpty()) {
-            valid = false
-            user.email.valid = false
-            user.email.messageResourceId = R.string.error_field_required
-        }
-
-        if (user.password.value.isNullOrEmpty()) {
-            valid = false
-            user.password.valid = false
-            user.password.messageResourceId = R.string.error_field_required
-        }
-
-
-        return valid
-    }
+    private fun validateView(result: Boolean) {
+        val valid = true
+        if( result == valid) navigateToHome() else{ showLoginError() } }
 
     private fun showLoginError () {
-        _model.value = UiModel.ErrorNotification(MessageValidation.ADOPTER_RESGISTER_FAILURE)
+        _model.value = UiModel.ErrorNotification(MessageValidation.LOGING_FAILURE)
     }
 
     private fun navigateToHome (){

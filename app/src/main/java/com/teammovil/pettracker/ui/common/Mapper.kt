@@ -234,5 +234,4 @@ object Mapper {
             getDateFromString(origin.activityStartDate.value)
         )
     }
-
 }
