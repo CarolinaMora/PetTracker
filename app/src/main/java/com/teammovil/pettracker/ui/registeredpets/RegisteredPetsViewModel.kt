@@ -4,23 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.usecases.rescuerPets.GetRescuerPets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepository: RescuerRepository) : ViewModel() {
+class RegisteredPetsViewModel(private val getRescuerPets: GetRescuerPets) : ViewModel() {
 
     sealed class UiModel {
-        object Loading: UiModel()
+        object Loading : UiModel()
         class PetsContent(val pets: List<com.teammovil.domain.Pet>) : UiModel()
     }
 
     sealed class UiEvents {
-        class GoToDetail (val petId: String): UiEvents()
-        object GoTORegistration: UiEvents()
+        class GoToDetail(val petId: String) : UiEvents()
+        object GoTORegistration : UiEvents()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -34,19 +33,18 @@ class RegisteredPetsViewModel(val petRepository: PetRepository, val rescuerRepos
 
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val rescuer = withContext(Dispatchers.IO) {rescuerRepository.getRescuer()}
-            if(rescuer!=null) {
-                val result = withContext(Dispatchers.IO) {petRepository.getAllPatsFromRescuer(rescuer.email)}
+            val result = withContext(Dispatchers.IO) { getRescuerPets.invoke() }
+            if (result != null) {
                 setView(result)
             }
         }
     }
 
-    fun onDetailPet (pet: com.teammovil.domain.Pet){
+    fun onDetailPet(pet: com.teammovil.domain.Pet) {
         _events.value = Event(UiEvents.GoToDetail(pet.id))
     }
 
-    fun onRegisterPet (){
+    fun onRegisterPet() {
         _events.value = Event(UiEvents.GoTORegistration)
     }
 
