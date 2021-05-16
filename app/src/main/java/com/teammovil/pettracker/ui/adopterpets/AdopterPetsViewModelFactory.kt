@@ -2,14 +2,12 @@ package com.teammovil.pettracker.ui.adopterpets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.data.adopter.AdopterRepository
-import com.teammovil.data.pet.PetRepository
-import java.lang.IllegalArgumentException
+import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
 
-class AdopterPetsViewModelFactory(val petRepository: PetRepository, val adopterRepository: AdopterRepository): ViewModelProvider.Factory {
+class AdopterPetsViewModelFactory(private val getAdopterPetsUseCase: GetAdopterPetsUseCase): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AdopterPetsViewModel::class.java)){
-            return AdopterPetsViewModel(petRepository, adopterRepository) as T
+            return AdopterPetsViewModel(getAdopterPetsUseCase) as T
         }
         throw IllegalArgumentException("Unknown AdopterPetsViewModel")
     }

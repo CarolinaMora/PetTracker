@@ -2,12 +2,12 @@ package com.teammovil.pettracker.ui.sendevidence
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.data.pet.PetRepository
+import com.teammovil.usecases.SaveEvidenceUseCase
 
-class SendEvidenceViewModelFactory(var petRepository: PetRepository) : ViewModelProvider.Factory{
+class SendEvidenceViewModelFactory(var saveEvidenceUseCase: SaveEvidenceUseCase) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(SendEvidenceViewModel::class.java)){
-            return SendEvidenceViewModel(petRepository) as T
+            return SendEvidenceViewModel( saveEvidenceUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

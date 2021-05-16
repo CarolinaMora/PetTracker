@@ -8,8 +8,12 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
-import com.teammovil.pettracker.ui.rescuerregistration.RescuerView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
+import com.teammovil.domain.Error
+import com.teammovil.domain.rules.RulesErrors
+import com.teammovil.pettracker.R
+
+
 import java.util.*
 
 object Mapper {
