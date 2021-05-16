@@ -1,7 +1,6 @@
 package com.teammovil.data.rescuer
 
-import com.teammovil.data.rescuer.RescuerExternalDataAccess
-import com.teammovil.data.rescuer.RescuerStorageDataAccess
+
 
 class RescuerRepository(
     private val externalDataAccess: RescuerExternalDataAccess,

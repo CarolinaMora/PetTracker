@@ -2,12 +2,15 @@ package com.teammovil.pettracker.ui.adopterlogin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teammovil.data.adopter.AdopterRepository
+import com.teammovil.usecases.loginadopter.LoginAdopterUseCase
 
-class AdopterLoginViewModelFactory (private val adopterRepository: AdopterRepository): ViewModelProvider.Factory {
+
+class AdopterLoginViewModelFactory (
+    private val adopterUseCaseRepository: LoginAdopterUseCase
+): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(AdopterLoginViewModel::class.java)){
-            return AdopterLoginViewModel(adopterRepository) as T
+            return AdopterLoginViewModel(adopterUseCaseRepository) as T
         }
         throw IllegalArgumentException("Unknow ViewModel class")
     }

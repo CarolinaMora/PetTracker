@@ -4,7 +4,7 @@ import com.teammovil.domain.Adopter
 
 interface AdopterStorageDataAccess {
 
-    suspend fun saveAdopter (adopter: com.teammovil.domain.Adopter)
+    suspend fun saveAdopter (adopter: Adopter)
 
-    suspend fun getAdopter (): com.teammovil.domain.Adopter
+    suspend fun getAdopter (): Adopter
 }
