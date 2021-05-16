@@ -7,7 +7,8 @@ const val DATE_FORMAT = "yyyy-MM-dd"
 
 fun getDateFromString (date: String?): Date? {
     return try {
-        date?.let {SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).parse(it)}
+        if (date.isNullOrEmpty() )  null
+        else date?.let {SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).parse(it)}
     }catch (e: Exception){
         null
     }
