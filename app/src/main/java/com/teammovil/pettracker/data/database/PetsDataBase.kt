@@ -21,9 +21,7 @@ abstract class PetsDataBase: RoomDatabase() {
     abstract fun rescuerDao(): RescuerDao
 
     companion object{
-
         private var INSTANCE: PetsDataBase? = null
-
         fun getDatabase(context: Context): PetsDataBase{
             if (INSTANCE == null){
                 INSTANCE = Room.databaseBuilder(context, PetsDataBase::class.java, "PetsDataBase")

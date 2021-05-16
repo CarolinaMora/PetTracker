@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.teammovil.pettracker.R
 import com.teammovil.data.adopter.AdopterRepository
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
+
+import com.teammovil.usecases.loginadopter.LoginAdopterUseCase
 
 
 class AdopterLoginFragment : Fragment() {
@@ -31,11 +32,11 @@ class AdopterLoginFragment : Fragment() {
     ): View? {
         binding = FragmentAdopterLoginBinding.inflate(inflater)
 
+        val adopterExternal = AdopterExternalDataAccessServiceImpl()
+        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireActivity())
+
         viewModel = ViewModelProvider(this, AdopterLoginViewModelFactory(
-            AdopterRepository(
-                AdopterExternalDataAccessServiceImpl(),
-                AdopterStorageDataAccessDataBaseImpl(requireActivity())
-            )
+            LoginAdopterUseCase(AdopterRepository(adopterExternal, adopterStorage ))
         )
         )[AdopterLoginViewModel::class.java]
 
@@ -46,23 +47,20 @@ class AdopterLoginFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        viewModel.model.observe(viewLifecycleOwner,  { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver { navigateTo(it) })
     }
 
     private fun updateUI(model:  AdopterLoginViewModel.UiModel){
-
         when(model){
-            is AdopterLoginViewModel.UiModel.LoginError -> showAdopterError(model.userView)
+            is AdopterLoginViewModel.UiModel.LoginError -> showAdopterError(model.adopterView)
             is AdopterLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
     }
 
-    private fun navigateTo (model: AdopterLoginViewModel.UiNavigation){
-        when(model){
-            is AdopterLoginViewModel.UiNavigation.GoHome -> navigateToMainActivity()
-            is AdopterLoginViewModel.UiNavigation.GoRegister -> navigateToAdopterRegistration()
-        }
+    private fun navigateTo (model: AdopterLoginViewModel.UiNavigation) = when(model){
+        is AdopterLoginViewModel.UiNavigation.GoHome -> navigateToMainActivity()
+        is AdopterLoginViewModel.UiNavigation.GoRegister -> navigateToAdopterRegistration()
     }
 
     private fun setListener() {
@@ -85,8 +83,10 @@ class AdopterLoginFragment : Fragment() {
     }
 
     private fun showAdopterError(userView: UserView){
-        binding.emailAdopted.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
-        binding.passAdopted.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
+        with(binding){
+            emailAdopted.error = if (userView.email.valid) null else userView.email.messageResourceId.toString()
+            passAdopted.error = if (userView.password.valid) null else userView.password.messageResourceId.toString()
+        }
     }
 
     private fun navigateToMainActivity(){
@@ -107,6 +107,8 @@ class AdopterLoginFragment : Fragment() {
                 FieldView(passAdopted.text.toString())
             )
             viewModel.onLoginAdopter(user)
+
+
         }
     }
 
