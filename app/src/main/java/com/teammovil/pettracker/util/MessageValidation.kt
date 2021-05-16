@@ -1,6 +1,7 @@
 package com.teammovil.pettracker.util
 
 object MessageValidation {
+    const val FIELD_REQUIERED = "Campo requerido"
     const val LOGING_FAILURE = "Usuario o Contrasena incorecta"
 
 
