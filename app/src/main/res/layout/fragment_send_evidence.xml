@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:gravity="center"
-                    android:text="Enviar Evidencia"
+                    android:text="@string/send_evidence_title"
                     android:textSize="30sp" />
 
 
@@ -61,7 +61,7 @@
                         android:layout_marginTop="@dimen/default_half_margin"
                         android:layout_marginBottom="@dimen/default_half_margin"
                         android:text=""
-                        tools:text="Photo error"
+                        tools:text="@string/send_evidence_error"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/send_evidence_photo_evidence"
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:hint="Fecha"
+                    android:hint="@string/send_evidence_date"
                     android:paddingTop="@dimen/default_margin">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:hint="Comments"
+                    android:hint="@string/send_evidence_comments"
                     android:paddingTop="@dimen/default_margin">
 
                     <androidx.appcompat.widget.AppCompatEditText
