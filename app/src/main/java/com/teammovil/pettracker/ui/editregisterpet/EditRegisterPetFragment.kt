@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +24,8 @@ import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.usecases.editpet.EditPetUseCase
+import com.teammovil.usecases.registerpet.RegisterPetUseCase
 
 
 class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
@@ -38,16 +41,17 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     ): View? {
         petId = arguments?.getString(ARG_PET_ID)
 
+        val rescuerRepository = RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
+        val petRepository = PetRepository(PetExternalDataAccessServiceImpl())
+
+        val registerPetUseCase = RegisterPetUseCase(rescuerRepository, petRepository)
+        val editPetUseCase = EditPetUseCase(petRepository)
+
         viewModel = ViewModelProvider(
                         this,
                         EditRegisterPetViewModelFactory(
-                            PetRepository(
-                                PetExternalDataAccessServiceImpl()
-                            ),
-                            RescuerRepository(
-                                RescuerExternalDataAccessServiceImpl(),
-                                RescuerStorageDataAccessDataBaseImpl(requireContext())
-                            )
+                            registerPetUseCase,
+                            editPetUseCase
                         )
                 )[EditRegisterPetViewModel::class.java]
 
@@ -55,8 +59,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        photoTaker =
-            PhotoTaker(requireContext())
+        photoTaker = PhotoTaker(requireContext())
         photoTaker?.fragment = this
         setViews()
         setListeners()
@@ -130,7 +133,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     private fun updateUI(model: EditRegisterPetViewModel.UiModel) {
         when(model){
             is EditRegisterPetViewModel.UiModel.Loading -> binding.petRegistrationProgress.visibility = if (model.show) View.VISIBLE else View.GONE
-            is EditRegisterPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
+            is EditRegisterPetViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.messageResourceId)
             is EditRegisterPetViewModel.UiModel.SuccessAdvice -> showSuccessAdvice()
         }
     }
@@ -186,7 +189,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
 
     private fun setViews (){
         //Type selection
-        val arrayType = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.PetType.values().map{it.name}
+        val arrayType = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.PetType.values().map{it.name}.drop(1)
         val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayType
@@ -195,7 +198,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         binding.petRegistrationType.adapter = adapterType
 
         //Gender selection
-        val arrayGender = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.GenderType.values().map{it.name}
+        val arrayGender = listOf(getString(R.string.prompt_select_option)) + com.teammovil.domain.GenderType.values().map{it.name}.drop(1)
         val adapterGender: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item, arrayGender
@@ -240,7 +243,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         builder.create().show()
     }
 
-    private fun showErrorAdvice (message: String){
+    private fun showErrorAdvice (@StringRes message: Int){
         val builder = AlertDialog.Builder(requireContext())
                 .setMessage(message)
                 .setPositiveButton(R.string.action_accept) { dialog, _ ->

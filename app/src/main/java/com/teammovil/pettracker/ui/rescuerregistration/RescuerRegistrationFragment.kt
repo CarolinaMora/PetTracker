@@ -13,7 +13,9 @@ import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRescuerRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver
+import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
 
 
 class RescuerRegistrationFragment : Fragment(R.layout.fragment_rescuer_registration), DatePickerFragment.DatePickerFragmentListener {
@@ -24,15 +26,18 @@ class RescuerRegistrationFragment : Fragment(R.layout.fragment_rescuer_registrat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val registerRescuerUseCase = RegisterRescuerUseCase(
+            RescuerRepository(
+                RescuerExternalDataAccessServiceImpl(),
+                RescuerStorageDataAccessDataBaseImpl(requireContext())
+            )
+        )
 
         binding = FragmentRescuerRegistrationBinding.bind(view)
         viewModel = ViewModelProvider(
             this,
             RescuerRegistrationViewModelFactory(
-                RescuerRepository(
-                    RescuerExternalDataAccessServiceImpl(),
-                    RescuerStorageDataAccessDataBaseImpl(requireContext())
-                )
+                registerRescuerUseCase
             )
         )[RescuerRegistrationViewModel::class.java]
         setListeners()
@@ -99,13 +104,13 @@ class RescuerRegistrationFragment : Fragment(R.layout.fragment_rescuer_registrat
     }
 
     private fun showRescuerError(rescuerView: RescuerView){
-        binding.rescuerRegistrationName.error = if (rescuerView.name.valid) null else rescuerView.name.message
-        binding.rescuerRegistrationStartDate.error = if (rescuerView.activityStartDate.valid) null else rescuerView.activityStartDate.message
-        binding.rescuerRegistrationEmail.error = if (rescuerView.email.valid) null else rescuerView.email.message
-        binding.rescuerRegistrationPassword.error = if (rescuerView.password.valid) null else rescuerView.password.message
-        binding.rescuerRegistrationPhone.error = if (rescuerView.phone.valid) null else rescuerView.phone.message
-        binding.rescuerRegistrationAddress.error = if (rescuerView.address.valid) null else rescuerView.address.message
-        binding.rescuerRegistrationDescription.error = if (rescuerView.descripion.valid) null else rescuerView.descripion.message
+        binding.rescuerRegistrationName.error = if (rescuerView.name.valid) null else getString(rescuerView.name.messageResourceId)
+        binding.rescuerRegistrationStartDate.error = if (rescuerView.activityStartDate.valid) null else getString(rescuerView.activityStartDate.messageResourceId)
+        binding.rescuerRegistrationEmail.error = if (rescuerView.email.valid) null else getString(rescuerView.email.messageResourceId)
+        binding.rescuerRegistrationPassword.error = if (rescuerView.password.valid) null else getString(rescuerView.password.messageResourceId)
+        binding.rescuerRegistrationPhone.error = if (rescuerView.phone.valid) null else getString(rescuerView.phone.messageResourceId)
+        binding.rescuerRegistrationAddress.error = if (rescuerView.address.valid) null else getString(rescuerView.address.messageResourceId)
+        binding.rescuerRegistrationDescription.error = if (rescuerView.descripion.valid) null else getString(rescuerView.descripion.messageResourceId)
     }
 
     private fun navigateUp (){
