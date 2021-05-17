@@ -5,15 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.data.rescuer.RescuerRepository
+import com.teammovil.domain.Error
+import com.teammovil.domain.Rescuer
+import com.teammovil.domain.Result
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.util.MessageValidation
+import com.teammovil.usecases.common.UseCaseErrors
+import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : ViewModel() {
+class RescuerRegistrationViewModel(val registerRescuerUseCase: RegisterRescuerUseCase) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -29,84 +35,32 @@ class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : V
     val navigation: LiveData<Event<Unit>> get() = _navigation
 
     fun onSaveRescuer (rescuer: RescuerView){
-        if(validateView(rescuer)){
-            saveRescuer(mapRescuer(rescuer))
-        }
-        else{
-            _model.value = UiModel.RescuerError(rescuer)
-        }
+        saveRescuer(rescuer)
     }
 
     fun onClickOkAdvice (){
         _navigation.value = Event(Unit)
     }
 
-    private fun saveRescuer (rescuer: com.teammovil.domain.Rescuer){
+    private fun saveRescuer (rescuer: RescuerView){
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO){rescuerRepository.registerRescuer(rescuer)}
-            if(result) showSuccessAdvice()
-            else showRegistrationError()
+            val result = withContext(Dispatchers.IO){registerRescuerUseCase.invoke(Mapper.map(rescuer))}
+            manageResult(result, rescuer)
         }
     }
 
-    private fun validateView(rescuer: RescuerView): Boolean {
-        var valid = true
-        if (rescuer.name.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.name.valid = false
-            rescuer.name.message = MessageValidation.FIELD_REQUIRED
-        }
 
-        if (rescuer.activityStartDate.value == null || getDateFromString(rescuer.activityStartDate.value) == null) {
-            valid = false
-            rescuer.activityStartDate.valid = false
-            rescuer.activityStartDate.message = MessageValidation.FIELD_REQUIRED
+    private fun manageResult (result: Result<Unit, List<Error>>, rescuer: RescuerView){
+        if(result.valid)
+            showSuccessAdvice()
+        else {
+            when{
+                result.error.isNullOrEmpty() -> {}
+                result.error!![0].code == UseCaseErrors.REGISTER_RESCUER_GENERIC_ERROR -> {showRegistrationError()}
+                else -> { showPetViewErrors(result.error!!, rescuer) }
+            }
         }
-
-        if (rescuer.email.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.email.valid = false
-            rescuer.email.message = MessageValidation.FIELD_REQUIRED
-        }
-
-        if (rescuer.password.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.password.valid = false
-            rescuer.password.message = MessageValidation.FIELD_REQUIRED
-        }
-
-        if (rescuer.phone.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.phone.valid = false
-            rescuer.phone.message = MessageValidation.FIELD_REQUIRED
-        }
-
-        if (rescuer.address.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.address.valid = false
-            rescuer.address.message = MessageValidation.FIELD_REQUIRED
-        }
-
-        if (rescuer.descripion.value.isNullOrEmpty()) {
-            valid = false
-            rescuer.descripion.valid = false
-            rescuer.descripion.message = MessageValidation.FIELD_REQUIRED
-        }
-        return valid
-    }
-
-    private fun mapRescuer (origin: RescuerView): com.teammovil.domain.Rescuer {
-        return com.teammovil.domain.Rescuer(
-            "",
-            origin.name.value!!,
-            origin.descripion.value!!,
-            origin.address.value!!,
-            origin.email.value!!,
-            origin.password.value!!,
-            origin.phone.value!!,
-            getDateFromString(origin.activityStartDate.value!!) ?: Date()
-        )
     }
 
     private fun showSuccessAdvice (){
@@ -115,6 +69,10 @@ class RescuerRegistrationViewModel(val rescuerRepository: RescuerRepository) : V
 
     private fun showRegistrationError (){
         _model.value = UiModel.ErrorNotification(MessageValidation.RESCUER_REGISTER_FAILURE)
+    }
+
+    private fun showPetViewErrors(errorList: List<Error>, rescuerView: RescuerView){
+        _model.value = UiModel.RescuerError(Mapper.map(rescuerView, errorList))
     }
 
 }
