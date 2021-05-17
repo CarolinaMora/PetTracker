@@ -8,10 +8,9 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
+import com.teammovil.pettracker.ui.rescuerregistration.RescuerView
+import com.teammovil.pettracker.ui.sendevidence.EvidenceView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
-import com.teammovil.domain.Error
-import com.teammovil.domain.rules.RulesErrors
-import com.teammovil.pettracker.R
 
 
 import java.util.*
@@ -233,5 +232,33 @@ object Mapper {
             origin.phone.value ?: "",
             getDateFromString(origin.activityStartDate.value)
         )
+    }
+
+    fun map (origin: EvidenceView): com.teammovil.domain.Evidence {
+        return com.teammovil.domain.Evidence(
+            origin.externalId,
+            origin.comments.value!!,
+            origin.photo.value ?: "",
+            getDateFromString(origin.evidenceDate.value)
+        )
+    }
+    fun map (evidence: EvidenceView, errorList: List<Error>) : EvidenceView {
+        for (error in errorList) {
+            when (error.code) {
+                RulesErrors.EVIDENCE_PHOTO_FIELD_EMPTY_ERROR -> {
+                    evidence.photo.valid = false
+                    evidence.photo.messageResourceId = R.string.error_photo_required
+                }
+                RulesErrors.EVIDENCE_DATE_FIELD_EMPTY_ERROR -> {
+                    evidence.evidenceDate.valid = false
+                    evidence.evidenceDate.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.EVIDENCE_COMMENTS_FIELD_EMPTY_ERROR -> {
+                    evidence.comments.valid = false
+                    evidence.comments.messageResourceId = R.string.error_field_required
+                }
+            }
+        }
+        return evidence
     }
 }
