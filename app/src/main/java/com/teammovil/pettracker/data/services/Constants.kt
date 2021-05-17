@@ -43,6 +43,7 @@ object Constants {
     const val PET_STATUS_FIELD = "status"
     const val PET_RESCUER_ID_FIELD = "rescuerId"
     const val PET_ADOPTER_ID_FIELD = "adopterId"
+    const val PET_PHOTO_FILE_NAME_ID_FIELD = "file_name"
 
     //Vaccine
     const val VACCINE_ID_FIELD = "id"
@@ -54,10 +55,15 @@ object Constants {
     const val EVIDENCE_COMMENT_FIELD = "comment"
     const val EVIDENCE_MADIA_URL_FIELD = "url"
     const val EVIDENCE_DATE_TAKEN_FIELD = "date_taken"
+    const val EVIDENCE_MEDIA_FILE_NAME_FIELD = "file_name"
 
     //Deworming
     const val DEWORMING_ID_FIELD = "id"
     const val DEWORMING_NAME_FIELD = "name"
     const val DEWORMING_APPLICATION_FIELD = "application_date"
+
+    //Files
+    const val PETS_ROOT_URL = "pet/"
+    const val EVIDENCES_ROOT_URL = "evidences/"
 
 }
