@@ -8,11 +8,13 @@ import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
+import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
+import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdopterViewModel(val adopterRepository: AdopterRepository, val petRepository: PetRepository):ViewModel() {
+class AdopterViewModel(private val assignAdopterToPetUseCase: AssignAdopterToPetUseCase,private val getAllAdoptersUseCase: GetAllAdoptersUseCase):ViewModel() {
 
     sealed class UiModel{
         object Loading: UiModel()
@@ -31,7 +33,7 @@ class AdopterViewModel(val adopterRepository: AdopterRepository, val petReposito
     init {
         viewModelScope.launch {
             _model.value = UiModel.Loading
-            var result = withContext(Dispatchers.IO){adopterRepository.getAllAdopters()}
+            var result = withContext(Dispatchers.IO){getAllAdoptersUseCase.invoke()}
             setView(result)
         }
     }
@@ -68,7 +70,7 @@ class AdopterViewModel(val adopterRepository: AdopterRepository, val petReposito
         _model.value = UiModel.Loading
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO){
-                petRepository.assignAdopterToPet(petId,adopterId)
+                assignAdopterToPetUseCase.invoke(petId,adopterId)
             }
             if(result){
                 showSuccessAdvice()

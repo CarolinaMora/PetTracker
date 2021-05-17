@@ -14,6 +14,8 @@ import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAssignAdopterToPetBinding
+import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
+import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 
 const val ARG_PET_ID= "petId"
 
@@ -41,13 +43,13 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         val adopterFake = AdopterExternalDataAccessServiceImpl()
         val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
 
-        val petRepository = PetRepository(petExternal)
-        val adopterRepository = AdopterRepository(
+        val assignAdopterToPetUseCase = AssignAdopterToPetUseCase(PetRepository(petExternal))
+        val getAllAdopterUseCase = GetAllAdoptersUseCase(AdopterRepository(
             adopterFake,
             adopterStorage
-        )
+        ))
 
-        viewModel = ViewModelProvider(this,AdopterViewModelFactory(petRepository,adopterRepository))[AdopterViewModel::class.java]
+        viewModel = ViewModelProvider(this,AdopterViewModelFactory(assignAdopterToPetUseCase,getAllAdopterUseCase))[AdopterViewModel::class.java]
 
         setViews()
         viewModel.model.observe(viewLifecycleOwner, Observer {
