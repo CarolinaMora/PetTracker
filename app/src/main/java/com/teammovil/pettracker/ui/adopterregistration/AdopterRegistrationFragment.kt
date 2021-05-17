@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
 import com.teammovil.data.adopter.AdopterRepository
+import com.teammovil.domain.GenderType
 import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
 import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.pettracker.ui.common.FieldView
+import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 
 
 class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registration), DatePickerFragment.DatePickerFragmentListener {
@@ -25,15 +28,19 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val registerAdopterUseCase = RegisterAdopterUseCase(
+            AdopterRepository(
+                AdopterExternalDataAccessServiceImpl(),
+                AdopterStorageDataAccessDataBaseImpl(requireContext())
+            )
+        )
+
 
         binding = FragmentAdopterRegistrationBinding.bind(view)
         viewModel = ViewModelProvider(
             this,
             AdopterRegistrationViewModelFactory(
-                AdopterRepository(
-                    AdopterExternalDataAccessServiceImpl(),
-                    AdopterStorageDataAccessDataBaseImpl(requireContext())
-                )
+                registerAdopterUseCase
             )
         )[AdopterRegistrationViewModel::class.java]
         setViews()
@@ -112,15 +119,15 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
     }
 
     private fun showAdopterError(adopterView: AdopterView){
-        binding.adopterRegistrationName.error = if (adopterView.name.valid) null else adopterView.name.message
-        binding.adopterRegistrationLastName.error = if (adopterView.firstLastName.valid) null else adopterView.firstLastName.message
-        binding.adopterRegistrationSecondSurname.error = if (adopterView.secondLastName.valid) null else adopterView.secondLastName.message
-        binding.adopterRegistrationGenderError.text = if (adopterView.genderType.valid) "" else adopterView.genderType.message
-        binding.adopterRegistrationBirthDate.error = if (adopterView.birthDay.valid) null else adopterView.birthDay.message
-        binding.adopterRegistrationEmail.error = if (adopterView.email.valid) null else adopterView.email.message
-        binding.adopterRegistrationPassword.error = if (adopterView.password.valid) null else adopterView.password.message
-        binding.adopterRegistrationPhone.error = if (adopterView.phone.valid) null else adopterView.phone.message
-        binding.adopterRegistrationAddress.error = if (adopterView.address.valid) null else adopterView.address.message
+        binding.adopterRegistrationName.error = if (adopterView.name.valid) null else getString(adopterView.name.messageResourceId)
+        binding.adopterRegistrationLastName.error = if (adopterView.firstLastName.valid) null else getString(adopterView.firstLastName.messageResourceId)
+        binding.adopterRegistrationSecondSurname.error = if (adopterView.secondLastName.valid) null else getString(adopterView.secondLastName.messageResourceId)
+        binding.adopterRegistrationGenderError.text = if (adopterView.genderType.valid) GenderType.UNKNOWN.name else getString(adopterView.genderType.messageResourceId)
+        binding.adopterRegistrationBirthDate.error = if (adopterView.birthDay.valid) null else getString(adopterView.birthDay.messageResourceId)
+        binding.adopterRegistrationEmail.error = if (adopterView.email.valid) null else getString(adopterView.email.messageResourceId)
+        binding.adopterRegistrationPassword.error = if (adopterView.password.valid) null else getString(adopterView.password.messageResourceId)
+        binding.adopterRegistrationPhone.error = if (adopterView.phone.valid) null else getString(adopterView.phone.messageResourceId)
+        binding.adopterRegistrationAddress.error = if (adopterView.address.valid) null else getString(adopterView.address.messageResourceId)
     }
 
     private fun navigateUp (){
@@ -129,7 +136,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
 
     private fun onClickRegister(){
         with(binding){
-            val adopter = AdopterView(
+            val adopterView = AdopterView(
                 null,
                 FieldView(adopterRegistrationName.text.toString()),
                 FieldView(adopterRegistrationLastName.text.toString()),
@@ -141,7 +148,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
                 FieldView(adopterRegistrationPhone.text.toString()),
                 FieldView(adopterRegistrationAddress.text.toString())
             )
-            viewModel.onSaveAdopter(adopter)
+            viewModel.onSaveAdopter(adopterView)
         }
     }
 }

@@ -29,7 +29,7 @@ object Mapper {
             adopter.firstLastName,
             adopter.secondLastName,
             adopter.gender,
-            adopter.BirthDate,
+            adopter.BirthDate?:Date(),
             adopter.password,
             adopter.phone,
             adopter.address

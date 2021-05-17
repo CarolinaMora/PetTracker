@@ -8,7 +8,7 @@ data class Adopter (
     var firstLastName: String,
     var secondLastName: String,
     var gender: GenderType,
-    var BirthDate: Date,
+    var BirthDate: Date?,
     var password: String,
     var phone: String,
     var address: String
