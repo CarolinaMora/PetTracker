@@ -12,7 +12,7 @@ class AdopterEntity(
     var name: String = "",
     var firstLastName: String = "",
     var secondLastName: String = "",
-    var gender: com.teammovil.domain.GenderType = com.teammovil.domain.GenderType.MALE,
+    var gender: com.teammovil.domain.GenderType = com.teammovil.domain.GenderType.UNKNOWN,
     var BirthDate: Date = Date(),
     var password: String = "",
     var phone: String = "",

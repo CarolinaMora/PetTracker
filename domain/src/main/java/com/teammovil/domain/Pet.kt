@@ -8,8 +8,8 @@ data class Pet (
     var gender: com.teammovil.domain.GenderType,
     var race: String,
     var description: String,
-    var approximateDateOfBirth: Date,
-    var rescueDate: Date,
+    var approximateDateOfBirth: Date ?,
+    var rescueDate: Date ?,
     var petType: com.teammovil.domain.PetType,
     var sterilized: Boolean,
     var vaccines: List<Vaccine>,
@@ -30,7 +30,7 @@ data class Evidence(
     var id: String,
     var comment: String?,
     var media: String,
-    var date: Date
+    var date: Date?
 )
 
 data class Deworming(

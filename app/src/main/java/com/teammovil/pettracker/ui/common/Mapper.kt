@@ -1,9 +1,19 @@
 package com.teammovil.pettracker.ui.common
 
+import com.teammovil.domain.Error
+import com.teammovil.domain.GenderType
+import com.teammovil.domain.PetType
+import com.teammovil.domain.rules.RulesErrors
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.getStringFromDate
 import com.teammovil.pettracker.ui.dewormings.DewormingView
 import com.teammovil.pettracker.ui.vaccines.VaccineView
+import com.teammovil.domain.Error
+import com.teammovil.domain.rules.RulesErrors
+import com.teammovil.pettracker.R
+
+
 import java.util.*
 
 object Mapper {
@@ -35,7 +45,7 @@ object Mapper {
         return com.teammovil.domain.Vaccine(
             id = vaccineView.idExternal,
             name = vaccineView.name,
-            applicationDate = getDateFromString(vaccineView.applicationDate)?.let { it } ?: Date()
+            applicationDate = getDateFromString(vaccineView.applicationDate) ?: Date()
         )
     }
 
@@ -44,7 +54,7 @@ object Mapper {
             com.teammovil.domain.Deworming(
                 it.idExternal,
                 it.name,
-                getDateFromString(it.applicationDate)?.let { it } ?: Date())
+                getDateFromString(it.applicationDate) ?: Date())
         }
     }
 
@@ -69,16 +79,12 @@ object Mapper {
         return com.teammovil.domain.Pet(
             origin.id,
             origin.name.value ?: "",
-            com.teammovil.domain.GenderType.valueOf(
-                origin.gender.value ?: com.teammovil.domain.GenderType.MALE.name
-            ),
+            trueValueOfGenderType(origin.gender.value),
             origin.race.value ?: "",
             origin.description.value ?: "",
-            getDateFromString(origin.approximateDateOfBirth.value ?: "") ?: Date(),
-            getDateFromString(origin.rescueDate.value ?: "") ?: Date(),
-            com.teammovil.domain.PetType.valueOf(
-                origin.petType.value ?: com.teammovil.domain.PetType.DOG.name
-            ),
+            getDateFromString(origin.approximateDateOfBirth.value),
+            getDateFromString(origin.rescueDate.value),
+            trueValueOfPetType(origin.petType.value),
             origin.sterilized.value,
             origin.vaccines.value ?: listOf(),
             origin.dewormings.value ?: listOf(),
@@ -88,13 +94,33 @@ object Mapper {
         )
     }
 
+    fun trueValueOfGenderType(data: String?) : GenderType{
+        return try {
+            GenderType.valueOf(
+                data ?: GenderType.UNKNOWN.name
+            )
+        }catch (e: IllegalArgumentException){
+            GenderType.UNKNOWN
+        }
+    }
+
+    fun trueValueOfPetType(data: String?) : PetType{
+        return try {
+            PetType.valueOf(
+                data ?: PetType.UNKNOWN.name
+            )
+        }catch (e: IllegalArgumentException){
+            PetType.UNKNOWN
+        }
+    }
+
     fun mapPet (origin: com.teammovil.domain.Pet): PetView{
         return PetView(
-            "",
+            origin.id,
             FieldView(origin.name),
             SelectFieldView(
                 origin.gender.name,
-                origin.gender.ordinal+1
+                origin.gender.ordinal
             ),
             FieldView(origin.race),
             FieldView(origin.description),
@@ -102,7 +128,7 @@ object Mapper {
             FieldView(getStringFromDate(origin.rescueDate)),
             SelectFieldView(
                 origin.petType.name,
-                origin.petType.ordinal+1
+                origin.petType.ordinal
             ),
             FieldView(origin.sterilized),
             FieldView(origin.vaccines),
@@ -110,6 +136,102 @@ object Mapper {
             FieldView(origin.mainPhoto),
             FieldView(origin.status),
             FieldView(origin.evidences)
+        )
+    }
+
+    fun map (pet: PetView, errorList: List<Error>) : PetView{
+        for(error in errorList){
+            when (error.code){
+                RulesErrors.NAME_FIELD_EMPTY_ERROR -> {
+                    pet.name.valid = false
+                    pet.name.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.DESCRIPTION_FIELD_EMPTY_ERROR -> {
+                    pet.description.valid = false
+                    pet.description.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.RACE_FIELD_EMPTY_ERROR -> {
+                    pet.race.valid = false
+                    pet.race.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.GENDER_FIELD_EMPTY_ERROR -> {
+                    pet.gender.valid = false
+                    pet.gender.messageResourceId = R.string.prompt_select_option
+                }
+                RulesErrors.TYPE_FIELD_EMPTY_ERROR -> {
+                    pet.petType.valid = false
+                    pet.petType.messageResourceId = R.string.prompt_select_option
+                }
+                RulesErrors.BIRTH_DATE_FIELD_EMPTY_ERROR -> {
+                    pet.approximateDateOfBirth.valid = false
+                    pet.approximateDateOfBirth.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.RESCUE_DATE_FIELD_EMPTY_ERROR -> {
+                    pet.rescueDate.valid = false
+                    pet.rescueDate.messageResourceId = R.string.error_field_required
+                }
+                RulesErrors.MAIN_PHOTO_FIELD_EMPTY_ERROR -> {
+                    pet.mainPhoto.valid = false
+                    pet.mainPhoto.messageResourceId = R.string.error_photo_required
+                }
+            }
+        }
+        return pet
+    }
+
+    fun map(rescuer: RescuerView, errorList: List<Error>): RescuerView {
+        for(error in errorList) {
+            when (error.code) {
+                RulesErrors.NAME_FIELD_EMPTY_ERROR -> {
+                    rescuer.name.valid = false
+                    rescuer.name.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.ACTIVITY_START_DATE_FIELD_EMPTY_ERROR -> {
+                    rescuer.activityStartDate.valid = false
+                    rescuer.activityStartDate.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
+                    rescuer.email.valid = false
+                    rescuer.email.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
+                    rescuer.password.valid = false
+                    rescuer.password.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.PHONE_FIELD_EMPTY_ERROR -> {
+                    rescuer.phone.valid = false
+                    rescuer.phone.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.ADDRESS_FIELD_EMPTY_ERROR -> {
+                    rescuer.address.valid = false
+                    rescuer.address.messageResourceId = R.string.error_field_required
+                }
+
+                RulesErrors.DESCRIPTION_FIELD_EMPTY_ERROR -> {
+                    rescuer.descripion.valid = false
+                    rescuer.descripion.messageResourceId = R.string.error_field_required
+                }
+            }
+        }
+
+        return rescuer
+    }
+
+    fun map (origin: RescuerView): com.teammovil.domain.Rescuer {
+        return com.teammovil.domain.Rescuer(
+            origin.id ?: "",
+            origin.name.value ?: "",
+            origin.descripion.value ?: "",
+            origin.address.value ?: "",
+            origin.email.value ?: "",
+            origin.password.value ?: "",
+            origin.phone.value ?: "",
+            getDateFromString(origin.activityStartDate.value)
         )
     }
 }

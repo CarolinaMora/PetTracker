@@ -1,6 +1,7 @@
 package com.teammovil.domain
 
 enum class PetType {
+    UNKNOWN,
     DOG,
     CAT,
     FISH,
@@ -11,6 +12,7 @@ enum class PetType {
 }
 
 enum class GenderType {
+    UNKNOWN,
     MALE,
     FEMALE
 }

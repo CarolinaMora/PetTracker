@@ -16,6 +16,7 @@ import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterPetsBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsAdapter
+import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
 
 class AdopterPetsFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class AdopterPetsFragment : Fragment() {
             adopterStorage
         )
 
-        viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(petsRepo, adopterRepo))[AdopterPetsViewModel::class.java]
+        viewModel = ViewModelProvider(this, AdopterPetsViewModelFactory(GetAdopterPetsUseCase(petsRepo, adopterRepo)))[AdopterPetsViewModel::class.java]
         petsAdapter = RegisteredPetsAdapter{
             onClickPet(it)
         }

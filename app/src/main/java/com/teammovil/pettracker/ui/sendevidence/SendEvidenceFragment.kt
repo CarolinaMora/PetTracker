@@ -2,9 +2,8 @@ package com.teammovil.pettracker.ui.sendevidence
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,16 +18,17 @@ import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.PhotoTaker
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.views.DatePickerFragment
+import com.teammovil.usecases.SaveEvidenceUseCase
 
 
-class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
+class SendEvidenceFragment : Fragment(R.layout.fragment_send_evidence),
+    DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentSendEvidenceBinding
     private lateinit var viewModel: SendEvidenceViewModel
     private var photoTaker: PhotoTaker? = null
     private var petId: String? = null
 
-    //todo ver el video de Navigation para ver como se pasan los parametros
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,29 +37,55 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentSendEvidenceBinding.inflate(inflater)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val saveEvidenceUseCase = SaveEvidenceUseCase(
+            PetRepository(
+                PetExternalDataAccessServiceImpl()
+            )
+        )
+        binding = FragmentSendEvidenceBinding.bind(view)
         viewModel = ViewModelProvider(
             this,
             SendEvidenceViewModelFactory(
-                PetRepository(
-                    PetExternalDataAccessServiceImpl()
-                )
+                saveEvidenceUseCase
             )
         )[SendEvidenceViewModel::class.java]
+
         photoTaker = PhotoTaker(requireContext())
         photoTaker?.fragment = this
 
-
         setListeners()
         setObservers()
-
-        return binding.root
     }
+
+    private fun setObservers (){
+        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
+    }
+
+    private fun setListeners() {
+        binding.sendEvidenceSendAction.setOnClickListener{
+            onClickSendEvidence()
+        }
+        binding.sendEvidencePhotoEvidence.setOnClickListener{
+            onTakePhoto()
+        }
+        binding.sendEvidenceDate.setOnClickListener {
+            onClickDate(it.id)
+        }
+    }
+
+    private fun updateUI(model: SendEvidenceViewModel.UiModel) {
+
+        when(model){
+            is SendEvidenceViewModel.UiModel.EvidenceError -> showEvidenceError(model.evidenceView)
+            is SendEvidenceViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.messageResourceId)
+            is SendEvidenceViewModel.UiModel.SuccessNotification -> showSuccessAdvice(model.messageResourceId)
+        }
+    }
+
     override fun saveDate(date: String, idCaller: Int) {
         when (idCaller){
             binding.sendEvidenceDate.id -> binding.sendEvidenceDate.setText(date)
@@ -81,33 +107,6 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         photoTaker?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun setObservers (){
-        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
-        viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ navigateUp() })
-    }
-
-    private fun updateUI(model: SendEvidenceViewModel.UiModel) {
-        binding.sendEvidenceProgress.visibility = if (model is SendEvidenceViewModel.UiModel.Loading) View.VISIBLE else View.GONE
-
-        when(model){
-            is SendEvidenceViewModel.UiModel.EvidenceError -> showEvidenceError(model.evidenceView)
-            is SendEvidenceViewModel.UiModel.ErrorAdvice -> showErrorAdvice(model.message)
-            is SendEvidenceViewModel.UiModel.SuccessAdvice -> showSuccessAdvice(model.message)
-        }
-    }
-
-    private fun setListeners() {
-        binding.sendEvidenceSendAction.setOnClickListener{
-            onClickSendEvidence()
-        }
-        binding.sendEvidencePhotoEvidence.setOnClickListener{
-            onTakePhoto()
-        }
-        binding.sendEvidenceDate.setOnClickListener {
-            onClickDate(it.id)
-        }
-    }
-
     private fun onClickSendEvidence() {
         with(binding) {
             val evidence = EvidenceView (
@@ -118,9 +117,7 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
             )
             viewModel.onSaveEvidence(petId, evidence)
         }
-
     }
-
 
     private fun onClickDate (idCaller: Int){
         val newFragment = DatePickerFragment(idCaller)
@@ -138,7 +135,7 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         binding.sendEvidenceComments.error = if (evidenceView.comments.valid) null else getString(evidenceView.comments.messageResourceId)
     }
 
-    private fun showSuccessAdvice (message: String){
+    private fun showSuccessAdvice (@StringRes message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message)
             .setCancelable(false)
@@ -149,7 +146,7 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
         builder.create().show()
     }
 
-    private fun showErrorAdvice (message: String){
+    private fun showErrorAdvice (@StringRes message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message)
             .setPositiveButton(R.string.action_accept) { dialog, _ ->
@@ -157,9 +154,6 @@ class SendEvidenceFragment : Fragment(), DatePickerFragment.DatePickerFragmentLi
             }
         builder.create().show()
     }
-
-
-
 
     private fun navigateUp (){
         view?.findNavController()?.navigateUp()
