@@ -6,7 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.teammovil.pettracker.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainAdopterActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
