@@ -38,7 +38,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Detalle de Mascota"
+                android:text="@string/pet_detail_title"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -52,112 +52,111 @@
                 android:id="@+id/txtLabelName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre Mascota"
+                android:text="@string/pet_detail_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                />
 
             <TextView
                 android:id="@+id/txtLabelGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sexo"
+                android:text="@string/pet_detail_sex"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                 />
 
             <TextView
                 android:id="@+id/txtLabelRace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Raza"
+                android:text="@string/pet_detail_race"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtRace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                />
 
             <TextView
                 android:id="@+id/txtLabelDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción"
+                android:text="@string/pet_detail_description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                 />
 
             <TextView
                 android:id="@+id/txtLabelBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha Nacimiento"
+                android:text="@string/pet_detail_birthdate"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                />
 
             <TextView
                 android:id="@+id/txtLabelRescue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha Rescate"
+                android:text="@string/pet_detail_recue_date"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtRescue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                />
 
             <TextView
                 android:id="@+id/txtLabelType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tipo"
+                android:text="@string/pet_detail_type"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:text="XX" />
+                />
 
             <TextView
                 android:id="@+id/txtLabelSterilized"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¿Está esterilizado?"
+                android:text="@string/pet_detail_sterilized"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtSterilized"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                 />
 
             <TextView
                 android:id="@+id/txtLabelVaccine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vacunas"
+                android:text="@string/pet_detail_vaccines"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -174,7 +173,7 @@
                 android:id="@+id/txtLabelDeworming"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Desparacitaciones"
+                android:text="@string/pet_detail_deworming"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -191,21 +190,21 @@
                 android:id="@+id/txtLabelStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Estado"
+                android:text="@string/pet_detail_status"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/txtStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX" />
+                 />
 
             <TextView
                 android:id="@+id/txtLabelEvidences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
-                android:text="Evidencias"
+                android:text="@string/pet_detail_evidences"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 

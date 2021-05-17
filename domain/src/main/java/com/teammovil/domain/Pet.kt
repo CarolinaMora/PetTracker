@@ -30,7 +30,7 @@ data class Evidence(
     var id: String,
     var comment: String?,
     var media: String,
-    var date: Date
+    var date: Date?
 )
 
 data class Deworming(

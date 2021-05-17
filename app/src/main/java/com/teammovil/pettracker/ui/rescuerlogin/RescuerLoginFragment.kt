@@ -17,6 +17,7 @@ import com.teammovil.pettracker.databinding.FragmentRescuerLoginBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
+import com.teammovil.usecases.loginrescuer.LoginRescuerUseCase
 
 
 class RescuerLoginFragment : Fragment() {
@@ -31,11 +32,11 @@ class RescuerLoginFragment : Fragment() {
     ): View? {
         binding = FragmentRescuerLoginBinding.inflate(layoutInflater)
 
+        val rescuerExternal = RescuerExternalDataAccessServiceImpl()
+        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireActivity())
+
         viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
-            RescuerRepository(
-                RescuerExternalDataAccessServiceImpl(),
-                RescuerStorageDataAccessDataBaseImpl(requireContext())
-            )
+            LoginRescuerUseCase(RescuerRepository(rescuerExternal, rescuerStorage))
         )
         )[RescuerLoginViewModel::class.java]
 
@@ -85,8 +86,10 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun showRescuerError(userView: UserView){
-        binding.rescuerEmail.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
-        binding.rescuerPassword.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
+        with(binding){
+            rescuerEmail.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
+            rescuerPassword.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
+        }
     }
 
     private fun navigateToMainActivity(){
@@ -106,7 +109,7 @@ class RescuerLoginFragment : Fragment() {
                 FieldView(rescuerEmail.text.toString()),
                 FieldView(rescuerPassword.text.toString())
             )
-            viewModel.onLoginAdopter(user)
+            viewModel.onLoginRescuer(user)
         }
     }
 
