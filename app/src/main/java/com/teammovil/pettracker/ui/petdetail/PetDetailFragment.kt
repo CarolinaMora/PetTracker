@@ -13,6 +13,7 @@ import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.data.pet.*
 import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
+import com.teammovil.usecases.petdetail.GetPetUseCase
 
 const val ARG_PET_ID= "petId"
 
@@ -40,13 +41,16 @@ class PetDetailFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val getPetUseCase = GetPetUseCase(
+            PetRepository(
+                PetExternalDataAccessServiceImpl()
+            )
+        )
         binding = FragmentPetDetailBinding.inflate (inflater)
 
         viewModel = ViewModelProvider(this,
                 PetDetailViewModelFactory (
-                    PetRepository(
-                        PetExternalDataAccessServiceImpl()
-                    )
+                    getPetUseCase
                 )
         ) [PetDetailViewModel::class.java]
         viewModel.model.observe(viewLifecycleOwner, Observer {
