@@ -1,12 +1,12 @@
 package com.teammovil.pettracker.ui.petdetail
 
 import androidx.lifecycle.*
-import com.teammovil.data.pet.PetRepository
+import com.teammovil.usecases.petdetail.GetPetUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PetDetailViewModel (var petRepository: PetRepository): ViewModel() {
+class PetDetailViewModel (var getPetUseCase: GetPetUseCase): ViewModel() {
 
     sealed class UiModel (){
         object Loading : UiModel()
@@ -27,7 +27,7 @@ class PetDetailViewModel (var petRepository: PetRepository): ViewModel() {
             _model.value = UiModel.Loading
 
             var resultPet = withContext( Dispatchers.IO ) {
-                petRepository.getPetById(petId)
+                getPetUseCase.invoke(petId)
             }
             if(resultPet!=null)
                 _model.value = UiModel.PetDetailContent(resultPet)
