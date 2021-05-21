@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.usecases.rescuerPets.GetRescuerPets
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RegisteredPetsViewModel(private val getRescuerPets: GetRescuerPets) : ViewModel() {
+@HiltViewModel
+class RegisteredPetsViewModel @Inject constructor(private val getRescuerPets: GetRescuerPets) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
