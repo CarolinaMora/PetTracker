@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.ui
+package com.teammovil.pettracker.di
 
 import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.usecases.loginadopter.LoginAdopterUseCase
