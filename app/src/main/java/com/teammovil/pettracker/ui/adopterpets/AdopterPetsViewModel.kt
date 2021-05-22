@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AdopterPetsViewModel(private val getAdopterPetsUseCase: GetAdopterPetsUseCase) : ViewModel() {
+@HiltViewModel
+class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase: GetAdopterPetsUseCase) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
