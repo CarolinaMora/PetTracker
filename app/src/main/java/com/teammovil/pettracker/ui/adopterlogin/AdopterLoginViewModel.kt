@@ -11,12 +11,14 @@ import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.pettracker.util.MessageValidation
 
 import com.teammovil.usecases.loginadopter.LoginAdopterUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-
-class AdopterLoginViewModel(private val getAdopterUseCase: LoginAdopterUseCase): ViewModel() {
+@HiltViewModel
+class AdopterLoginViewModel @Inject constructor(private val getAdopterUseCase: LoginAdopterUseCase): ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
