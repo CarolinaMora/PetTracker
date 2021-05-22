@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -19,15 +20,17 @@ import com.teammovil.pettracker.ui.common.PhotoTaker
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import com.teammovil.usecases.SaveEvidenceUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SendEvidenceFragment : Fragment(R.layout.fragment_send_evidence),
     DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentSendEvidenceBinding
-    private lateinit var viewModel: SendEvidenceViewModel
     private var photoTaker: PhotoTaker? = null
     private var petId: String? = null
+
+    val viewModel: SendEvidenceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +49,6 @@ class SendEvidenceFragment : Fragment(R.layout.fragment_send_evidence),
             )
         )
         binding = FragmentSendEvidenceBinding.bind(view)
-        viewModel = ViewModelProvider(
-            this,
-            SendEvidenceViewModelFactory(
-                saveEvidenceUseCase
-            )
-        )[SendEvidenceViewModel::class.java]
 
         photoTaker = PhotoTaker(requireContext())
         photoTaker?.fragment = this
