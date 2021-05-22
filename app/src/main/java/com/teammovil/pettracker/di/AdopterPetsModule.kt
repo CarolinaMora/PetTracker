@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.di.adopterpets
+package com.teammovil.pettracker.di
 
 import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.data.pet.PetRepository
