@@ -10,11 +10,15 @@ import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.pettracker.util.MessageValidation
 import com.teammovil.usecases.loginrescuer.LoginRescuerUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RescuerLoginViewModel(private val getRescuerUseCase: LoginRescuerUseCase): ViewModel() {
+
+@HiltViewModel
+class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: LoginRescuerUseCase): ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
