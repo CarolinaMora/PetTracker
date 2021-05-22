@@ -1,110 +1,98 @@
-package com.teammovil.pettracker.ui.petdetail
+    package com.teammovil.pettracker.ui.petdetail
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.pettracker.data.pet.*
-import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
-import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
-import com.teammovil.usecases.petdetail.GetPetUseCase
+    import android.os.Bundle
+    import android.view.LayoutInflater
+    import android.view.View
+    import android.view.ViewGroup
+    import androidx.fragment.app.Fragment
+    import androidx.fragment.app.viewModels
+    import androidx.lifecycle.Observer
+    import androidx.navigation.findNavController
+    import com.bumptech.glide.Glide
+    import com.teammovil.pettracker.data.pet.DewormingsAdapter
+    import com.teammovil.pettracker.data.pet.EvidencesAdapter
+    import com.teammovil.pettracker.data.pet.VaccinesAdapter
+    import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
+    import dagger.hilt.android.AndroidEntryPoint
 
-const val ARG_PET_ID= "petId"
+    const val ARG_PET_ID= "petId"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PetDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class PetDetailFragment: Fragment() {
+    @AndroidEntryPoint
+    class PetDetailFragment: Fragment() {
+        private var petId: String? = null
+        private lateinit var binding: FragmentPetDetailBinding
 
-    private var petId: String? = null
+        //di
+        val viewModel: PetDetailViewModel by viewModels()
 
-    private lateinit var binding: FragmentPetDetailBinding
-    private lateinit var viewModel: PetDetailViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            petId = it.getString(ARG_PET_ID)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            arguments?.let {
+                petId = it.getString(ARG_PET_ID)
+            }
 
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val getPetUseCase = GetPetUseCase(
-            PetRepository(
-                PetExternalDataAccessServiceImpl()
-            )
-        )
-        binding = FragmentPetDetailBinding.inflate (inflater)
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
 
-        viewModel = ViewModelProvider(this,
-                PetDetailViewModelFactory (
-                    getPetUseCase
-                )
-        ) [PetDetailViewModel::class.java]
-        viewModel.model.observe(viewLifecycleOwner, Observer {
-            updateUi(it)
-        })
 
-        petId?.let{
-            viewModel.onGetPetDetail(it)
-        }
-        
-        setListeners()
+            binding = FragmentPetDetailBinding.inflate (inflater)
 
-        return binding.root
-    }
-    
-    private fun setListeners(){
-        binding.btEdit.setOnClickListener { 
-            val action = PetDetailFragmentDirections.actionPetDetailFragmentToPetRegistrationFragment(petId)
-            view?.findNavController()?.navigate(action)
-        }
-    }
+            viewModel.model.observe(viewLifecycleOwner, Observer {
+                updateUi(it)
+            })
 
-    private fun updateUi (uiModel: PetDetailViewModel.UiModel) {
-        //Activa / desactiva progress bar
-        binding.prgProgress.visibility = if (uiModel is PetDetailViewModel.UiModel.Loading)  View.VISIBLE else View.GONE
+            petId?.let{
+                viewModel.onGetPetDetail(it)
+            }
 
-        when (uiModel) {
-            is PetDetailViewModel.UiModel.PetDetailContent -> setView(uiModel.pet)
+            setListeners()
+
+            return binding.root
         }
 
-    }
+        private fun setListeners(){
+            binding.btEdit.setOnClickListener {
+                val action = PetDetailFragmentDirections.actionPetDetailFragmentToPetRegistrationFragment(petId)
+                view?.findNavController()?.navigate(action)
+            }
+        }
 
-    private fun setView(pet: com.teammovil.domain.Pet) {
-        with(binding){
+        private fun updateUi (uiModel: PetDetailViewModel.UiModel) {
+            //Activa / desactiva progress bar
+            binding.prgProgress.visibility = if (uiModel is PetDetailViewModel.UiModel.Loading)  View.VISIBLE else View.GONE
 
-            txtName.text = pet.name
-            txtGender.text= pet.gender.name
-            txtRace.text = pet.race
-            txtDesc.text = pet.description
-            txtBirth.text = pet.approximateDateOfBirth.toString()
-            txtRescue.text = pet.rescueDate.toString()
-            txtType.text = pet.petType.name
-            txtSterilized.text = pet.sterilized.toString()
-            rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
-            rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
-            txtStatus.text = pet.status.name
-            rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
-            Glide
-                .with(binding.root.context)
-                .load(pet.mainPhoto)
-                .into(binding.imgPetPhoto)
+            when (uiModel) {
+                is PetDetailViewModel.UiModel.PetDetailContent -> setView(uiModel.pet)
+            }
+
+        }
+
+        private fun setView(pet: com.teammovil.domain.Pet) {
+            with(binding){
+
+                txtName.text = pet.name
+                txtGender.text= pet.gender.name
+                txtRace.text = pet.race
+                txtDesc.text = pet.description
+                txtBirth.text = pet.approximateDateOfBirth.toString()
+                txtRescue.text = pet.rescueDate.toString()
+                txtType.text = pet.petType.name
+                txtSterilized.text = pet.sterilized.toString()
+                rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
+                rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
+                txtStatus.text = pet.status.name
+                rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
+                Glide
+                    .with(binding.root.context)
+                    .load(pet.mainPhoto)
+                    .into(binding.imgPetPhoto)
+
+            }
 
         }
 
     }
-
-}

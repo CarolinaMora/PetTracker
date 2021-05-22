@@ -13,12 +13,14 @@ import com.teammovil.usecases.SaveEvidenceUseCase
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
 import com.teammovil.usecases.common.UseCaseErrors
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-
-class SendEvidenceViewModel(
+@HiltViewModel
+class SendEvidenceViewModel @Inject constructor(
     var saveEvidenceUseCase: SaveEvidenceUseCase
     ): ViewModel() {
 
