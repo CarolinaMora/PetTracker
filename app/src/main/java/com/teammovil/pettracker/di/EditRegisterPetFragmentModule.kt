@@ -23,6 +23,6 @@ class EditRegisterPetFragmentModule {
         petRepository: PetRepository
     ) = RegisterPetUseCase(rescuerRepository, petRepository)
 
-    @Provides
-    fun provideGetPetUseCase (petRepository: PetRepository) = GetPetUseCase(petRepository)
+    //@Provides
+    //fun provideGetPetUseCase (petRepository: PetRepository) = GetPetUseCase(petRepository)
 }
