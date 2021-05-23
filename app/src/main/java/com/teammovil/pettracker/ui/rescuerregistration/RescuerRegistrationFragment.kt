@@ -4,42 +4,28 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
-import com.teammovil.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentRescuerRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.views.DatePickerFragment
-import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RescuerRegistrationFragment : Fragment(R.layout.fragment_rescuer_registration), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentRescuerRegistrationBinding
-    private lateinit var viewModel: RescuerRegistrationViewModel
+
+    private val viewModel: RescuerRegistrationViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val registerRescuerUseCase = RegisterRescuerUseCase(
-            RescuerRepository(
-                RescuerExternalDataAccessServiceImpl(),
-                RescuerStorageDataAccessDataBaseImpl(requireContext())
-            )
-        )
-
         binding = FragmentRescuerRegistrationBinding.bind(view)
-        viewModel = ViewModelProvider(
-            this,
-            RescuerRegistrationViewModelFactory(
-                registerRescuerUseCase
-            )
-        )[RescuerRegistrationViewModel::class.java]
+
         setListeners()
         setObservers()
 
