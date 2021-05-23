@@ -4,17 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.data.adopter.AdopterRepository
-import com.teammovil.data.pet.PetRepository
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.util.MessageValidation
 import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
 import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AdopterViewModel(private val assignAdopterToPetUseCase: AssignAdopterToPetUseCase,private val getAllAdoptersUseCase: GetAllAdoptersUseCase):ViewModel() {
+@HiltViewModel
+class AdopterViewModel @Inject constructor(var assignAdopterToPetUseCase: AssignAdopterToPetUseCase, var getAllAdoptersUseCase: GetAllAdoptersUseCase):ViewModel() {
 
     sealed class UiModel{
         object Loading: UiModel()
