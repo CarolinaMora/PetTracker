@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,31 +19,18 @@ import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registration), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentAdopterRegistrationBinding
-    private lateinit var viewModel: AdopterRegistrationViewModel
+    private val viewModel: AdopterRegistrationViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val registerAdopterUseCase = RegisterAdopterUseCase(
-            AdopterRepository(
-                AdopterExternalDataAccessServiceImpl(),
-                AdopterStorageDataAccessDataBaseImpl(requireContext())
-            )
-        )
-
-
         binding = FragmentAdopterRegistrationBinding.bind(view)
-        viewModel = ViewModelProvider(
-            this,
-            AdopterRegistrationViewModelFactory(
-                registerAdopterUseCase
-            )
-        )[AdopterRegistrationViewModel::class.java]
         setViews()
         setListeners()
         setObservers()
