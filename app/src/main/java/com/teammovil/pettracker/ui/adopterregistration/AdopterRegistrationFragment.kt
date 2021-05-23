@@ -30,21 +30,7 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*val registerAdopterUseCase = RegisterAdopterUseCase(
-            AdopterRepository(
-                AdopterExternalDataAccessServiceImpl(),
-                AdopterStorageDataAccessDataBaseImpl(requireContext())
-            )
-        )*/
-
-
         binding = FragmentAdopterRegistrationBinding.bind(view)
-        /*viewModel = ViewModelProvider(
-            this,
-            AdopterRegistrationViewModelFactory(
-                registerAdopterUseCase
-            )
-        )[AdopterRegistrationViewModel::class.java]*/
         setViews()
         setListeners()
         setObservers()
