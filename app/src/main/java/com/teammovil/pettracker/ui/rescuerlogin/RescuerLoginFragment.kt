@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,11 +19,14 @@ import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
 import com.teammovil.usecases.loginrescuer.LoginRescuerUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RescuerLoginFragment : Fragment() {
 
-    private lateinit var viewModel: RescuerLoginViewModel
+//    private lateinit var viewModel: RescuerLoginViewModel
+
+    private val viewModel: RescuerLoginViewModel by viewModels()
     private lateinit var binding: FragmentRescuerLoginBinding
 
     override fun onCreateView(
@@ -30,15 +34,17 @@ class RescuerLoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+//        viewModelProvider(this)[RescuerLoginViewModel::class.java]
         binding = FragmentRescuerLoginBinding.inflate(layoutInflater)
 
-        val rescuerExternal = RescuerExternalDataAccessServiceImpl()
-        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireActivity())
-
-        viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
-            LoginRescuerUseCase(RescuerRepository(rescuerExternal, rescuerStorage))
-        )
-        )[RescuerLoginViewModel::class.java]
+//        val rescuerExternal = RescuerExternalDataAccessServiceImpl()
+//        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireActivity())
+//
+//        viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
+//            LoginRescuerUseCase(RescuerRepository(rescuerExternal, rescuerStorage))
+//        )
+//        )[RescuerLoginViewModel::class.java]
 
         setListener()
         setObservers()

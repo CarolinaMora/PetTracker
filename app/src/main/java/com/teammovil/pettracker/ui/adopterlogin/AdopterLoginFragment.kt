@@ -6,23 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
-import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterLoginBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.common.UserView
 
-import com.teammovil.usecases.loginadopter.LoginAdopterUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AdopterLoginFragment : Fragment() {
 
-    private lateinit var viewModel: AdopterLoginViewModel
+    private val viewModel: AdopterLoginViewModel by viewModels()
     private lateinit var binding: FragmentAdopterLoginBinding
 
     override fun onCreateView(
@@ -30,15 +27,8 @@ class AdopterLoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentAdopterLoginBinding.inflate(inflater)
-
-        val adopterExternal = AdopterExternalDataAccessServiceImpl()
-        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireActivity())
-
-        viewModel = ViewModelProvider(this, AdopterLoginViewModelFactory(
-            LoginAdopterUseCase(AdopterRepository(adopterExternal, adopterStorage ))
-        )
-        )[AdopterLoginViewModel::class.java]
 
         setListener()
         setObservers()
@@ -115,7 +105,6 @@ class AdopterLoginFragment : Fragment() {
     private fun onClickRegister(){
         viewModel.onRegisterAdopter()
     }
-
 }
 
 

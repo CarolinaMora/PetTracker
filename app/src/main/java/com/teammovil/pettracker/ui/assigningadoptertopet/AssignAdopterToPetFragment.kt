@@ -4,28 +4,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.data.adopter.AdopterRepository
-import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
-import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAssignAdopterToPetBinding
-import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
-import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
 const val ARG_PET_ID= "petId"
 
-
+@AndroidEntryPoint
 class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_pet) {
 
     private lateinit var binding: FragmentAssignAdopterToPetBinding
-    private lateinit var viewModel: AdopterViewModel
     private lateinit var adoptersAdapter: AdopterAdapter
     private lateinit var petId:String
+
+    val viewModel : AdopterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +33,6 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAssignAdopterToPetBinding.bind(view)
-
-        val petExternal = PetExternalDataAccessServiceImpl()
-        val adopterFake = AdopterExternalDataAccessServiceImpl()
-        val adopterStorage = AdopterStorageDataAccessDataBaseImpl(requireContext())
-
-        val assignAdopterToPetUseCase = AssignAdopterToPetUseCase(PetRepository(petExternal))
-        val getAllAdopterUseCase = GetAllAdoptersUseCase(AdopterRepository(
-            adopterFake,
-            adopterStorage
-        ))
-
-        viewModel = ViewModelProvider(this,AdopterViewModelFactory(assignAdopterToPetUseCase,getAllAdopterUseCase))[AdopterViewModel::class.java]
 
         setViews()
         viewModel.model.observe(viewLifecycleOwner, Observer {
@@ -125,7 +108,4 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
             }
         builder.create().show()
     }
-    //Crear un método que tenga cómo objetivo mandar el petId y el adopterID una ves que el usuario haya confirmado la asiganación en el viewModel se manda a llamar
-    //Para hacer le Match es necesario mandar el petId y el adopterID, con eso deberia.
-
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,31 +18,21 @@ import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceIm
 import com.teammovil.pettracker.databinding.FragmentRegisteredPetsBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.usecases.rescuerPets.GetRescuerPets
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  * A simple [Fragment] subclass.
  */
+@AndroidEntryPoint
 class RegisteredPetsFragment : Fragment() {
 
     lateinit var binding: FragmentRegisteredPetsBinding
     lateinit var petsAdapter: RegisteredPetsAdapter
-    private lateinit var viewModel: RegisteredPetsViewModel
+    private val viewModel: RegisteredPetsViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRegisteredPetsBinding.inflate(inflater)
-
-        val petFake = PetExternalDataAccessServiceImpl()
-        val rescuerFake = RescuerExternalDataAccessServiceImpl()
-        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireContext())
-
-        val petsRepo = PetRepository(petFake)
-        val rescuerRepo = RescuerRepository(
-            rescuerFake,
-            rescuerStorage
-        )
-
-        viewModel = ViewModelProvider(this, RegisteredPetsViewModelFactory(GetRescuerPets(petsRepo, rescuerRepo)))[RegisteredPetsViewModel::class.java]
 
         setViews()
         setListeners()
