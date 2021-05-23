@@ -4,21 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.data.adopter.AdopterRepository
-import com.teammovil.domain.Adopter
 import com.teammovil.domain.Error
 import com.teammovil.domain.Result
-import com.teammovil.pettracker.getDateFromString
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.util.MessageValidation
 import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AdopterRegistrationViewModel(val registerAdopterUseCase: RegisterAdopterUseCase) : ViewModel() {
+@HiltViewModel
+class AdopterRegistrationViewModel @Inject constructor (val registerAdopterUseCase: RegisterAdopterUseCase) : ViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
