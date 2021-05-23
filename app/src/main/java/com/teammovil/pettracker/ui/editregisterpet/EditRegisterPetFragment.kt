@@ -9,51 +9,31 @@ import android.widget.ArrayAdapter
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.pettracker.data.database.dataaccess.RescuerStorageDataAccessDataBaseImpl
-import com.teammovil.data.pet.PetRepository
-import com.teammovil.data.rescuer.RescuerRepository
-import com.teammovil.pettracker.data.services.PetExternalDataAccessServiceImpl
-import com.teammovil.pettracker.data.services.RescuerExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentPetRegistrationBinding
 import com.teammovil.pettracker.ui.common.*
 import com.teammovil.pettracker.ui.dewormings.DewormingsListFragment
 import com.teammovil.pettracker.ui.petdetail.ARG_PET_ID
 import com.teammovil.pettracker.ui.vaccines.VaccinesListFragment
 import com.teammovil.pettracker.ui.views.DatePickerFragment
-import com.teammovil.usecases.editpet.EditPetUseCase
-import com.teammovil.usecases.registerpet.RegisterPetUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmentListener {
 
     private lateinit var binding: FragmentPetRegistrationBinding
-    private lateinit var viewModel : EditRegisterPetViewModel
     private var photoTaker : PhotoTaker? = null
     private var petId : String? = null
+
+    val  viewModel : EditRegisterPetViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         petId = arguments?.getString(ARG_PET_ID)
-
-        val rescuerRepository = RescuerRepository(RescuerExternalDataAccessServiceImpl(), RescuerStorageDataAccessDataBaseImpl(requireContext()))
-        val petRepository = PetRepository(PetExternalDataAccessServiceImpl())
-
-        val registerPetUseCase = RegisterPetUseCase(rescuerRepository, petRepository)
-        val editPetUseCase = EditPetUseCase(petRepository)
-
-        viewModel = ViewModelProvider(
-                        this,
-                        EditRegisterPetViewModelFactory(
-                            registerPetUseCase,
-                            editPetUseCase
-                        )
-                )[EditRegisterPetViewModel::class.java]
 
         binding = FragmentPetRegistrationBinding.inflate(inflater)
         binding.viewModel = viewModel
@@ -102,8 +82,8 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
     }
 
     private fun setObservers (){
-        viewModel.petView.observe(viewLifecycleOwner, Observer { updateRestPet(it) })
-        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        viewModel.petView.observe(viewLifecycleOwner, { updateRestPet(it) })
+        viewModel.model.observe(viewLifecycleOwner, { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver{ updateUI(it) })
     }
 
@@ -284,7 +264,7 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
         }
 
         with(binding) {
-            val pet = PetView(
+            return PetView(
                 petId ?: "",
                 FieldView(petRegistrationName.text.toString()),
                 SelectFieldView(
@@ -308,7 +288,6 @@ class EditRegisterPetFragment : Fragment(), DatePickerFragment.DatePickerFragmen
                     else  com.teammovil.domain.PetStatus.valueOf(petRegistrationStatus.text.toString())),
                 FieldView(null)
             )
-            return pet
         }
     }
 
