@@ -21,7 +21,7 @@ import javax.inject.Inject
 class AdopterRegistrationViewModel @Inject constructor (val registerAdopterUseCase: RegisterAdopterUseCase) : ViewModel() {
 
     sealed class UiModel {
-        object Loading : UiModel()
+        class Loading (val show : Boolean): UiModel()
         class AdopterError(val adopterView: AdopterView) : UiModel()
         class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
@@ -43,8 +43,9 @@ class AdopterRegistrationViewModel @Inject constructor (val registerAdopterUseCa
 
     private fun saveAdopter (adopter: AdopterView){
         viewModelScope.launch {
-            _model.value = UiModel.Loading
+            _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){registerAdopterUseCase.invoke(Mapper.map(adopter))}
+            _model.value = UiModel.Loading(false)
             manageResult(result,adopter)
         }
     }
