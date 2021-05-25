@@ -29,11 +29,6 @@ class AdopterPetsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAdopterPetsBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         petsAdapter = RegisteredPetsAdapter{
             onClickPet(it)
@@ -41,6 +36,9 @@ class AdopterPetsFragment : Fragment() {
         binding.adopterPetsRecycler.adapter = petsAdapter
 
         setObservers()
+        viewModel.onStartView()
+
+        return binding.root
     }
 
     private fun setObservers(){

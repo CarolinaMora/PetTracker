@@ -26,7 +26,7 @@ class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase
     private val _navigation = MutableLiveData<Event<String>>()
     val navigation: LiveData<Event<String>> get() = _navigation
 
-    init {
+    fun onStartView() {
         viewModelScope.launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){
