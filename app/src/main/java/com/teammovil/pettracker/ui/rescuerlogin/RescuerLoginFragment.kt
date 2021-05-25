@@ -24,8 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RescuerLoginFragment : Fragment() {
 
-//    private lateinit var viewModel: RescuerLoginViewModel
-
     private val viewModel: RescuerLoginViewModel by viewModels()
     private lateinit var binding: FragmentRescuerLoginBinding
 
@@ -35,16 +33,7 @@ class RescuerLoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//        viewModelProvider(this)[RescuerLoginViewModel::class.java]
         binding = FragmentRescuerLoginBinding.inflate(layoutInflater)
-
-//        val rescuerExternal = RescuerExternalDataAccessServiceImpl()
-//        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireActivity())
-//
-//        viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
-//            LoginRescuerUseCase(RescuerRepository(rescuerExternal, rescuerStorage))
-//        )
-//        )[RescuerLoginViewModel::class.java]
 
         setListener()
         setObservers()
@@ -58,8 +47,8 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun updateUI(model:  RescuerLoginViewModel.UiModel){
-
         when(model){
+            is RescuerLoginViewModel.UiModel.Loading -> binding.rescuerLoginProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is RescuerLoginViewModel.UiModel.LoginError -> showRescuerError(model.userView)
             is RescuerLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
