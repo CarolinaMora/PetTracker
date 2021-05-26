@@ -330,4 +330,20 @@ object Mapper {
         return evidence
     }
 
+    fun map(user: UserView, errorList: List<Error>): UserView{
+        for (error in errorList){
+            when(error.code){
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
+                    user.email.valid = false
+                    user.email.messageResourceId = R.string.error_email_required
+                }
+                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
+                    user.password.valid = false
+                    user.password.messageResourceId = R.string.error_pass_required
+                }
+            }
+        }
+        return user
+    }
+
 }

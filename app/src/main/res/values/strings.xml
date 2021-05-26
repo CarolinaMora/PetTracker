@@ -24,6 +24,8 @@
     <string name="title_dewormings">DESPARASITACIONES</string>
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_photo_required">Fotografía requerida</string>
+    <string name="error_email_required">Correo requerido</string>
+    <string name="error_pass_required">Contraseña requerida</string>
     <string name="prompt_select_option">Seleccione una opción...</string>
     <string name="alert_message_registration_error">Hubo un error al registrar su mascota. Intente más tarde.</string>
     <string name="alert_message_edit_error">Hubo un error al modificar su mascota. Intente más tarde.</string>
