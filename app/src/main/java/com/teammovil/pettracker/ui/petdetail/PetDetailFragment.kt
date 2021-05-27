@@ -85,7 +85,7 @@
                 rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
                 rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
                 txtStatus.text = pet.status.name
-                rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
+                rvwEvidences.adapter = EvidencesAdapter (pet.evidences.sortedByDescending { it.date })
                 Glide
                     .with(binding.root.context)
                     .load(pet.mainPhoto)
