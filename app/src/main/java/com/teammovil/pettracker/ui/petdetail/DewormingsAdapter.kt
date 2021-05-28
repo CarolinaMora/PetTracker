@@ -1,7 +1,6 @@
-package com.teammovil.pettracker.data.pet
+package com.teammovil.pettracker.ui.petdetail
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.teammovil.pettracker.databinding.ViewDewormingItemBinding
