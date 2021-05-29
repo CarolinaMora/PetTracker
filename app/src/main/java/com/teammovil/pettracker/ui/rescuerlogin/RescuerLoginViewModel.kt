@@ -4,11 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teammovil.pettracker.R
 import com.teammovil.data.rescuer.RescuerRepository
+import com.teammovil.domain.Error
+import com.teammovil.domain.Result
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.UserView
+import com.teammovil.pettracker.ui.rescuerregistration.RescuerView
 import com.teammovil.pettracker.util.MessageValidation
+import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.loginrescuer.LoginRescuerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +26,7 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
 
     sealed class UiModel {
         object Loading : UiModel()
+        class RescuerError(val rescuerView: UserView) : UiModel()
         class LoginError(val userView: UserView) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
     }
@@ -50,17 +55,32 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
             _model.value = UiModel.Loading
 
             val result = withContext(Dispatchers.IO){
-                getRescuerUseCase.invoke(user.email.value!!, user.password.value!!)}
-            validateView(result)
+                getRescuerUseCase.invoke(Mapper.map(user))}
+            validateView(result, user)
         }
     }
 
-    private fun validateView(result: Boolean) {
-        val valid = true
-        if( result == valid) navigateToHome() else{ showLoginError() } }
+    private fun validateView(result: Result<Unit, List<Error>>, rescuer: UserView) {
+        if(result.valid)
+            navigateToHome()
+        else {
+            when{
+                result.error.isNullOrEmpty() -> {}
+                result.error!![0].code == UseCaseErrors.LOGIN_RESCUER_ERROR ->{showLoginError()}
+                else -> {rescuerErrors(result.error!!, rescuer) }
+            }
+        }
+
+//        val valid = true
+//        if( result == valid) navigateToHome() else{ showLoginError()
+
+    }
 
     private fun showLoginError () {
         _model.value = UiModel.ErrorNotification(MessageValidation.LOGING_FAILURE)
+    }
+    private fun rescuerErrors(errorList: List<Error>, rescuerView: UserView){
+        _model.value = UiModel.RescuerError(Mapper.map(rescuerView, errorList))
     }
 
     private fun navigateToHome (){
