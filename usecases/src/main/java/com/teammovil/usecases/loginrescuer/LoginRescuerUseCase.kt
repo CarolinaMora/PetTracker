@@ -2,18 +2,18 @@ package com.teammovil.usecases.loginrescuer
 
 import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.domain.Error
-import com.teammovil.domain.Rescuer
+
 import com.teammovil.domain.Result
-import com.teammovil.domain.UserRescuer
-import com.teammovil.domain.rules.RescuerValidator
+import com.teammovil.domain.rules.RescuerLoginValidator
+
 import com.teammovil.usecases.common.UseCaseErrors
 
 class LoginRescuerUseCase( val rescuerRepository: RescuerRepository) {
 
-    suspend fun invoke(input: UserRescuer): Result<Unit, List<Error>>{
-        val loginRescuerValidation = RescuerValidator.validateRescuerUser(input)
+    suspend fun invoke(user: String, password: String): Result<Unit, List<Error>>{
+        val loginRescuerValidation = RescuerLoginValidator.validateRescuer(user, password)
         return if(loginRescuerValidation.valid){
-            val loginRescuerSuccess = rescuerRepository.login(input.email, input.password)
+            val loginRescuerSuccess = rescuerRepository.login(user, password)
             if(loginRescuerSuccess)
                 Result(Unit, null)
             else
