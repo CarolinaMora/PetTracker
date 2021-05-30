@@ -1,9 +1,6 @@
 package com.teammovil.pettracker.ui.common
 
-import com.teammovil.domain.Adopter
-import com.teammovil.domain.Error
-import com.teammovil.domain.GenderType
-import com.teammovil.domain.PetType
+import com.teammovil.domain.*
 import com.teammovil.domain.rules.RulesErrors
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
@@ -236,6 +233,7 @@ object Mapper {
         )
     }
 
+
     fun map(adopter: AdopterView,errorList: List<Error>):AdopterView{
         for (error in errorList){
             when(error.code){
@@ -328,6 +326,22 @@ object Mapper {
             }
         }
         return evidence
+    }
+
+    fun map(user: UserView, errorList: List<Error>): UserView{
+        for (error in errorList){
+            when(error.code){
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
+                    user.email.valid = false
+
+                }
+                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
+                    user.password.valid = false
+
+                }
+            }
+        }
+        return user
     }
 
 }
