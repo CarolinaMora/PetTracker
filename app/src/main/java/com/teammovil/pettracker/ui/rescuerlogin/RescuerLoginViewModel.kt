@@ -27,7 +27,6 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
     sealed class UiModel {
         object Loading : UiModel()
         class RescuerError(val rescuerView: UserView) : UiModel()
-        class LoginError(val userView: UserView) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
     }
 
@@ -55,7 +54,7 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
             _model.value = UiModel.Loading
 
             val result = withContext(Dispatchers.IO){
-                getRescuerUseCase.invoke(Mapper.map(user))}
+                getRescuerUseCase.invoke(user.email.value!!, user.password.value!!)}
             validateView(result, user)
         }
     }
@@ -71,16 +70,13 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
             }
         }
 
-//        val valid = true
-//        if( result == valid) navigateToHome() else{ showLoginError()
-
     }
 
     private fun showLoginError () {
         _model.value = UiModel.ErrorNotification(MessageValidation.LOGING_FAILURE)
     }
-    private fun rescuerErrors(errorList: List<Error>, rescuerView: UserView){
-        _model.value = UiModel.RescuerError(Mapper.map(rescuerView, errorList))
+    private fun rescuerErrors(errorList: List<Error>, user: UserView){
+        _model.value = UiModel.RescuerError(Mapper.map(user, errorList))
     }
 
     private fun navigateToHome (){
