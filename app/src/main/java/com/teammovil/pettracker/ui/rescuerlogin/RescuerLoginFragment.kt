@@ -50,7 +50,6 @@ class RescuerLoginFragment : Fragment() {
 
         when(model){
             is RescuerLoginViewModel.UiModel.RescuerError -> showRescuerError(model.rescuerView)
-            is RescuerLoginViewModel.UiModel.LoginError -> showRescuerError(model.userView)
             is RescuerLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
     }
