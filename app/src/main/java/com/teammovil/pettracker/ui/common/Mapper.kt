@@ -233,33 +233,6 @@ object Mapper {
         )
     }
 
-    fun map(rescuer: UserView, errorList: List<Error>): UserView {
-        for(error in errorList) {
-            when (error.code) {
-
-                RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
-                    rescuer.email.valid = false
-                    rescuer.email.messageResourceId = R.string.error_field_required
-                }
-
-                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
-                    rescuer.password.valid = false
-                    rescuer.password.messageResourceId = R.string.error_field_required
-                }
-            }
-        }
-
-        return rescuer
-    }
-
-    fun map (origin: UserView): UserRescuer {
-        return UserRescuer(
-
-            origin.email.value ?: "",
-            origin.password.value ?: "",
-
-        )
-    }
 
     fun map(adopter: AdopterView,errorList: List<Error>):AdopterView{
         for (error in errorList){
@@ -353,6 +326,22 @@ object Mapper {
             }
         }
         return evidence
+    }
+
+    fun map(user: UserView, errorList: List<Error>): UserView{
+        for (error in errorList){
+            when(error.code){
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
+                    user.email.valid = false
+
+                }
+                RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
+                    user.password.valid = false
+
+                }
+            }
+        }
+        return user
     }
 
 }
