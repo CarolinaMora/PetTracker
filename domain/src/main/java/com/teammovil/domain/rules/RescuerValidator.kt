@@ -3,6 +3,7 @@ package com.teammovil.domain.rules
 import com.teammovil.domain.Rescuer
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
+import com.teammovil.domain.UserRescuer
 
 object RescuerValidator {
 

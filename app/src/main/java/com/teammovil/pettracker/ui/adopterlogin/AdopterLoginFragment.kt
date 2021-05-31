@@ -63,7 +63,7 @@ class AdopterLoginFragment : Fragment() {
         }
     }
 
-    private fun showErrorAdvice(message: String){
+    private fun showErrorAdvice(message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message).setCancelable(false).setPositiveButton(R.string.action_accept) { dialog, _->
                 dialog.dismiss()
@@ -74,8 +74,8 @@ class AdopterLoginFragment : Fragment() {
 
     private fun showAdopterError(userView: UserView){
         with(binding){
-            emailAdopted.error = if (userView.email.valid) null else userView.email.messageResourceId.toString()
-            passAdopted.error = if (userView.password.valid) null else userView.password.messageResourceId.toString()
+            emailAdopted.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
+            passAdopted.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
         }
     }
 
