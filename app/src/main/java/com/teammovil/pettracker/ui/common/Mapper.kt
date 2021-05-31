@@ -233,7 +233,6 @@ object Mapper {
         )
     }
 
-
     fun map(adopter: AdopterView,errorList: List<Error>):AdopterView{
         for (error in errorList){
             when(error.code){
@@ -333,11 +332,11 @@ object Mapper {
             when(error.code){
                 RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
                     user.email.valid = false
-                    user.email.messageResourceId = R.string.error_field_required
+                    user.email.messageResourceId = R.string.error_email_required
                 }
                 RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
                     user.password.valid = false
-                    user.password.messageResourceId = R.string.error_field_required
+                    user.password.messageResourceId = R.string.error_pass_required
                 }
             }
         }

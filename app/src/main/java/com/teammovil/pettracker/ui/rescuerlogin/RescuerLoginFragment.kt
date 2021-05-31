@@ -71,7 +71,7 @@ class RescuerLoginFragment : Fragment() {
         }
     }
 
-    private fun showErrorAdvice(message: String){
+    private fun showErrorAdvice(message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message).setCancelable(false).setPositiveButton(R.string.action_accept) { dialog, _->
                 dialog.dismiss()
