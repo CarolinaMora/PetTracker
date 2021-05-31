@@ -1,11 +1,10 @@
-package com.teammovil.pettracker.data.pet
+package com.teammovil.pettracker.ui.petdetail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.teammovil.pettracker.databinding.ViewEvidenceItemBinding
-import com.teammovil.domain.Evidence
 import java.text.SimpleDateFormat
 import java.util.*
 

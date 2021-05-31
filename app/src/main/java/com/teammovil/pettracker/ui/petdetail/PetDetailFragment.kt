@@ -9,9 +9,6 @@
     import androidx.lifecycle.Observer
     import androidx.navigation.findNavController
     import com.bumptech.glide.Glide
-    import com.teammovil.pettracker.data.pet.DewormingsAdapter
-    import com.teammovil.pettracker.data.pet.EvidencesAdapter
-    import com.teammovil.pettracker.data.pet.VaccinesAdapter
     import com.teammovil.pettracker.databinding.FragmentPetDetailBinding
     import dagger.hilt.android.AndroidEntryPoint
 
@@ -85,7 +82,7 @@
                 rvwVaccine.adapter = VaccinesAdapter (pet.vaccines)
                 rvwDeworming.adapter = DewormingsAdapter(pet.dewormings.map{it.applicationDate})
                 txtStatus.text = pet.status.name
-                rvwEvidences.adapter = EvidencesAdapter (pet.evidences)
+                rvwEvidences.adapter = EvidencesAdapter (pet.evidences.sortedByDescending { it.date })
                 Glide
                     .with(binding.root.context)
                     .load(pet.mainPhoto)
