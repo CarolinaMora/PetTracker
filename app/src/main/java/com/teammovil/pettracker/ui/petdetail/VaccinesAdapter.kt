@@ -1,10 +1,9 @@
-package com.teammovil.pettracker.data.pet
+package com.teammovil.pettracker.ui.petdetail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.teammovil.pettracker.databinding.ViewVaccineItemBinding
-import com.teammovil.domain.Vaccine
 import java.text.SimpleDateFormat
 import java.util.*
 
