@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.domain.Error
 import com.teammovil.domain.Result
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.UserView
@@ -24,7 +25,7 @@ class AdopterLoginViewModel @Inject constructor(private val getAdopterUseCase: L
     sealed class UiModel {
         object Loading : UiModel()
         class LoginError(val adopterView: UserView) : UiModel()
-        class ErrorNotification(val message: String) : UiModel()
+        class ErrorNotification(val message: Int) : UiModel()
     }
 
     sealed class UiNavigation {
@@ -76,7 +77,7 @@ class AdopterLoginViewModel @Inject constructor(private val getAdopterUseCase: L
     }
 
     private fun showLoginError () {
-        _model.value = UiModel.ErrorNotification(MessageValidation.LOGING_FAILURE)
+        _model.value = UiModel.ErrorNotification(R.string.failure_login)
     }
 
     private fun showLoginViewErrors(errorList: List<Error>, user: UserView){

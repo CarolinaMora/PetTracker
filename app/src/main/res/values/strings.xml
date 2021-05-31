@@ -81,6 +81,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_login">Entrar</string>
     <string name="title_login">Iniciar sesión</string>
+    <string name="failure_login">Usuario o Contraseña incorrecta</string>
 
     <!-- Fragment assign adopter to pet -->
     <string name="tittle_assign_adopter_to_pet">Asignar adoptante a la mascota</string>

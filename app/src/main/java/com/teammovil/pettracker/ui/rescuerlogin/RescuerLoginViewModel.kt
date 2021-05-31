@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.domain.Error
 import com.teammovil.domain.Result
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.UserView
@@ -27,7 +28,7 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
     sealed class UiModel {
         object Loading : UiModel()
         class RescuerError(val rescuerView: UserView) : UiModel()
-        class ErrorNotification(val message: String) : UiModel()
+        class ErrorNotification(val message: Int) : UiModel()
     }
 
     sealed class UiNavigation {
@@ -73,7 +74,7 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
     }
 
     private fun showLoginError () {
-        _model.value = UiModel.ErrorNotification(MessageValidation.LOGING_FAILURE)
+        _model.value = UiModel.ErrorNotification(R.string.failure_login)
     }
     private fun rescuerErrors(errorList: List<Error>, user: UserView){
         _model.value = UiModel.RescuerError(Mapper.map(user, errorList))
