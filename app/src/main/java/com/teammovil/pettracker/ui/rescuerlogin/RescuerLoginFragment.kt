@@ -42,14 +42,14 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        viewModel.model.observe(viewLifecycleOwner, { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver { navigateTo(it) })
     }
 
     private fun updateUI(model:  RescuerLoginViewModel.UiModel){
         when(model){
             is RescuerLoginViewModel.UiModel.Loading -> binding.rescuerLoginProgress.visibility = if(model.show) View.VISIBLE else View.GONE
-            is RescuerLoginViewModel.UiModel.LoginError -> showRescuerError(model.userView)
+            is RescuerLoginViewModel.UiModel.RescuerError -> showRescuerError(model.rescuerView)
             is RescuerLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
     }
@@ -71,7 +71,7 @@ class RescuerLoginFragment : Fragment() {
         }
     }
 
-    private fun showErrorAdvice(message: String){
+    private fun showErrorAdvice(message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message).setCancelable(false).setPositiveButton(R.string.action_accept) { dialog, _->
                 dialog.dismiss()
