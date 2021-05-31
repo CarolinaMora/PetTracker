@@ -4,16 +4,16 @@ import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.domain.Error
 
 import com.teammovil.domain.Result
-import com.teammovil.domain.rules.RescuerLoginValidator
+import com.teammovil.domain.rules.UserValidator
 
 import com.teammovil.usecases.common.UseCaseErrors
 
 class LoginRescuerUseCase( val rescuerRepository: RescuerRepository) {
 
-    suspend fun invoke(user: String, password: String): Result<Unit, List<Error>>{
-        val loginRescuerValidation = RescuerLoginValidator.validateRescuer(user, password)
+    suspend fun invoke(user: String?, password: String?): Result<Unit, List<Error>>{
+        val loginRescuerValidation = UserValidator.validateUser(user, password)
         return if(loginRescuerValidation.valid){
-            val loginRescuerSuccess = rescuerRepository.login(user, password)
+            val loginRescuerSuccess = rescuerRepository.login(user!!, password!!)
             if(loginRescuerSuccess)
                 Result(Unit, null)
             else
@@ -22,5 +22,5 @@ class LoginRescuerUseCase( val rescuerRepository: RescuerRepository) {
             Result(null, loginRescuerValidation.error)
 
     }
-//    suspend fun invoke(user: String, password: String) = rescuerRepository.login(user, password)
+
 }

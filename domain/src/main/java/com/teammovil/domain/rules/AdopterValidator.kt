@@ -25,7 +25,7 @@ object AdopterValidator {
             errorList.add(Error(RulesErrors.BIRTH_DATE_FIELD_EMPTY_ERROR))
         }
         if(adopter.email.isEmpty()){
-            errorList.add(Error(RulesErrors.MAIL_FIELD_EMPTY_ERROR))
+            errorList.add(Error(RulesErrors.EMAIL_FIELD_EMPTY_ERROR))
         }
         if (adopter.password.isEmpty()){
             errorList.add(Error(RulesErrors.PASSWORD_FIELD_EMPTY_ERROR))

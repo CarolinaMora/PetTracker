@@ -262,7 +262,7 @@ object Mapper {
                     adopter.birthDay.messageResourceId = R.string.error_field_required
                 }
 
-                RulesErrors.MAIL_FIELD_EMPTY_ERROR ->{
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR ->{
                     adopter.email.valid = false
                     adopter.email.messageResourceId = R.string.error_field_required
                 }
@@ -333,11 +333,11 @@ object Mapper {
             when(error.code){
                 RulesErrors.EMAIL_FIELD_EMPTY_ERROR -> {
                     user.email.valid = false
-
+                    user.email.messageResourceId = R.string.error_field_required
                 }
                 RulesErrors.PASSWORD_FIELD_EMPTY_ERROR -> {
                     user.password.valid = false
-
+                    user.password.messageResourceId = R.string.error_field_required
                 }
             }
         }

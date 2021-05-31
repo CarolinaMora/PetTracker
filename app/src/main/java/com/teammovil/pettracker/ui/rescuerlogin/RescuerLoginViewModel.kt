@@ -54,7 +54,7 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
             _model.value = UiModel.Loading
 
             val result = withContext(Dispatchers.IO){
-                getRescuerUseCase.invoke(user.email.value!!, user.password.value!!)}
+                getRescuerUseCase.invoke(user.email.value, user.password.value)}
             validateView(result, user)
         }
     }
