@@ -7,4 +7,5 @@ object UseCaseErrors {
     const val REGISTER_ADOPTER_GENERIC_ERROR = 10004
     const val SEND_EVIDENCE_GENERIC_ERROR = 10005
     const val LOGIN_ADOPTER_GENERIC_ERROR = 10006
+    const val LOGIN_RESCUER_ERROR = 10007
 }

@@ -1,9 +1,6 @@
 package com.teammovil.pettracker.ui.common
 
-import com.teammovil.domain.Adopter
-import com.teammovil.domain.Error
-import com.teammovil.domain.GenderType
-import com.teammovil.domain.PetType
+import com.teammovil.domain.*
 import com.teammovil.domain.rules.RulesErrors
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.getDateFromString
@@ -264,7 +261,7 @@ object Mapper {
                     adopter.birthDay.messageResourceId = R.string.error_field_required
                 }
 
-                RulesErrors.MAIL_FIELD_EMPTY_ERROR ->{
+                RulesErrors.EMAIL_FIELD_EMPTY_ERROR ->{
                     adopter.email.valid = false
                     adopter.email.messageResourceId = R.string.error_field_required
                 }
