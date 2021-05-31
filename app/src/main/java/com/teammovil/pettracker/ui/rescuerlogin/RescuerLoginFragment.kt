@@ -24,8 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RescuerLoginFragment : Fragment() {
 
-//    private lateinit var viewModel: RescuerLoginViewModel
-
     private val viewModel: RescuerLoginViewModel by viewModels()
     private lateinit var binding: FragmentRescuerLoginBinding
 
@@ -35,16 +33,7 @@ class RescuerLoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//        viewModelProvider(this)[RescuerLoginViewModel::class.java]
         binding = FragmentRescuerLoginBinding.inflate(layoutInflater)
-
-//        val rescuerExternal = RescuerExternalDataAccessServiceImpl()
-//        val rescuerStorage = RescuerStorageDataAccessDataBaseImpl(requireActivity())
-//
-//        viewModel = ViewModelProvider(this, RescuerLoginViewModelFactory(
-//            LoginRescuerUseCase(RescuerRepository(rescuerExternal, rescuerStorage))
-//        )
-//        )[RescuerLoginViewModel::class.java]
 
         setListener()
         setObservers()
@@ -53,14 +42,14 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.model.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        viewModel.model.observe(viewLifecycleOwner, { updateUI(it) })
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver { navigateTo(it) })
     }
 
     private fun updateUI(model:  RescuerLoginViewModel.UiModel){
 
         when(model){
-            is RescuerLoginViewModel.UiModel.LoginError -> showRescuerError(model.userView)
+            is RescuerLoginViewModel.UiModel.RescuerError -> showRescuerError(model.rescuerView)
             is RescuerLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
     }
@@ -82,7 +71,7 @@ class RescuerLoginFragment : Fragment() {
         }
     }
 
-    private fun showErrorAdvice(message: String){
+    private fun showErrorAdvice(message: Int){
         val builder = AlertDialog.Builder(requireContext())
             .setMessage(message).setCancelable(false).setPositiveButton(R.string.action_accept) { dialog, _->
                 dialog.dismiss()
