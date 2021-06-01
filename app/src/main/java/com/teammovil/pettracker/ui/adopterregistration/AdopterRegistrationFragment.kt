@@ -14,6 +14,7 @@ import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import com.teammovil.pettracker.ui.common.FieldView
+import com.teammovil.pettracker.ui.petdetail.PetDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,8 +39,9 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
     }
 
     private fun updateUI(model: AdopterRegistrationViewModel.UiModel){
+        binding.adopterRegistrationProgress.visibility = if (model is AdopterRegistrationViewModel.UiModel.Loading)  View.VISIBLE else View.GONE
+
         when(model){
-            is AdopterRegistrationViewModel.UiModel.Loading -> binding.adopterRegistrationProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is AdopterRegistrationViewModel.UiModel.AdopterError -> showAdopterError(model.adopterView)
             is AdopterRegistrationViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
             is AdopterRegistrationViewModel.UiModel.SuccessNotification -> showSuccessAdvice(model.message)
