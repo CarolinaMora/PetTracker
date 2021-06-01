@@ -21,7 +21,7 @@ import javax.inject.Inject
 class RescuerRegistrationViewModel @Inject constructor(private val registerRescuerUseCase: RegisterRescuerUseCase) : ViewModel() {
 
     sealed class UiModel {
-        class Loading(val show: Boolean) : UiModel()
+        object Loading: UiModel()
         class RescuerError(val rescuerView: RescuerView) : UiModel()
         class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
@@ -43,9 +43,8 @@ class RescuerRegistrationViewModel @Inject constructor(private val registerRescu
 
     private fun saveRescuer (rescuer: RescuerView){
         viewModelScope.launch {
-            _model.value = UiModel.Loading(true)
+            _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){registerRescuerUseCase.invoke(Mapper.map(rescuer))}
-            _model.value = UiModel.Loading(false)
             manageResult(result, rescuer)
         }
     }

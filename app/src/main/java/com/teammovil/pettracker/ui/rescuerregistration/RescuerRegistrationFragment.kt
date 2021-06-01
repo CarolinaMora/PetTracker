@@ -37,9 +37,8 @@ class RescuerRegistrationFragment : Fragment(R.layout.fragment_rescuer_registrat
     }
 
     private fun updateUI(model: RescuerRegistrationViewModel.UiModel){
-
+        binding.rescuerRegistrationProgress.visibility = if(model is RescuerRegistrationViewModel.UiModel.Loading) View.VISIBLE else View.GONE
         when(model){
-            is RescuerRegistrationViewModel.UiModel.Loading -> binding.rescuerRegistrationProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is RescuerRegistrationViewModel.UiModel.RescuerError -> showRescuerError(model.rescuerView)
             is RescuerRegistrationViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
             is RescuerRegistrationViewModel.UiModel.SuccessNotification -> showSuccessAdvice(model.message)
