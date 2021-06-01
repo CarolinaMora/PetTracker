@@ -38,6 +38,8 @@ class RegisteredPetsFragment : Fragment() {
         setListeners()
         setObservers()
 
+        viewModel.onStartView()
+
         return binding.root
     }
 

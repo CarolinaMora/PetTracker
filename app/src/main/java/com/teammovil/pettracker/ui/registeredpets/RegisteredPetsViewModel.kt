@@ -32,7 +32,7 @@ class RegisteredPetsViewModel @Inject constructor(private val getRescuerPets: Ge
     private val _events = MutableLiveData<Event<UiEvents>>()
     val events: LiveData<Event<UiEvents>> get() = _events
 
-    init {
+    fun onStartView() {
 
         viewModelScope.launch {
             _model.value = UiModel.Loading
