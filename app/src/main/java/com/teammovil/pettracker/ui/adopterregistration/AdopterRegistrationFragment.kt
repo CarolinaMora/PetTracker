@@ -7,18 +7,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.teammovil.pettracker.R
-import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.domain.GenderType
-import com.teammovil.pettracker.data.database.dataaccess.AdopterStorageDataAccessDataBaseImpl
-import com.teammovil.pettracker.data.services.AdopterExternalDataAccessServiceImpl
 import com.teammovil.pettracker.databinding.FragmentAdopterRegistrationBinding
 import com.teammovil.pettracker.ui.common.EventObserver
 import com.teammovil.pettracker.ui.views.DatePickerFragment
 import com.teammovil.pettracker.ui.common.FieldView
-import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,8 +38,8 @@ class AdopterRegistrationFragment : Fragment(R.layout.fragment_adopter_registrat
     }
 
     private fun updateUI(model: AdopterRegistrationViewModel.UiModel){
-
         when(model){
+            is AdopterRegistrationViewModel.UiModel.Loading -> binding.adopterRegistrationProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is AdopterRegistrationViewModel.UiModel.AdopterError -> showAdopterError(model.adopterView)
             is AdopterRegistrationViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
             is AdopterRegistrationViewModel.UiModel.SuccessNotification -> showSuccessAdvice(model.message)
