@@ -1,5 +1,6 @@
 package com.teammovil.pettracker.ui.adopterlogin
 
+import android.text.BoringLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class AdopterLoginViewModel @Inject constructor(private val getAdopterUseCase: LoginAdopterUseCase): ViewModel() {
 
     sealed class UiModel {
-        object Loading : UiModel()
+        class Loading(val show : Boolean) : UiModel()
         class LoginError(val adopterView: UserView) : UiModel()
         class ErrorNotification(val message: Int) : UiModel()
     }
@@ -49,9 +50,10 @@ class AdopterLoginViewModel @Inject constructor(private val getAdopterUseCase: L
 
     private fun loginAdopter (user: UserView){
         viewModelScope.launch{
-            _model.value = UiModel.Loading
+            _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){
                 getAdopterUseCase.invoke(user.email.value!!, user.password.value!!)}
+            _model.value = UiModel.Loading(false)
             validateView(result, user)
         }
     }

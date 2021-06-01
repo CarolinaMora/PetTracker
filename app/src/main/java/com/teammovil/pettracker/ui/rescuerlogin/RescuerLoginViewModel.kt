@@ -26,7 +26,7 @@ import javax.inject.Inject
 class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: LoginRescuerUseCase): ViewModel() {
 
     sealed class UiModel {
-        object Loading : UiModel()
+        class Loading(val show: Boolean) : UiModel()
         class RescuerError(val rescuerView: UserView) : UiModel()
         class ErrorNotification(val message: Int) : UiModel()
     }
@@ -52,10 +52,10 @@ class RescuerLoginViewModel @Inject constructor(private val getRescuerUseCase: L
 
     private fun loginRescuer (user: UserView){
         viewModelScope.launch{
-            _model.value = UiModel.Loading
-
+            _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){
-                getRescuerUseCase.invoke(user.email.value, user.password.value)}
+                getRescuerUseCase.invoke(user.email.value!!, user.password.value!!)}
+            _model.value = UiModel.Loading(false)
             validateView(result, user)
         }
     }
