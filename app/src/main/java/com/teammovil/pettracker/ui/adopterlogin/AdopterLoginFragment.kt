@@ -43,6 +43,7 @@ class AdopterLoginFragment : Fragment() {
 
     private fun updateUI(model:  AdopterLoginViewModel.UiModel){
         when(model){
+            is AdopterLoginViewModel.UiModel.Loading -> binding.adopterLoginProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is AdopterLoginViewModel.UiModel.LoginError -> showAdopterError(model.adopterView)
             is AdopterLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }

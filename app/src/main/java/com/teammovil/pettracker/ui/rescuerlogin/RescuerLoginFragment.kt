@@ -47,8 +47,8 @@ class RescuerLoginFragment : Fragment() {
     }
 
     private fun updateUI(model:  RescuerLoginViewModel.UiModel){
-
         when(model){
+            is RescuerLoginViewModel.UiModel.Loading -> binding.rescuerLoginProgress.visibility = if(model.show) View.VISIBLE else View.GONE
             is RescuerLoginViewModel.UiModel.RescuerError -> showRescuerError(model.rescuerView)
             is RescuerLoginViewModel.UiModel.ErrorNotification -> showErrorAdvice(model.message)
         }
