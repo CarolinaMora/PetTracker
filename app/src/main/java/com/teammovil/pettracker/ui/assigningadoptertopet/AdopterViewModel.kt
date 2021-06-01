@@ -18,7 +18,7 @@ import javax.inject.Inject
 class AdopterViewModel @Inject constructor(var assignAdopterToPetUseCase: AssignAdopterToPetUseCase, var getAllAdoptersUseCase: GetAllAdoptersUseCase):ViewModel() {
 
     sealed class UiModel{
-        class Loading(val show: Boolean): UiModel()
+        object Loading: UiModel()
         class AdoptersContent(val adopter: List<com.teammovil.domain.Adopter>) :UiModel()
         class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
@@ -33,9 +33,8 @@ class AdopterViewModel @Inject constructor(var assignAdopterToPetUseCase: Assign
 
     init {
         viewModelScope.launch {
-            _model.value = UiModel.Loading(true)
+            _model.value = UiModel.Loading
             var result = withContext(Dispatchers.IO){getAllAdoptersUseCase.invoke()}
-            _model.value = UiModel.Loading(false)
             setView(result)
         }
     }
@@ -70,11 +69,10 @@ class AdopterViewModel @Inject constructor(var assignAdopterToPetUseCase: Assign
 
     fun onAssignAdopterToPet(adopterId: String, petId: String){
         viewModelScope.launch {
-            _model.value = UiModel.Loading(true)
+            _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){
                 assignAdopterToPetUseCase.invoke(petId,adopterId)
             }
-            _model.value = UiModel.Loading(false)
             if(result){
                 showSuccessAdvice()
             }else {

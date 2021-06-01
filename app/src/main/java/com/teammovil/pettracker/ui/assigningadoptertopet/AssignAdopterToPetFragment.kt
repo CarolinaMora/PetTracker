@@ -62,8 +62,8 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
     }
 
     private fun updateUI(uiModel: AdopterViewModel.UiModel){
+        binding.assignAdopterToPetProgress.visibility = if(uiModel is AdopterViewModel.UiModel.Loading) View.VISIBLE else View.GONE
         when(uiModel){
-            is AdopterViewModel.UiModel.Loading -> binding.assignAdopterToPetProgress.visibility = if(uiModel.show) View.VISIBLE else View.GONE
             is AdopterViewModel.UiModel.SuccessConfimation -> showConfirmation(uiModel.adopterId,uiModel.adopterName)
             is AdopterViewModel.UiModel.SuccessNotification -> showSuccessAdvice(uiModel.message)
             is AdopterViewModel.UiModel.ErrorNotification -> showErrorAdvice(uiModel.message)
