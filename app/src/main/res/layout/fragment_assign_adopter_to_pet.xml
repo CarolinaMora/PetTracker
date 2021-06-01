@@ -7,21 +7,12 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="22dp"
         tools:context=".ui.assigningadoptertopet.AssignAdopterToPetFragment">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tittle_assign_adopter_to_pet"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:paddingBottom="16dp"
-            android:gravity="center" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/adopter_recycler"
@@ -32,10 +23,14 @@
             tools:listitem="@layout/view_adopter_item" />
 
         <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
+            android:id="@+id/assign_adopter_to_pet_progress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

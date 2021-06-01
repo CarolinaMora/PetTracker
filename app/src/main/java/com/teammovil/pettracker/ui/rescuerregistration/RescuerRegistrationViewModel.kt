@@ -21,7 +21,7 @@ import javax.inject.Inject
 class RescuerRegistrationViewModel @Inject constructor(private val registerRescuerUseCase: RegisterRescuerUseCase) : ViewModel() {
 
     sealed class UiModel {
-        object Loading : UiModel()
+        object Loading: UiModel()
         class RescuerError(val rescuerView: RescuerView) : UiModel()
         class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()

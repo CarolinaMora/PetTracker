@@ -68,8 +68,8 @@ class AdopterViewModel @Inject constructor(var assignAdopterToPetUseCase: Assign
     }
 
     fun onAssignAdopterToPet(adopterId: String, petId: String){
-        _model.value = UiModel.Loading
         viewModelScope.launch {
+            _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){
                 assignAdopterToPetUseCase.invoke(petId,adopterId)
             }
