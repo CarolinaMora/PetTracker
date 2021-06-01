@@ -11,5 +11,8 @@ java {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    //Test
+    testImplementation testLibs.values()
+
     implementation project (":domain")
 }

@@ -1,4 +1,4 @@
-package com.teammovil.pettracker.data.fakes
+package com.teammovil.pettracker.fakes
 
 import com.teammovil.data.pet.PetExternalDataAccess
 import com.teammovil.pettracker.getDateFromString
