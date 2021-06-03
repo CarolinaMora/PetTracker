@@ -24,6 +24,11 @@ allprojects {
     }
 
     ext {
+        kotlinLibs = [
+                stdlib    : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                coroutines: 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
+        ]
+
         testLibs = [
                 junit : 'junit:junit:4.13.2',
                 mockitoKotlin: 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0',
