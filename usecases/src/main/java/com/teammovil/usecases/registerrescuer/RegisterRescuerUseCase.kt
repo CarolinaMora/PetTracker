@@ -5,14 +5,15 @@ import com.teammovil.domain.Rescuer
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
 import com.teammovil.domain.rules.RescuerValidator
+import com.teammovil.domain.rules.RescuerValidatorImpl
 import com.teammovil.usecases.common.UseCaseErrors
 
 class RegisterRescuerUseCase(
     val rescuerRepository: RescuerRepository
-) {
+): RescuerValidator by RescuerValidatorImpl() {
 
     suspend fun invoke (input: Rescuer) : Result<Unit, List<Error>>{
-        val rescuerValidationResult = RescuerValidator.validateRescuer(input)
+        val rescuerValidationResult = validateRescuer(input)
         if(rescuerValidationResult.valid){
             val registerRescuerResultSuccess = rescuerRepository.registerRescuer(input)
             if(registerRescuerResultSuccess)
