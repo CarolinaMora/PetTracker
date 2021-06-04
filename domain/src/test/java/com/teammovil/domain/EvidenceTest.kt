@@ -44,4 +44,12 @@ class EvidenceTest {
 
         assertTrue(result)
     }
+
+    @Test
+    fun `EvidenceValidator success`() {
+
+        val result = evidenceValidator.validate(mockEvidence).valid
+
+        assertTrue(result)
+    }
 }
