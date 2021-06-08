@@ -5,13 +5,16 @@ import com.teammovil.domain.Evidence
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
 import com.teammovil.domain.rules.EvidenceValidator
+import com.teammovil.domain.rules.EvidenceValidatorImpl
 import com.teammovil.usecases.common.UseCaseErrors
 
 class SaveEvidenceUseCase (
-    private val petRepository: PetRepository) {
+    val petRepository: PetRepository)
+    :EvidenceValidator by EvidenceValidatorImpl()
+{
 
     suspend fun invoke (petId:String?, evidence: Evidence) : Result<Unit, List<Error>> {
-        val validationResult = EvidenceValidator.validate(evidence)
+        val validationResult = validate(evidence)
 
         if (validationResult.valid) {
 
