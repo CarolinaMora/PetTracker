@@ -2,6 +2,7 @@ package com.teammovil.domain
 
 
 import com.teammovil.domain.rules.EvidenceValidator
+import com.teammovil.domain.rules.EvidenceValidatorImpl
 import com.teammovil.domain.rules.RulesErrors
 import com.teammovil.testshared.mockEvidence
 import org.junit.Assert.assertTrue
@@ -14,7 +15,7 @@ class EvidenceTest {
 
     @Before
     fun setUp() {
-        evidenceValidator = EvidenceValidator
+        evidenceValidator = EvidenceValidatorImpl()
     }
 
 
