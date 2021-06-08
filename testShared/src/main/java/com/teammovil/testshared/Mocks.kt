@@ -57,3 +57,10 @@ val mockRescuer = Rescuer(
     "5566778899",
     Date()
 )
+
+val mockEvidence = Evidence(
+    "1",
+    "comment1",
+    "image.png",
+    Date()
+)
