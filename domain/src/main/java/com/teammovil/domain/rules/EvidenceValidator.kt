@@ -4,9 +4,12 @@ import com.teammovil.domain.Error
 import com.teammovil.domain.Evidence
 import com.teammovil.domain.Result
 
-object EvidenceValidator {
+interface EvidenceValidator {
+    fun validate(evidence: Evidence): Result<Unit, List<Error>>
+}
 
-    fun validate(evidence: Evidence): Result<Unit, List<Error>> {
+class EvidenceValidatorImpl: EvidenceValidator {
+    override fun validate(evidence: Evidence): Result<Unit, List<Error>> {
         val errorList = mutableListOf<Error>()
 
         if (evidence.media.isEmpty()) {

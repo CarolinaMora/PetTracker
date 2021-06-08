@@ -3,11 +3,14 @@ package com.teammovil.domain.rules
 import com.teammovil.domain.Rescuer
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
-import com.teammovil.domain.UserRescuer
 
-object RescuerValidator {
+interface RescuerValidator {
+    fun validateRescuer (rescuer: Rescuer): Result<Unit, List<Error>>
+}
 
-    fun validateRescuer (rescuer: Rescuer): Result<Unit, List<Error>>{
+class RescuerValidatorImpl : RescuerValidator {
+
+    override fun validateRescuer (rescuer: Rescuer): Result<Unit, List<Error>>{
         val errorList = mutableListOf<Error>()
         if (rescuer.name.isEmpty()) {
             errorList.add(Error(RulesErrors.NAME_FIELD_EMPTY_ERROR))
