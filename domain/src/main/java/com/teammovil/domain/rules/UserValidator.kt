@@ -2,8 +2,12 @@ package com.teammovil.domain.rules
 
 import com.teammovil.domain.*
 
-object UserValidator {
-    fun validateUser(user: String?, password: String?): Result<Unit, List<Error>> {
+interface UserValidator {
+    fun validateUser (user: String?, password: String?): Result<Unit, List<Error>>
+}
+
+class UserValidatorImpl : UserValidator {
+    override fun validateUser(user: String?, password: String?): Result<Unit, List<Error>> {
 
         val errorList = mutableListOf<Error>()
 
