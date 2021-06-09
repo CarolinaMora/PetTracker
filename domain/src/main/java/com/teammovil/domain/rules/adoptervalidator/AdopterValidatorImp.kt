@@ -7,6 +7,7 @@ import com.teammovil.domain.Result
 import com.teammovil.domain.rules.RulesErrors
 
 class AdopterValidatorImp: AdopterValidator {
+
    override fun validateAdopter(adopter: Adopter): Result<Unit, List<Error>> {
 
         val errorList = mutableListOf<Error>()
