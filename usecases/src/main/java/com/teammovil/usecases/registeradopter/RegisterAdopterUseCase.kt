@@ -8,7 +8,7 @@ import com.teammovil.domain.rules.adoptervalidator.AdopterValidator
 import com.teammovil.domain.rules.adoptervalidator.AdopterValidatorImp
 import com.teammovil.usecases.common.UseCaseErrors
 
-class RegisterAdopterUseCase(var adopterRepository: AdopterRepository):AdopterValidator by AdopterValidatorImp() {
+class RegisterAdopterUseCase(var adopterRepository: AdopterRepository): AdopterValidator by AdopterValidatorImp() {
 
     suspend fun invoke(input: Adopter): Result<Unit, List<Error>>{
         val resultAdopterValidation = validateAdopter(input)
