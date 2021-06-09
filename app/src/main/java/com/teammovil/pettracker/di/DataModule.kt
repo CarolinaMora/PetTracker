@@ -18,6 +18,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -63,4 +65,7 @@ class DataModule {
 
     @Provides
     fun providePetExternalDataAccess (): PetExternalDataAccess = PetExternalDataAccessServiceImpl()
+
+    @Provides
+    fun provideCoroutineDispatcher (): CoroutineDispatcher = Dispatchers.Main
 }
