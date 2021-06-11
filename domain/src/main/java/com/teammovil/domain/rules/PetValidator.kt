@@ -2,9 +2,14 @@ package com.teammovil.domain.rules
 
 import com.teammovil.domain.*
 
-object PetValidator {
 
-    fun validatePet (pet: Pet): Result<Unit, List<Error>>{
+interface PetValidator {
+    fun validatePet (pet: Pet): Result<Unit, List<Error>>
+}
+
+class PetValidatorImpl: PetValidator {
+
+    override fun validatePet (pet: Pet): Result<Unit, List<Error>>{
         val errorList = mutableListOf<Error>()
         if (pet.name.isEmpty()){
             errorList.add(Error(RulesErrors.NAME_FIELD_EMPTY_ERROR))

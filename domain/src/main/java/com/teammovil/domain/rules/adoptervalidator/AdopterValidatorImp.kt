@@ -1,12 +1,14 @@
-package com.teammovil.domain.rules
+package com.teammovil.domain.rules.adoptervalidator
 
 import com.teammovil.domain.Adopter
 import com.teammovil.domain.Error
 import com.teammovil.domain.GenderType
 import com.teammovil.domain.Result
+import com.teammovil.domain.rules.RulesErrors
 
-object AdopterValidator {
-    fun validateAdopter(adopter: Adopter): Result<Unit, List<Error>> {
+class AdopterValidatorImp: AdopterValidator {
+
+   override fun validateAdopter(adopter: Adopter): Result<Unit, List<Error>> {
 
         val errorList = mutableListOf<Error>()
         if(adopter.name.isEmpty()){
