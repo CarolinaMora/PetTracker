@@ -5,13 +5,15 @@ import com.teammovil.domain.Error
 
 import com.teammovil.domain.Result
 import com.teammovil.domain.rules.UserValidator
+import com.teammovil.domain.rules.UserValidatorImpl
 
 import com.teammovil.usecases.common.UseCaseErrors
 
-class LoginRescuerUseCase( val rescuerRepository: RescuerRepository) {
+class LoginRescuerUseCase( val rescuerRepository: RescuerRepository
+): UserValidator by UserValidatorImpl() {
 
     suspend fun invoke(user: String?, password: String?): Result<Unit, List<Error>>{
-        val loginRescuerValidation = UserValidator.validateUser(user, password)
+        val loginRescuerValidation = userValidator(user, password)
         return if(loginRescuerValidation.valid){
             val loginRescuerSuccess = rescuerRepository.login(user!!, password!!)
             if(loginRescuerSuccess)
