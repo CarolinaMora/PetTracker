@@ -12,7 +12,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.teammovil.pettracker.R
 import com.teammovil.pettracker.fakes.mockEvidenceView
+import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.testshared.mockEvidence
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -33,7 +35,7 @@ class SendEvidenceVMTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        vm = SendEvidenceViewModel(sendEvidenceUseCase)
+        vm = SendEvidenceViewModel(sendEvidenceUseCase, Dispatchers.Unconfined)
     }
 
     @Test
@@ -52,12 +54,14 @@ class SendEvidenceVMTest {
     @Test
     fun `when called sendEvidence use case, show success advice is called`() {
         runBlocking {
-            whenever(sendEvidenceUseCase.invoke("1", mockEvidence)).thenReturn(Result(Unit,null))
+            whenever(sendEvidenceUseCase.invoke("1", Mapper.map(mockEvidenceView))).thenReturn(Result(Unit,null))
             vm.model.observeForever(observer)
 
             vm.onSaveEvidence("1", mockEvidenceView)
 
+            verify(observer).onChanged(SendEvidenceViewModel.UiModel.Loading)
             verify(observer).onChanged(SendEvidenceViewModel.UiModel.SuccessNotification(R.string.send_evidence_ok))
+
         }
     }
 }

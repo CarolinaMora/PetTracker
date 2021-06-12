@@ -12,22 +12,29 @@ import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.usecases.SaveEvidenceUseCase
 import com.teammovil.domain.Result
 import com.teammovil.domain.Error
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.usecases.common.UseCaseErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
+/*
+class PetDetailViewModel @Inject
+   constructor(var getPetUseCase: GetPetUseCase, uiDispatcher: CoroutineDispatcher)
+    : ScopedViewModel(uiDispatcher) {
+ */
 @HiltViewModel
 class SendEvidenceViewModel @Inject constructor(
-    var saveEvidenceUseCase: SaveEvidenceUseCase
-    ): ViewModel() {
+    var saveEvidenceUseCase: SaveEvidenceUseCase,
+    uiDispatcher: CoroutineDispatcher
+    ): ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
         object Loading : UiModel()
         class EvidenceError(val evidenceView: EvidenceView) : UiModel()
-        class SuccessNotification(@StringRes val messageResourceId: Int) : UiModel()
+        data class SuccessNotification(@StringRes val messageResourceId: Int) : UiModel()
         class ErrorNotification(@StringRes val messageResourceId: Int) : UiModel()
     }
 
@@ -46,7 +53,7 @@ class SendEvidenceViewModel @Inject constructor(
     }
 
     private fun saveEvidence(petId:String?, evidence: EvidenceView) {
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO) {
                 saveEvidenceUseCase.invoke(petId,
