@@ -60,6 +60,7 @@ class AssignAdopterViewModelTest {
             vm.model.observeForever(observer)
 
             vm.onAssignAdopterToPet(adopterId = mockAdopter.email,petId = mockPet.id)
+            verify(assignAdopterToPetUseCase).invoke(petId= mockPet.id,adopterId = mockAdopter.email)
             verify(observer).onChanged(AdopterViewModel.UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS))
         }
     }
