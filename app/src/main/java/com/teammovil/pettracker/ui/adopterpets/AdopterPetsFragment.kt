@@ -1,7 +1,9 @@
 package com.teammovil.pettracker.ui.adopterpets
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,10 +20,8 @@ class AdopterPetsFragment : Fragment() {
     lateinit var petsAdapter: RegisteredPetsAdapter
     private val viewModel: AdopterPetsViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding = FragmentAdopterPetsBinding.bind(view)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentAdopterPetsBinding.inflate(inflater)
 
         petsAdapter = RegisteredPetsAdapter{
             onClickPet(it)
@@ -30,6 +30,8 @@ class AdopterPetsFragment : Fragment() {
 
         setObservers()
         viewModel.onStartView()
+
+        return binding.root
     }
 
     private fun setObservers(){
