@@ -14,7 +14,7 @@ class LoginRescuerUseCase(
     ): UserValidator by UserValidatorImpl() {
 
     suspend fun invoke(user: String?, password: String?): Result<Unit, List<Error>>{
-        val loginRescuerValidation = userValidator(user, password)
+        val loginRescuerValidation = validateUser(user, password)
         return if(loginRescuerValidation.valid){
             val loginRescuerSuccess = rescuerRepository.login(user!!, password!!)
             if(loginRescuerSuccess)

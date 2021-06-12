@@ -49,12 +49,12 @@ class LoginRescuerUseCaseTest {
             val password = mockRescuer.password
 
             val spiedLogin = spy(loginRescuerUseCase)
-            whenever(spiedLogin.userValidator(user, password)).thenReturn(Result(Unit, null))
+            whenever(spiedLogin.validateUser(user, password)).thenReturn(Result(Unit, null))
             whenever(rescuerRepository.login(user, password)).thenReturn(true)
 
             val result = spiedLogin.invoke(user, password).success != null
 
-            verify(spiedLogin).userValidator(user, password)
+            verify(spiedLogin).validateUser(user, password)
             verify(rescuerRepository).login(user, password)
             Assert.assertTrue(result)
         }
@@ -66,13 +66,13 @@ class LoginRescuerUseCaseTest {
             val email = mockRescuer.email
             val password = mockRescuer.password
             val spiedUseCase = spy(loginRescuerUseCase)
-            whenever(spiedUseCase.userValidator(email, password)).thenReturn(Result(null, listOf(
+            whenever(spiedUseCase.validateUser(email, password)).thenReturn(Result(null, listOf(
                 Error(0)
             )))
 
             val result = spiedUseCase.invoke(email, password).success != null
 
-            verify(spiedUseCase).userValidator(email, password)
+            verify(spiedUseCase).validateUser(email, password)
             Assert.assertTrue(result)
         }
     }
