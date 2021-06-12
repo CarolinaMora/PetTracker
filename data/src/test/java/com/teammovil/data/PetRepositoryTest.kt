@@ -4,9 +4,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.teammovil.data.pet.PetExternalDataAccess
 import com.teammovil.data.pet.PetRepository
-import com.teammovil.testshared.mockEvidence
-import com.teammovil.testshared.mockPet
-import com.teammovil.testshared.mockRescuer
+import com.teammovil.testshared.*
+import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -26,6 +25,45 @@ class PetRepositoryTest {
     @Before
     fun setUp (){
         petRepository = PetRepository(petExternalDataAccess)
+    }
+
+    @Test
+    fun `getAllPatsFromRescuer calls external data access`() {
+        runBlocking {
+            whenever(petExternalDataAccess.getAllPatsFromRescuer(mockRescuer.id)).thenReturn(mockPetList)
+
+            val result = petRepository.getAllPatsFromRescuer(mockRescuer.id)
+
+            verify(petExternalDataAccess).getAllPatsFromRescuer(mockRescuer.id)
+            assertEquals(result, mockPetList)
+
+        }
+    }
+
+    @Test
+    fun `getAllPetsFromAdopter calls external data access`() {
+        runBlocking {
+            whenever(petExternalDataAccess.getAllPetsFromAdopter(mockAdopter.email)).thenReturn(mockPetList)
+
+            val result = petRepository.getAllPetsFromAdopter(mockRescuer.email)
+
+            verify(petExternalDataAccess).getAllPetsFromAdopter(mockRescuer.email)
+            assertEquals(result, mockPetList)
+
+        }
+    }
+
+    @Test
+    fun `getPetById calls external data access`() {
+        runBlocking {
+            whenever(petExternalDataAccess.getPetById(mockPet.id)).thenReturn(mockPet)
+
+            val result = petRepository.getPetById(mockPet.id)
+
+            verify(petExternalDataAccess).getPetById(mockPet.id)
+            assertEquals(result, mockPet)
+
+        }
     }
 
     @Test
