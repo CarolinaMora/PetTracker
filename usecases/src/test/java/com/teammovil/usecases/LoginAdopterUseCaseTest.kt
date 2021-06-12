@@ -35,12 +35,12 @@ class LoginAdopterUseCaseTest {
             val email = mockAdopter.email
             val password = mockAdopter.password
             val spiedLogin = spy(loginAdopterUseCase)
-            whenever(spiedLogin.userValidator(email, password)).thenReturn(Result(Unit, null))
+            whenever(spiedLogin.validateUser(email, password)).thenReturn(Result(Unit, null))
             whenever(adopterRepository.login(email, password)).thenReturn(true)
 
             val result = spiedLogin.invoke(email, password).success != null
 
-            verify(spiedLogin).userValidator(email, password)
+            verify(spiedLogin).validateUser(email, password)
             verify(adopterRepository).login(email, password)
             Assert.assertTrue(result)
 
@@ -53,11 +53,11 @@ class LoginAdopterUseCaseTest {
             val email = mockAdopter.email
             val password = mockAdopter.password
             val spiedUseCase = spy(loginAdopterUseCase)
-            whenever(spiedUseCase.userValidator(email, password)).thenReturn(Result(null, listOf(Error(0))))
+            whenever(spiedUseCase.validateUser(email, password)).thenReturn(Result(null, listOf(Error(0))))
 
             val result = spiedUseCase.invoke(email, password).success != null
 
-            verify(spiedUseCase).userValidator(email, password)
+            verify(spiedUseCase).validateUser(email, password)
             Assert.assertTrue(result)
         }
     }
