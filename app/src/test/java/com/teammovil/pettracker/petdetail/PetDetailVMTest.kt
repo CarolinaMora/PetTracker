@@ -19,9 +19,9 @@ import org.mockito.MockitoAnnotations
 import java.util.*
 
 class PetDetailVMTest {
-    /*@get:Rule
+    @get:Rule
     val rule = InstantTaskExecutorRule()
-    */
+
 
     @Mock
     lateinit var petDetailUseCase: GetPetUseCase
@@ -34,7 +34,7 @@ class PetDetailVMTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        vm = PetDetailViewModel(petDetailUseCase)
+        vm = PetDetailViewModel(petDetailUseCase, Dispatchers.Unconfined)
     }
 
     @Test
@@ -45,6 +45,7 @@ class PetDetailVMTest {
             vm.onGetPetDetail(mockPetView.id)
 
             verify(observer).onChanged (PetDetailViewModel.UiModel.Loading)
+
         }
     }
 }
