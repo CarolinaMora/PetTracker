@@ -11,7 +11,7 @@ class LoginAdopterUseCase(
     val adopterRepository: AdopterRepository) : UserValidator by UserValidatorImpl() {
 
     suspend fun invoke(user: String, password: String): Result<Unit, List<Error>>{
-        val loginResultValidation = userValidator(user, password)
+        val loginResultValidation = validateUser(user, password)
         if (loginResultValidation.valid){
             val success = adopterRepository.login(user, password)
             if (success)

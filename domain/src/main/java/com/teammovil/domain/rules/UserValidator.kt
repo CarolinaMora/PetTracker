@@ -4,11 +4,11 @@ import com.teammovil.domain.*
 
 
 interface UserValidator {
-    fun userValidator(user: String?, password: String?): Result<Unit, List<Error>>
+    fun validateUser(user: String?, password: String?): Result<Unit, List<Error>>
 }
 
 class UserValidatorImpl: UserValidator {
-    override fun userValidator(user: String?, password: String?): Result<Unit, List<Error>> {
+    override fun validateUser(user: String?, password: String?): Result<Unit, List<Error>> {
 
         val errorList = mutableListOf<Error>()
 
