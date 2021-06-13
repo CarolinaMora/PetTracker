@@ -48,7 +48,7 @@ class RescuerRegistrationViewModel @Inject constructor(
 
     private fun saveRescuer (rescuer: RescuerView){
         launch {
-            //_model.value = UiModel.Loading
+            _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){registerRescuerUseCase.invoke(Mapper.map(rescuer))}
             manageResult(result, rescuer)
         }
