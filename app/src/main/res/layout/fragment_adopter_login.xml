@@ -14,7 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:context=".ui.adopterlogin.AdopterLoginFragment">
 
             <LinearLayout
@@ -27,19 +27,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:textSize="25dp"
                     android:textColor="#FFCA28"
                     android:padding="30dp"
                     android:text="@string/title_login"/>
                 <EditText
-                    android:id="@+id/email_adopter"
+                    android:id="@+id/email_adopted"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:textColor="#FFA040"
                     android:textColorHint="#FFA040"/>
                 <EditText
-                    android:id="@+id/pass_adopter"
+                    android:id="@+id/pass_adopted"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -57,7 +57,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/adopter_register_Btn"
+                    android:id="@+id/Btn_cancel"
                     android:text="@string/action_register"
                     android:textAllCaps="false"/>
 

@@ -52,7 +52,7 @@ class RegisterRescuerUITest {
             ViewActions.click()
         )
 
-        Espresso.onView(withId(R.id.recuer_register_Btn)).perform(
+        Espresso.onView(withId(R.id.Btn_cancel)).perform(
             ViewActions.scrollTo(),
             ViewActions.click()
         )

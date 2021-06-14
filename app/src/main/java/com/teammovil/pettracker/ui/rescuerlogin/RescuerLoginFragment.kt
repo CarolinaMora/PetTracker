@@ -66,7 +66,7 @@ class RescuerLoginFragment : Fragment() {
             onClickLogin()
 
         }
-        binding.recuerRegisterBtn.setOnClickListener(){
+        binding.BtnCancel.setOnClickListener(){
             onClickRegister()
         }
     }

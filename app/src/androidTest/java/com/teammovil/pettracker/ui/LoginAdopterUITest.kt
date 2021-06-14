@@ -50,10 +50,10 @@ class LoginAdopterUITest {
         Espresso.onView(withId(R.id.adopter_login_Btn)).perform(
             ViewActions.click()
         )
-        Espresso.onView(withId(R.id.email_adopter))
+        Espresso.onView(withId(R.id.email_adopted))
             .check(ViewAssertions.matches(ViewMatchers.hasErrorText("Correo requerido")))
 
-        Espresso.onView(withId(R.id.pass_adopter))
+        Espresso.onView(withId(R.id.pass_adopted))
             .check(ViewAssertions.matches(ViewMatchers.hasErrorText("Contraseña requerida")))
 
     }
@@ -62,7 +62,7 @@ class LoginAdopterUITest {
         activityRule.launchActivity(null)
         goToLoginAdopterScreen()
 
-        Espresso.onView(withId(R.id.adopter_register_Btn)).perform(
+        Espresso.onView(withId(R.id.Btn_cancel)).perform(
             ViewActions.scrollTo(),
             ViewActions.click()
         )

@@ -59,7 +59,7 @@ class AdopterLoginFragment : Fragment() {
             onClickLogin()
 
         }
-        binding.adopterRegisterBtn.setOnClickListener(){
+        binding.BtnCancel.setOnClickListener(){
             onClickRegister()
         }
     }
@@ -75,8 +75,8 @@ class AdopterLoginFragment : Fragment() {
 
     private fun showAdopterError(userView: UserView){
         with(binding){
-            emailAdopter.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
-            passAdopter.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
+            emailAdopted.error = if (userView.email.valid) null else getString(userView.email.messageResourceId)
+            passAdopted.error = if (userView.password.valid) null else getString(userView.password.messageResourceId)
         }
     }
 
@@ -94,8 +94,8 @@ class AdopterLoginFragment : Fragment() {
     private fun onClickLogin(){
         with(binding){
             val user = UserView(
-                FieldView(emailAdopter.text.toString()),
-                FieldView(emailAdopter.text.toString())
+                FieldView(emailAdopted.text.toString()),
+                FieldView(emailAdopted.text.toString())
             )
             viewModel.onLoginAdopter(user)
 
