@@ -45,9 +45,9 @@ class PetRepositoryTest {
         runBlocking {
             whenever(petExternalDataAccess.getAllPetsFromAdopter(mockAdopter.email)).thenReturn(mockPetList)
 
-            val result = petRepository.getAllPetsFromAdopter(mockRescuer.email)
+            val result = petRepository.getAllPetsFromAdopter(mockAdopter.email)
 
-            verify(petExternalDataAccess).getAllPetsFromAdopter(mockRescuer.email)
+            verify(petExternalDataAccess).getAllPetsFromAdopter(mockAdopter.email)
             assertEquals(result, mockPetList)
 
         }
