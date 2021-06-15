@@ -1,7 +1,5 @@
 package com.teammovil.data.pet
 
-import com.teammovil.data.pet.PetExternalDataAccess
-
 class PetRepository(private val externalDataAccess: PetExternalDataAccess) {
 
     suspend fun getAllPatsFromRescuer (rescuerId: String) = externalDataAccess.getAllPatsFromRescuer(rescuerId)
