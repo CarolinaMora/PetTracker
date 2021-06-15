@@ -45,7 +45,7 @@ class PetDetailVMTest {
             vm.onGetPetDetail(mockPetView.id)
 
             verify(petDetailUseCase).invoke(mockPetView.id)
-           
+
 
         }
     }
