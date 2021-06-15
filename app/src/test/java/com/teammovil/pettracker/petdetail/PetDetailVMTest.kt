@@ -44,7 +44,8 @@ class PetDetailVMTest {
 
             vm.onGetPetDetail(mockPetView.id)
 
-            verify(observer).onChanged (PetDetailViewModel.UiModel.Loading)
+            verify(petDetailUseCase).invoke(mockPetView.id)
+           
 
         }
     }
