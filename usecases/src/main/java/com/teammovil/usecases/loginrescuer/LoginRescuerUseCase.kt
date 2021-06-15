@@ -9,6 +9,7 @@ import com.teammovil.domain.rules.UserValidatorImpl
 
 import com.teammovil.usecases.common.UseCaseErrors
 
+
 class LoginRescuerUseCase( val rescuerRepository:
                            RescuerRepository): UserValidator by UserValidatorImpl() {
 
