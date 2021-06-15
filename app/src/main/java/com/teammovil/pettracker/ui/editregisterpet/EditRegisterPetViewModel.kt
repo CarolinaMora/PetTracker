@@ -3,8 +3,6 @@ package com.teammovil.pettracker.ui.editregisterpet
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.teammovil.domain.Error
 import com.teammovil.domain.Pet
 import com.teammovil.domain.Result
@@ -12,11 +10,13 @@ import com.teammovil.pettracker.R
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.PetView
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.editpet.EditPetUseCase
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,13 +26,14 @@ import javax.inject.Inject
 class EditRegisterPetViewModel @Inject constructor(
     var editPetUseCase: EditPetUseCase,
     var getPetUseCase: GetPetUseCase,
-    var registerPetUseCase: RegisterPetUseCase
-): ViewModel() {
+    var registerPetUseCase: RegisterPetUseCase,
+    uiDispatcher: CoroutineDispatcher
+): ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
-        class Loading(val show: Boolean): UiModel()
-        class SuccessAdvice (): UiModel()
-        class ErrorAdvice (@StringRes val messageResourceId: Int): UiModel()
+        data class Loading(val show: Boolean): UiModel()
+        object SuccessAdvice : UiModel()
+        data class ErrorAdvice (@StringRes val messageResourceId: Int): UiModel()
     }
 
     sealed class UiEvents {
@@ -79,7 +80,7 @@ class EditRegisterPetViewModel @Inject constructor(
     }
 
     private fun savePet (pet: Pet){
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading(true)
             val result =
                 if (pet.id.isEmpty())
@@ -92,7 +93,7 @@ class EditRegisterPetViewModel @Inject constructor(
     }
 
     private fun getPet (id: String){
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading(true)
             val result = withContext(Dispatchers.IO){getPetUseCase.invoke(id)}
             _model.value = UiModel.Loading(false)
@@ -116,7 +117,7 @@ class EditRegisterPetViewModel @Inject constructor(
     }
 
     private fun showSuccessAdvice (){
-        _model.value = UiModel.SuccessAdvice()
+        _model.value = UiModel.SuccessAdvice
     }
 
     private fun showRegistrationError (){
