@@ -2,8 +2,10 @@ package com.teammovil.pettracker.ui.petdetail
 
 
 import androidx.lifecycle.*
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PetDetailViewModel @Inject
-   constructor(var getPetUseCase: GetPetUseCase): ViewModel() {
+   constructor(var getPetUseCase: GetPetUseCase, uiDispatcher: CoroutineDispatcher)
+    : ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel (){
         object Loading : UiModel()
@@ -28,7 +31,7 @@ class PetDetailViewModel @Inject
     fun onGetPetDetail (petId: String)
     {
 
-        viewModelScope.launch{
+        launch{
 
             _model.value = UiModel.Loading
 
