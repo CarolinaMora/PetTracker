@@ -5,7 +5,7 @@ import com.teammovil.domain.Evidence
 import com.teammovil.domain.PetStatus
 import com.teammovil.domain.Vaccine
 
-class PetView (
+data class PetView (
     var id: String = "",
     var name: FieldView<String?>,
     var gender: SelectFieldView<String?>,
@@ -15,11 +15,11 @@ class PetView (
     var rescueDate:FieldView< String?>,
     var petType: SelectFieldView<String?>,
     var sterilized: FieldView<Boolean>,
-    var vaccines: FieldView<List<com.teammovil.domain.Vaccine>?>,
-    var dewormings: FieldView<List<com.teammovil.domain.Deworming>?>,
+    var vaccines: FieldView<List<Vaccine>?>,
+    var dewormings: FieldView<List<Deworming>?>,
     var mainPhoto: FieldView<String?>,
-    var status: FieldView<com.teammovil.domain.PetStatus>,
-    var evidences: FieldView<List<com.teammovil.domain.Evidence>?>
+    var status: FieldView<PetStatus>,
+    var evidences: FieldView<List<Evidence>?>
 )
 
 

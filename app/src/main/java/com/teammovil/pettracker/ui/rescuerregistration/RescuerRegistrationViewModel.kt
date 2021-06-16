@@ -8,22 +8,27 @@ import com.teammovil.domain.Error
 import com.teammovil.domain.Result
 import com.teammovil.pettracker.ui.common.Event
 import com.teammovil.pettracker.ui.common.Mapper
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.pettracker.util.MessageValidation
 import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RescuerRegistrationViewModel @Inject constructor(private val registerRescuerUseCase: RegisterRescuerUseCase) : ViewModel() {
+class RescuerRegistrationViewModel @Inject constructor(
+    private val registerRescuerUseCase: RegisterRescuerUseCase,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
         object Loading: UiModel()
         class RescuerError(val rescuerView: RescuerView) : UiModel()
-        class SuccessNotification(val message: String) : UiModel()
+        data class SuccessNotification(val message: String) : UiModel()
         class ErrorNotification(val message: String) : UiModel()
     }
 
@@ -42,7 +47,7 @@ class RescuerRegistrationViewModel @Inject constructor(private val registerRescu
     }
 
     private fun saveRescuer (rescuer: RescuerView){
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){registerRescuerUseCase.invoke(Mapper.map(rescuer))}
             manageResult(result, rescuer)
