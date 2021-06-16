@@ -56,6 +56,7 @@ class AdopterRegistrationVMTest {
 
             vm.onSaveAdopter(mockAdopterView)
 
+            verify(registerAdopterUseCase).invoke(Mapper.map(mockAdopterView))
             verify(observer).onChanged(AdopterRegistrationViewModel.UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS))
         }
     }
