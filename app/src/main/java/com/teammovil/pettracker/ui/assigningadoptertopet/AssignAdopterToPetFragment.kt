@@ -42,6 +42,8 @@ class AssignAdopterToPetFragment : Fragment(R.layout.fragment_assign_adopter_to_
         viewModel.navigation.observe(viewLifecycleOwner, Observer {
             goBackScreem()
         })
+
+        viewModel.onStartView()
     }
 
     private fun setViews() {
