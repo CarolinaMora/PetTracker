@@ -2,18 +2,18 @@ package com.teammovil.pettracker.ui.adopterpets
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase: GetAdopterPetsUseCase) : ViewModel() {
+class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase: GetAdopterPetsUseCase, uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -27,7 +27,7 @@ class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase
     val navigation: LiveData<Event<String>> get() = _navigation
 
     fun onStartView() {
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO){
                 getAdopterPetsUseCase.invoke()
