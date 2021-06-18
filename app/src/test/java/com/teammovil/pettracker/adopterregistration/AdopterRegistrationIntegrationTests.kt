@@ -3,11 +3,8 @@ package com.teammovil.pettracker.adopterregistration
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
-import com.teammovil.domain.Adopter
 import com.teammovil.pettracker.fakes.FakeAdopterExternalDataAccess
-import org.junit.Assert.assertTrue
 import com.teammovil.pettracker.fakes.FakeData
-import com.teammovil.pettracker.fakes.fakeAdopterList
 import com.teammovil.pettracker.fakes.mockAdopterView
 import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
 import kotlinx.coroutines.runBlocking
@@ -29,8 +26,6 @@ class AdopterRegistrationIntegrationTests {
 
     lateinit var vm: AdopterRegistrationViewModel
 
-    lateinit var adopterDataAccess: FakeAdopterExternalDataAccess
-
 
     @Before
     fun init(){
@@ -46,7 +41,6 @@ class AdopterRegistrationIntegrationTests {
             vm.onSaveAdopter(mockAdopterView)
 
             verify(observer).onChanged(AdopterRegistrationViewModel.UiModel.Loading)
-            //assertTrue(adopterDataAccess.registerAdopter(fakeAdopterList[1]))
         }
     }
 
