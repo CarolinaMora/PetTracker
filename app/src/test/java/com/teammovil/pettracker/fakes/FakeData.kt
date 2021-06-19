@@ -4,9 +4,11 @@ import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.data.pet.PetRepository
 import com.teammovil.data.rescuer.RescuerRepository
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
+import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
 import com.teammovil.usecases.editpet.EditPetUseCase
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
+import com.teammovil.usecases.rescuerPets.GetRescuerPets
 import kotlinx.coroutines.Dispatchers
 
 
@@ -26,6 +28,8 @@ object FakeData {
 
     val fakeRegisterPetUseCase = RegisterPetUseCase(fakeRescuerRepository, fakePetRepository)
 
+    val fakerescuerPetsUseCase = GetRescuerPets(fakePetRepository, fakeRescuerRepository)
+
     //View Models
     val fakeEditPetViewModel = EditRegisterPetViewModel(
         fakeEditPetUseCase,
@@ -34,4 +38,7 @@ object FakeData {
         Dispatchers.Unconfined
     )
 
+    val fakeregisteredpetsViewModel = RegisteredPetsViewModel(
+        fakerescuerPetsUseCase, Dispatchers.Unconfined
+    )
 }
