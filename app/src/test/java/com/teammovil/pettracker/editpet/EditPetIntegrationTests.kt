@@ -3,6 +3,7 @@ package com.teammovil.pettracker.editpet
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.teammovil.pettracker.fakes.FakeData
 import com.teammovil.pettracker.fakes.fakePetList
@@ -42,6 +43,17 @@ class EditPetIntegrationTests {
             vm.onStartView(fakePetList[0].id)
 
             verify(observer).onChanged(any())
+        }
+    }
+
+    @Test
+    fun `pet data is not loaded from server when is register`() {
+        runBlocking {
+            vm.petView.observeForever(observer)
+
+            vm.onStartView(null)
+
+            verify(observer, never()).onChanged(any())
         }
     }
 }
