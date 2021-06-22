@@ -58,7 +58,7 @@ class LoginAdopterUseCaseTest {
             val result = spiedUseCase.invoke(email, password).success != null
 
             verify(spiedUseCase).validateUser(email, password)
-            Assert.assertTrue(result)
+            Assert.assertFalse(result)
         }
     }
 }
