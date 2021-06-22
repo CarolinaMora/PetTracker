@@ -66,9 +66,7 @@ class LoginRescuerUseCaseTest {
             val email = mockRescuer.email
             val password = mockRescuer.password
             val spiedUseCase = spy(loginRescuerUseCase)
-            whenever(spiedUseCase.validateUser(email, password)).thenReturn(Result(null, listOf(
-                Error(0)
-            )))
+            whenever(spiedUseCase.validateUser(email, password)).thenReturn(Result(null, listOf(Error(0))))
 
             val result = spiedUseCase.invoke(email, password).success != null
 
