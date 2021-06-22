@@ -5,15 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teammovil.pettracker.ui.common.Event
+import com.teammovil.pettracker.ui.common.ScopedViewModel
 import com.teammovil.usecases.rescuerPets.GetRescuerPets
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisteredPetsViewModel @Inject constructor(private val getRescuerPets: GetRescuerPets) : ViewModel() {
+class RegisteredPetsViewModel @Inject constructor(private val getRescuerPets: GetRescuerPets, uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
         object Loading : UiModel()
@@ -34,7 +36,7 @@ class RegisteredPetsViewModel @Inject constructor(private val getRescuerPets: Ge
 
     fun onStartView() {
 
-        viewModelScope.launch {
+        launch {
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO) { getRescuerPets.invoke() }
             if (result != null) {

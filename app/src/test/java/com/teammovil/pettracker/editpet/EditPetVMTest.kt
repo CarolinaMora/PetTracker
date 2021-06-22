@@ -1,4 +1,4 @@
-package com.teammovil.pettracker
+package com.teammovil.pettracker.editpet
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.teammovil.domain.Error
 import com.teammovil.domain.Result
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.fakes.mockPetView
 import com.teammovil.pettracker.ui.common.Mapper
 import com.teammovil.pettracker.ui.common.PetView
