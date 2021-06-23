@@ -84,9 +84,9 @@ class EditRegisterPetViewModel @Inject constructor(
             _model.value = UiModel.Loading(true)
             val result =
                 if (pet.id.isEmpty())
-                    withContext(Dispatchers.IO) { registerPetUseCase.invoke(pet) }
+                    registerPetUseCase.invoke(pet)
                 else
-                    withContext(Dispatchers.IO) { editPetUseCase.invoke(pet) }
+                    editPetUseCase.invoke(pet)
             _model.value = UiModel.Loading(false)
             manageResult(result)
         }
@@ -95,7 +95,7 @@ class EditRegisterPetViewModel @Inject constructor(
     private fun getPet (id: String){
         launch {
             _model.value = UiModel.Loading(true)
-            val result = withContext(Dispatchers.IO){getPetUseCase.invoke(id)}
+            val result = getPetUseCase.invoke(id)
             _model.value = UiModel.Loading(false)
             if(result!=null)
                 _petView.value = Mapper.mapPet(result)

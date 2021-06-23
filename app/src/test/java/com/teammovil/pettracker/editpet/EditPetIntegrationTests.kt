@@ -5,8 +5,10 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
+import com.teammovil.pettracker.R
 import com.teammovil.pettracker.fakes.FakeData
 import com.teammovil.pettracker.fakes.fakePetList
+import com.teammovil.pettracker.fakes.mockPetView
 import com.teammovil.pettracker.ui.common.PetView
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
 import kotlinx.coroutines.runBlocking
@@ -26,6 +28,9 @@ class EditPetIntegrationTests {
 
     @Mock
     lateinit var observer: Observer<PetView>
+
+    @Mock
+    lateinit var observerModel: Observer<EditRegisterPetViewModel.UiModel>
 
     lateinit var vm : EditRegisterPetViewModel
 
@@ -54,6 +59,28 @@ class EditPetIntegrationTests {
             vm.onStartView(null)
 
             verify(observer, never()).onChanged(any())
+        }
+    }
+
+    @Test
+    fun `pet data is saved in server when is editing`() {
+        runBlocking {
+            vm.model.observeForever(observerModel)
+
+            vm.onSavePet(mockPetView)
+
+            verify(observerModel).onChanged(EditRegisterPetViewModel.UiModel.SuccessAdvice)
+        }
+    }
+
+    @Test
+    fun `pet data is saved in server when is register`() {
+        runBlocking {
+            vm.model.observeForever(observerModel)
+
+            vm.onSavePet(mockPetView.copy(id = ""))
+
+            verify(observerModel).onChanged(EditRegisterPetViewModel.UiModel.SuccessAdvice)
         }
     }
 }
