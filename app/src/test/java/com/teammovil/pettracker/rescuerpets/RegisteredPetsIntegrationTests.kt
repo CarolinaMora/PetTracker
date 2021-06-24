@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.teammovil.pettracker.fakes.FakeData
+import com.teammovil.pettracker.fakes.fakePetList
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -38,7 +39,7 @@ class RegisteredPetsIntegrationTests {
 
             vm.onStartView()
 
-            verify(observer).onChanged(RegisteredPetsViewModel.UiModel.Loading)
+            verify(observer).onChanged(RegisteredPetsViewModel.UiModel.PetsContent(fakePetList))
         }
     }
 }
