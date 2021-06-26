@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.teammovil.pettracker.fakes.FakeData
+import com.teammovil.pettracker.fakes.fakePetList
 import com.teammovil.pettracker.ui.adopterpets.AdopterPetsViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -32,13 +33,13 @@ class AdopterPetsIntegrationTests {
     }
 
     @Test
-    fun `loading is called when onStartView is called`(){
+    fun `adopterPets are retrieving when called onStartView`(){
         runBlocking {
             vm.model.observeForever(observer)
 
             vm.onStartView()
 
-            verify(observer).onChanged(AdopterPetsViewModel.UiModel.Loading)
+            verify(observer).onChanged(AdopterPetsViewModel.UiModel.AdopterPetsContent(fakePetList))
         }
     }
 
