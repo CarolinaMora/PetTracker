@@ -29,6 +29,18 @@ class RescuerPetsUITest {
     fun loadingPets(){
         activityRule.launchActivity(null)
         goToRescuerPetsScreen()
+
+        Thread.sleep(3000)
+
+        Espresso.onView(withId(R.id.registered_pets_recycler)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ViewActions.click())
+        )
+
+        Thread.sleep(3000)
+
+        Espresso.onView(withId(R.id.txtName)).check(
+            matches(withText("Max"))
+        )
     }
 
     private fun goToRescuerPetsScreen() {
@@ -49,18 +61,6 @@ class RescuerPetsUITest {
         Espresso.onView(withId(R.id.rescuer_login_Btn)).perform(
             ViewActions.scrollTo(),
             ViewActions.click()
-        )
-
-        Thread.sleep(3000)
-
-        Espresso.onView(withId(R.id.registered_pets_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ViewActions.click())
-        )
-
-        Thread.sleep(3000)
-
-        Espresso.onView(withId(R.id.txtName)).check(
-            matches(withText("Max"))
         )
 
     }
