@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.teammovil.pettracker.fakes.*
 import com.teammovil.pettracker.ui.assigningadoptertopet.AdopterViewModel
+import com.teammovil.pettracker.util.MessageValidation
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -43,13 +44,14 @@ class AssignAdopterIntegrationTests {
     }
 
     @Test
-    fun `loading is called when onAssignAdopterToPet method is call`(){
+    fun `assig adopter data is register in server`(){
         runBlocking {
             vm.model.observeForever(observer)
 
             vm.onAssignAdopterToPet(fakeAdopterList[0].email, fakePetList[0].id)
 
             verify(observer).onChanged(AdopterViewModel.UiModel.Loading)
+            verify(observer).onChanged(AdopterViewModel.UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS))
         }
     }
 

@@ -9,9 +9,7 @@ import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
 import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,7 +36,7 @@ class AdopterViewModel @Inject constructor(
     fun onStartView() {
         launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO) { getAllAdoptersUseCase.invoke() }
+            val result =  getAllAdoptersUseCase.invoke()
             setView(result)
         }
     }
@@ -74,9 +72,7 @@ class AdopterViewModel @Inject constructor(
     fun onAssignAdopterToPet(adopterId: String, petId: String) {
         launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO) {
-                assignAdopterToPetUseCase.invoke(petId, adopterId)
-            }
+            val result = assignAdopterToPetUseCase.invoke(petId, adopterId)
             if (result) {
                 showSuccessAdvice()
             } else {
