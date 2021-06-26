@@ -12,9 +12,7 @@ import com.teammovil.usecases.common.UseCaseErrors
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,7 +45,7 @@ class AdopterRegistrationViewModel @Inject constructor(
     private fun saveAdopter(adopter: AdopterView) {
         launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO) { registerAdopterUseCase.invoke(Mapper.map(adopter)) }
+            val result = registerAdopterUseCase.invoke(Mapper.map(adopter))
             manageResult(result, adopter)
         }
     }

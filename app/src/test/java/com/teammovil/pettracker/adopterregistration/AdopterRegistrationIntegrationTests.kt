@@ -3,10 +3,10 @@ package com.teammovil.pettracker.adopterregistration
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
-import com.teammovil.pettracker.fakes.FakeAdopterExternalDataAccess
 import com.teammovil.pettracker.fakes.FakeData
 import com.teammovil.pettracker.fakes.mockAdopterView
 import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
+import com.teammovil.pettracker.util.MessageValidation
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -34,13 +34,13 @@ class AdopterRegistrationIntegrationTests {
     }
 
     @Test
-    fun `loading is called when onSaveAdopter is pressed`(){
+    fun `adopter data is register in server`(){
         runBlocking {
             vm.model.observeForever(observer)
 
             vm.onSaveAdopter(mockAdopterView)
 
-            verify(observer).onChanged(AdopterRegistrationViewModel.UiModel.Loading)
+            verify(observer).onChanged(AdopterRegistrationViewModel.UiModel.SuccessNotification(MessageValidation.ADOPTER_REGISTER_SUCCESS))
         }
     }
 
