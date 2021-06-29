@@ -3,10 +3,13 @@ package com.teammovil.pettracker.fakes
 import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.data.pet.PetRepository
 import com.teammovil.data.rescuer.RescuerRepository
+import com.teammovil.pettracker.ui.assigningadoptertopet.AdopterViewModel
 import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
+import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
 import com.teammovil.usecases.editpet.EditPetUseCase
+import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
@@ -32,6 +35,10 @@ object FakeData {
 
     val fakerescuerPetsUseCase = GetRescuerPets(fakePetRepository, fakeRescuerRepository)
 
+    val fakeAssignAdopterToPetUseCase = AssignAdopterToPetUseCase(fakePetRepository)
+
+    val fakeGatAllAdoptersUseCase = GetAllAdoptersUseCase(fakeAdopterRepository)
+
     val fakeRegisterAdopterUseCase = RegisterAdopterUseCase(fakeAdopterRepository)
 
     //View Models
@@ -39,6 +46,12 @@ object FakeData {
         fakeEditPetUseCase,
         fakeGetDetailUseCase,
         fakeRegisterPetUseCase,
+        Dispatchers.Unconfined
+    )
+
+    val fakeAssignAdopterToPetViewModel = AdopterViewModel(
+        fakeAssignAdopterToPetUseCase,
+        fakeGatAllAdoptersUseCase,
         Dispatchers.Unconfined
     )
 
