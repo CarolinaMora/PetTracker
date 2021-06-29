@@ -7,6 +7,7 @@ import com.teammovil.pettracker.ui.adopterpets.AdopterPetsViewModel
 import com.teammovil.pettracker.ui.assigningadoptertopet.AdopterViewModel
 import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
+import com.teammovil.pettracker.ui.rescuerregistration.RescuerRegistrationViewModel
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
 import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
 import com.teammovil.usecases.assignadoptertopet.AssignAdopterToPetUseCase
@@ -15,6 +16,7 @@ import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
+import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
 import com.teammovil.usecases.rescuerPets.GetRescuerPets
 import kotlinx.coroutines.Dispatchers
 
@@ -35,6 +37,8 @@ object FakeData {
 
     val fakeRegisterPetUseCase = RegisterPetUseCase(fakeRescuerRepository, fakePetRepository)
 
+    val fakeRegisterRescuerUseCase = RegisterRescuerUseCase(fakeRescuerRepository)
+
     val fakerescuerPetsUseCase = GetRescuerPets(fakePetRepository, fakeRescuerRepository)
 
     val fakeAssignAdopterToPetUseCase = AssignAdopterToPetUseCase(fakePetRepository)
@@ -50,6 +54,11 @@ object FakeData {
         fakeEditPetUseCase,
         fakeGetDetailUseCase,
         fakeRegisterPetUseCase,
+        Dispatchers.Unconfined
+    )
+
+    val fakeRescuerRegistrationViewModel = RescuerRegistrationViewModel(
+        fakeRegisterRescuerUseCase,
         Dispatchers.Unconfined
     )
 
