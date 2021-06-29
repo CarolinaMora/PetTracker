@@ -17,7 +17,7 @@ class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase
 
     sealed class UiModel {
         object Loading : UiModel()
-        class AdopterPetsContent(val pets: List<com.teammovil.domain.Pet>) : UiModel()
+        data class AdopterPetsContent(val pets: List<com.teammovil.domain.Pet>) : UiModel()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -29,11 +29,8 @@ class AdopterPetsViewModel @Inject constructor(private val getAdopterPetsUseCase
     fun onStartView() {
         launch {
             _model.value = UiModel.Loading
-            val result = withContext(Dispatchers.IO){
-                getAdopterPetsUseCase.invoke()
-            }
+            val result = getAdopterPetsUseCase.invoke()
             setView(result)
-
         }
     }
 
