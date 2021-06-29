@@ -7,6 +7,8 @@ import com.teammovil.pettracker.fakes.mockPetView
 import com.teammovil.pettracker.ui.petdetail.PetDetailViewModel
 import kotlinx.coroutines.runBlocking
 import androidx.lifecycle.Observer
+import com.teammovil.pettracker.fakes.fakePetList
+import com.teammovil.pettracker.ui.common.Mapper
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -35,13 +37,14 @@ class PetDetailIntegrationTests {
     }
 
     @Test
-    fun `loading is called when onGetPetDetail is called` () {
+    fun `PetDetailContent is called when onGetPetDetail is called` () {
         runBlocking {
             vm.model.observeForever(observer)
 
-            vm.onGetPetDetail(mockPetView.id)
+            vm.onGetPetDetail(fakePetList[0].id)
 
-            verify(observer).onChanged(PetDetailViewModel.UiModel.Loading)
+
+            verify(observer).onChanged(PetDetailViewModel.UiModel.PetDetailContent(fakePetList[0]))
 
         }
 
