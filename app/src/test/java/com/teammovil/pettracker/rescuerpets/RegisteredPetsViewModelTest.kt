@@ -1,4 +1,4 @@
-package com.teammovil.pettracker
+package com.teammovil.pettracker.rescuerpets
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer

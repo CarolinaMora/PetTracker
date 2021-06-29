@@ -23,11 +23,11 @@ val mockRescuerView = RescuerView(
 )
 
 val mockAdopterView = AdopterView(
-    "karen@gmail.com",
+    "karen@gmail.com.mx",
     name = FieldView("Karen"),
     firstLastName = FieldView("Pérez"),
     secondLastName = FieldView("García"),
-    genderType = FieldView(""),
+    genderType = FieldView(GenderType.MALE.name),
     birthDay = FieldView("1992-07-19"),
     email = FieldView("karen@gmail.com"),
     password = FieldView("hola1234"),
