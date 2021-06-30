@@ -5,12 +5,12 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
-import com.teammovil.pettracker.R
 import com.teammovil.pettracker.fakes.FakeData
 import com.teammovil.pettracker.fakes.fakePetList
 import com.teammovil.pettracker.fakes.mockPetView
 import com.teammovil.pettracker.ui.common.PetView
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -37,7 +37,12 @@ class EditPetIntegrationTests {
     @Before
     fun init() {
         MockitoAnnotations.initMocks(this)
-        vm = FakeData.fakeEditPetViewModel
+        vm = EditRegisterPetViewModel(
+            FakeData.fakeEditPetUseCase,
+            FakeData.fakeGetDetailUseCase,
+            FakeData.fakeRegisterPetUseCase,
+            Dispatchers.Unconfined
+        )
     }
 
     @Test
