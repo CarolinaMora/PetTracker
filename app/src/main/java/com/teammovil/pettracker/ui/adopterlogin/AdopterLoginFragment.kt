@@ -95,7 +95,7 @@ class AdopterLoginFragment : Fragment() {
         with(binding){
             val user = UserView(
                 FieldView(emailAdopted.text.toString()),
-                FieldView(emailAdopted.text.toString())
+                FieldView(passAdopted.text.toString())
             )
             viewModel.onLoginAdopter(user)
 
