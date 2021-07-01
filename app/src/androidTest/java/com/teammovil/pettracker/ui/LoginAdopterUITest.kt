@@ -63,8 +63,12 @@ class LoginAdopterUITest {
         goToLoginAdopterScreen()
 
         Espresso.onView(withId(R.id.Btn_cancel)).perform(
-            ViewActions.scrollTo(),
             ViewActions.click()
         )
+        Thread.sleep(2000)
+        
+        Espresso.onView(withId(R.id.action_bar))
+            .check(ViewAssertions.matches(ViewMatchers.hasDescendant(withText("Registro Adoptante"))))
+
     }
 }
