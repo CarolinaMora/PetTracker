@@ -144,12 +144,13 @@ class PetFakeExternalDataAccess: PetExternalDataAccess {
     }
 
     override suspend fun registerPet(pet: com.teammovil.domain.Pet, rescuerId: String): Boolean {
+        pet.id = (fakePetList.size+1).toString()
         fakePetList.add(pet)
         return true
     }
 
     override suspend fun updatePet(pet: com.teammovil.domain.Pet): Boolean {
-        //fakePetList[pet.id.toInt()-1] = pet
+        fakePetList[pet.id.toInt()-1] = pet
         return true
     }
 
