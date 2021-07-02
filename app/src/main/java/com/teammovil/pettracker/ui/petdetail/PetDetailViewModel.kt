@@ -19,7 +19,7 @@ class PetDetailViewModel @Inject
 
     sealed class UiModel (){
         object Loading : UiModel()
-        class PetDetailContent(val pet: com.teammovil.domain.Pet) : UiModel()
+        data class PetDetailContent(val pet: com.teammovil.domain.Pet) : UiModel()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -35,9 +35,9 @@ class PetDetailViewModel @Inject
 
             _model.value = UiModel.Loading
 
-            var resultPet = withContext( Dispatchers.IO ) {
+            var resultPet =
                 getPetUseCase.invoke(petId)
-            }
+
             if(resultPet!=null)
                 _model.value = UiModel.PetDetailContent(resultPet)
         }

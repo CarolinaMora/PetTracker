@@ -12,6 +12,7 @@ import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewMo
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
 import com.teammovil.pettracker.ui.sendevidence.EvidenceView
 import com.teammovil.pettracker.ui.sendevidence.SendEvidenceViewModel
+import com.teammovil.pettracker.ui.petdetail.PetDetailViewModel
 import com.teammovil.pettracker.ui.rescuerregistration.RescuerRegistrationViewModel
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
 import com.teammovil.usecases.adopterPets.GetAdopterPetsUseCase
@@ -62,6 +63,11 @@ object FakeData {
         fakeEditPetUseCase,
         fakeGetDetailUseCase,
         fakeRegisterPetUseCase,
+        Dispatchers.Unconfined
+    )
+
+    val fakePetDetailViewModel = PetDetailViewModel (
+        fakeGetDetailUseCase,
         Dispatchers.Unconfined
     )
 
