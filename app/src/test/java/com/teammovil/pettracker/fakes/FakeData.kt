@@ -3,10 +3,15 @@ package com.teammovil.pettracker.fakes
 import com.teammovil.data.adopter.AdopterRepository
 import com.teammovil.data.pet.PetRepository
 import com.teammovil.data.rescuer.RescuerRepository
+import com.teammovil.domain.Evidence
+import com.teammovil.pettracker.getDateFromString
+import com.teammovil.pettracker.ui.common.FieldView
 import com.teammovil.pettracker.ui.adopterpets.AdopterPetsViewModel
 import com.teammovil.pettracker.ui.assigningadoptertopet.AdopterViewModel
 import com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationViewModel
 import com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel
+import com.teammovil.pettracker.ui.sendevidence.EvidenceView
+import com.teammovil.pettracker.ui.sendevidence.SendEvidenceViewModel
 import com.teammovil.pettracker.ui.petdetail.PetDetailViewModel
 import com.teammovil.pettracker.ui.rescuerregistration.RescuerRegistrationViewModel
 import com.teammovil.pettracker.ui.registeredpets.RegisteredPetsViewModel
@@ -17,6 +22,7 @@ import com.teammovil.usecases.getalladopters.GetAllAdoptersUseCase
 import com.teammovil.usecases.petdetail.GetPetUseCase
 import com.teammovil.usecases.registeradopter.RegisterAdopterUseCase
 import com.teammovil.usecases.registerpet.RegisterPetUseCase
+import com.teammovil.usecases.SaveEvidenceUseCase
 import com.teammovil.usecases.registerrescuer.RegisterRescuerUseCase
 import com.teammovil.usecases.rescuerPets.GetRescuerPets
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +43,8 @@ object FakeData {
     val fakeGetDetailUseCase = GetPetUseCase(fakePetRepository)
 
     val fakeRegisterPetUseCase = RegisterPetUseCase(fakeRescuerRepository, fakePetRepository)
+
+    val fakeSaveEvidenceUseCase = SaveEvidenceUseCase(fakePetRepository)
 
     val fakeRegisterRescuerUseCase = RegisterRescuerUseCase(fakeRescuerRepository)
 
@@ -66,6 +74,19 @@ object FakeData {
     val fakeRescuerRegistrationViewModel = RescuerRegistrationViewModel(
         fakeRegisterRescuerUseCase,
         Dispatchers.Unconfined
+    )
+
+    val fakeSendEvidenceViewModel = SendEvidenceViewModel (
+        fakeSaveEvidenceUseCase,
+        Dispatchers.Unconfined
+            )
+
+    //Objects
+    val fakeEvidenceView = EvidenceView(
+        externalId = "1",
+        photo = FieldView("image.png"),
+        comments = FieldView("hola"),
+        evidenceDate = FieldView("2021-06-09")
     )
 
     val fakeAssignAdopterToPetViewModel = AdopterViewModel(

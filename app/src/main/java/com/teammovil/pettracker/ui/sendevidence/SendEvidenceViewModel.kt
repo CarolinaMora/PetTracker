@@ -53,7 +53,9 @@ class SendEvidenceViewModel @Inject constructor(
     }
 
     private fun saveEvidence(petId:String?, evidence: EvidenceView) {
+/*
         launch {
+
             _model.value = UiModel.Loading
             val result = withContext(Dispatchers.IO) {
                 saveEvidenceUseCase.invoke(petId,
@@ -62,6 +64,16 @@ class SendEvidenceViewModel @Inject constructor(
             manageResult(result, evidence)
 
         }
+-*/
+
+        launch {
+            _model.value = UiModel.Loading
+            val result = saveEvidenceUseCase.invoke(petId,  Mapper.map (evidence))
+            manageResult(result, evidence)
+        }
+
+
+
     }
 
     private fun manageResult(result: Result<Unit, List<Error>>, evidence: EvidenceView) {

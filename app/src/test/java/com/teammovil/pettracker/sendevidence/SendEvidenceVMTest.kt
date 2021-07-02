@@ -41,7 +41,7 @@ class SendEvidenceVMTest {
     @Test
     fun `when send evidence button, loading is shown`() {
         runBlocking {
-            whenever(sendEvidenceUseCase.invoke("1", mockEvidence)).thenReturn(Result(Unit,null))
+            whenever(sendEvidenceUseCase.invoke("1", Mapper.map(mockEvidenceView))).thenReturn(Result(Unit,null))
             vm.model.observeForever(observer)
 
             vm.onSaveEvidence("1", mockEvidenceView)
