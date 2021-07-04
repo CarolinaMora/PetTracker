@@ -6,15 +6,15 @@ import com.teammovil.pettracker.data.database.entities.RescuerEntity
 interface RescuerDao {
 
     @Query("SELECT * FROM Rescuer")
-    fun getRescuer(): RescuerEntity
+    suspend fun getRescuer(): RescuerEntity
 
     @Insert
-    fun addRescuer(rescuer: RescuerEntity)
+    suspend fun addRescuer(rescuer: RescuerEntity)
 
     @Query("DELETE FROM Rescuer")
-    fun deleteRescuer()
+    suspend fun deleteRescuer()
 
     @Update
-    fun updateRescuer(rescuer: RescuerEntity)
+    suspend fun updateRescuer(rescuer: RescuerEntity)
 
 }

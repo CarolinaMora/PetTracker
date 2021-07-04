@@ -10,11 +10,11 @@ import com.teammovil.domain.Adopter
 interface AdopterDao {
 
     @Insert
-    fun addAdopter(adopter: AdopterEntity)
+    suspend fun addAdopter(adopter: AdopterEntity)
 
     @Query("DELETE FROM Adopter")
-    fun deleteAdopter()
+    suspend fun deleteAdopter()
 
     @Query("SELECT * FROM Adopter")
-    fun getAdopter(): AdopterEntity
+    suspend fun getAdopter(): AdopterEntity
 }
