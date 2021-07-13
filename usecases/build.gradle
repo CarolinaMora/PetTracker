@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+dependencies {
+
+    implementation kotlinLibs.values()
+
+    //Test
+    testImplementation testLibs.values()
+
+    implementation project (":domain")
+    implementation project (":data")
+}

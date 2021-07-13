@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/selectionFragment"
         android:name="com.teammovil.pettracker.ui.SelectionFragment"
-        android:label="fragment_selection"
+        android:label="@string/title_selection_fragment"
         tools:layout="@layout/fragment_selection" >
         <action
             android:id="@+id/action_selectionFragment_to_adopterLoginFragment"
@@ -19,12 +19,46 @@
     </fragment>
     <fragment
         android:id="@+id/adopterLoginFragment"
-        android:name="com.teammovil.pettracker.ui.AdopterLoginFragment"
-        android:label="fragment_adopter_login"
-        tools:layout="@layout/fragment_adopter_login" />
+        android:name="com.teammovil.pettracker.ui.adopterlogin.AdopterLoginFragment"
+        android:label="@string/title_adopter_login_fragment"
+        tools:layout="@layout/fragment_adopter_login" >
+        <action
+            android:id="@+id/action_adopterLoginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_adopterLoginFragment_to_adopterRegistrationFragment2"
+            app:destination="@id/adopterRegistrationFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/rescuerLoginFragment"
-        android:name="com.teammovil.pettracker.ui.RescuerLoginFragment"
-        android:label="fragment_rescuer_login"
-        tools:layout="@layout/fragment_rescuer_login" />
+        android:name="com.teammovil.pettracker.ui.rescuerlogin.RescuerLoginFragment"
+        android:label="@string/title_rescuer_login_fragment"
+        tools:layout="@layout/fragment_rescuer_login" >
+        <action
+            android:id="@+id/action_rescuerLoginFragment_to_mainRescuerActivity"
+            app:destination="@id/mainRescuerActivity" />
+        <action
+            android:id="@+id/action_rescuerLoginFragment_to_rescuerRegistrationFragment"
+            app:destination="@id/rescuerRegistrationFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.teammovil.pettracker.ui.MainAdopterActivity"
+        android:label="@string/app_name"
+        tools:layout="@layout/activity_main_adopter" />
+    <activity
+        android:id="@+id/mainRescuerActivity"
+        android:name="com.teammovil.pettracker.ui.MainRescuerActivity"
+        android:label="@string/app_name"
+        tools:layout="@layout/activity_main_rescuer" />
+    <fragment
+        android:id="@+id/adopterRegistrationFragment2"
+        android:name="com.teammovil.pettracker.ui.adopterregistration.AdopterRegistrationFragment"
+        android:label="@string/title_adopter_registration_fragment"
+        tools:layout="@layout/fragment_adopter_registration" />
+    <fragment
+        android:id="@+id/rescuerRegistrationFragment"
+        android:name="com.teammovil.pettracker.ui.rescuerregistration.RescuerRegistrationFragment"
+        android:label="@string/title_rescuer_registration_fragment"
+        tools:layout="@layout/fragment_rescuer_registration"/>
 </navigation>

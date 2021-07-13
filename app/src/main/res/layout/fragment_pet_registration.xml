@@ -1,14 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.PetRegistrationFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.teammovil.pettracker.ui.editregisterpet.EditRegisterPetViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Registro de mascota" />
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        tools:context=".ui.petregistration.PetRegistrationFragment">
 
-</FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/pet_registration_main_photo"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@android:drawable/ic_menu_camera"
+                        app:url="@{viewModel.petView.mainPhoto.value}"
+                        app:layout_constraintBottom_toTopOf="@+id/pet_registration_photo_error"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.4"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/pet_registration_photo_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_half_margin"
+                        android:layout_marginBottom="@dimen/default_half_margin"
+                        android:textColor="@android:color/holo_red_dark"
+                        app:showError="@{viewModel.petView.mainPhoto}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pet_registration_main_photo"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_pet_registration_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:hint="@string/prompt_name">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pet_registration_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.petView.name.value}"
+                        app:showError="@{viewModel.petView.name}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/pet_registration_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:padding="@dimen/default_margin"
+                    app:showSelection="@{viewModel.petView.petType}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pet_registration_type_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_marginTop="@dimen/default_half_margin"
+                    android:layout_marginBottom="@dimen/default_half_margin"
+                    app:showError="@{viewModel.petView.petType}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/pet_registration_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:padding="@dimen/default_margin"
+                    app:showSelection="@{viewModel.petView.gender}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pet_registration_gender_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_marginTop="@dimen/default_half_margin"
+                    android:layout_marginBottom="@dimen/default_half_margin"
+                    app:showError="@{viewModel.petView.gender}"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_pet_registration_race"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:hint="@string/prompt_race">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pet_registration_race"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.petView.race.value}"
+                        app:showError="@{viewModel.petView.race}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_pet_registration_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:hint="@string/prompt_description">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pet_registration_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.petView.description.value}"
+                        app:showError="@{viewModel.petView.description}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_pet_registration_birth_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_margin"
+                    android:hint="@string/prompt_birth_date">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pet_registration_birth_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@{viewModel.petView.approximateDateOfBirth.value}"
+                        app:showError="@{viewModel.petView.approximateDateOfBirth}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_pet_registration_rescue_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_margin"
+                    android:hint="@string/prompt_rescue_date">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pet_registration_rescue_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@{viewModel.petView.rescueDate.value}"
+                        app:showError="@{viewModel.petView.rescueDate}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/pet_registration_sterilized"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:checked="@{viewModel.petView.sterilized.value}"
+                    android:text="@string/prompt_sterilized"
+                    android:textOff="@string/action_no"
+                    android:textOn="@string/action_yes"
+                    />
+
+                <TextView
+                    android:id="@+id/pet_registration_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@{viewModel.petView.status.value.name()}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_send_evidence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:background="@color/yellow_dark"
+                    android:textColor="@android:color/white"
+                    android:text="@string/action_send_evidence"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_assign_adopter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:background="@color/yellow_dark"
+                    android:textColor="@android:color/white"
+                    android:text="@string/action_assing_adopter"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/title_vaccines" />
+
+                <fragment
+                    android:id="@+id/pet_registration_vaccines"
+                    android:name="com.teammovil.pettracker.ui.vaccines.VaccinesListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/title_dewormings" />
+
+                <fragment
+                    android:id="@+id/pet_registration_dewormings"
+                    android:name="com.teammovil.pettracker.ui.dewormings.DewormingsListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/default_margin" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/pet_registration_register_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:src="@android:drawable/ic_menu_save"
+            android:background="@color/orange_medium"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/pet_registration_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
