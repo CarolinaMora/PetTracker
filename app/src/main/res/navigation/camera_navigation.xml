@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/camera_navigation"
+    >
+
+    <fragment
+        android:id="@+id/cameraPhotoTakerFragment"
+        android:name="com.teammovil.pettracker.ui.camera.fragments.CameraPhotoTakerFragment"
+        android:label="@string/title_photo_taker_fragment" >
+        <action
+            android:id="@+id/action_cameraPhotoTakerFragment_to_cameraPhotoPreviewFragment"
+            app:destination="@id/cameraPhotoPreviewFragment" />
+        <argument
+            android:name="configuration"
+            app:argType="com.teammovil.pettracker.ui.camera.CameraConfiguration"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraPhotoPreviewFragment"
+        android:name="com.teammovil.pettracker.ui.camera.fragments.CameraPhotoPreviewFragment"
+        android:label="@string/title_photo_preview_fragment" >
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraVideoTakerFragment"
+        android:name="com.teammovil.pettracker.ui.camera.fragments.CameraVideoTakerFragment"
+        android:label="@string/title_video_taker_fragment" >
+        <action
+            android:id="@+id/action_cameraVideoTakerFragment_to_cameraVideoPreviewFragment"
+            app:destination="@id/cameraVideoPreviewFragment" />
+        <argument
+            android:name="configuration"
+            app:argType="com.teammovil.pettracker.ui.camera.CameraConfiguration"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraVideoPreviewFragment"
+        android:name="com.teammovil.pettracker.ui.camera.fragments.CameraVideoPreviewFragment"
+        android:label="@string/title_video_preview_fragment">
+        <argument
+            android:name="videoUrl"
+            app:argType="string"
+            />
+    </fragment>
+</navigation>

@@ -114,4 +114,10 @@
     <string name="send_evidence_comments">Comentarios</string>
     <string name="send_evidence_ok">"Evidencia enviada correctamente"</string>
     <string name="send_evidence_error">"Hubo un error al enviar evidencia. Intente más tarde"</string>
+
+    <!-- Camera -->
+    <string name="title_photo_taker_fragment">Captura de fotografía</string>
+    <string name="title_photo_preview_fragment">Captura de fotografía</string>
+    <string name="title_video_taker_fragment">Captura de video</string>
+    <string name="title_video_preview_fragment">Captura de video</string>
 </resources>
