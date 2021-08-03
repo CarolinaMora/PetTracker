@@ -35,7 +35,7 @@ class CameraActivity: AppCompatActivity(),
     }
 
     private fun getArgs (){
-        //TODO: configuration = CameraActivityArgs.fromBundle(intent.extras!!).configuration
+        configuration = CameraActivityArgs.fromBundle(intent.extras!!).configuration
     }
 
     private fun setupNavigation() {

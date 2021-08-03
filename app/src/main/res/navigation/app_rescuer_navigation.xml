@@ -38,6 +38,9 @@
         <argument
             android:name="petId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_sendEvidenceFragment_to_cameraActivity"
+            app:destination="@id/cameraActivity" />
     </fragment>
     <fragment
         android:id="@+id/assignAdopterToPetFragment"
@@ -63,5 +66,16 @@
         <action
             android:id="@+id/action_adopterRegistrationFragment_to_sendEvidenceFragment"
             app:destination="@id/sendEvidenceFragment" />
+        <action
+            android:id="@+id/action_petRegistrationFragment_to_cameraActivity"
+            app:destination="@id/cameraActivity" />
     </fragment>
+    <activity
+        android:id="@+id/cameraActivity"
+        android:name="com.teammovil.pettracker.ui.camera.CameraActivity"
+        android:label="CameraActivity" >
+        <argument
+            android:name="configuration"
+            app:argType="com.teammovil.pettracker.ui.camera.CameraConfiguration" />
+    </activity>
 </navigation>
