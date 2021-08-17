@@ -13,6 +13,9 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.teammovil.pettracker.ui.camera.CameraActivity
+import com.teammovil.pettracker.ui.camera.CameraConfiguration
+import com.teammovil.pettracker.ui.camera.CameraConstants
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -58,9 +61,11 @@ class PhotoTaker(var context: Context) {
 
     fun dispatchTakePictureIntent() {
         if(checkPermissions()) {
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                // Ensure that there's a camera activity to handle the intent
-                takePictureIntent.resolveActivity(context.packageManager)?.also {
+            fragment?.let { fragment ->
+                Intent(
+                    fragment.requireActivity(),
+                    CameraActivity::class.java
+                ).also { takePictureIntent ->
                     // Create the File where the photo should go
                     val photoFile: File? = try {
                         createImageFile()
@@ -70,13 +75,9 @@ class PhotoTaker(var context: Context) {
                     }
                     // Continue only if the File was successfully created
                     photoFile?.also {
-                        val photoURI: Uri = FileProvider.getUriForFile(
-                            context,
-                            "com.teammovil.pettracker.fileprovider",
-                            it
-                        )
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                        fragment?.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                        val cameraConfiguration = CameraConfiguration(it.absolutePath, CameraConstants.REQUEST_IMAGE_CAPTURE)
+                        takePictureIntent.putExtra(CameraConfiguration.ARG_NAME, cameraConfiguration)
+                        fragment.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                     }
                 }
             }
